@@ -28,6 +28,20 @@ public class DreamVacationTest {
         assertTrue(testDreamDestinations.addDreamDestinations("Croatia"));
         assertFalse(testDreamDestinations.addDreamDestinations("Croatia"));
     }
+    @Test
+    void testAddDreamsDestinations() {
+        testDreamDestinations.addDreamDestinations("Italy");
+        testDreamDestinations.addDreamDestinations("Croatia");
+        testDreamDestinations.addDreamDestinations("Spain");
+        testDreamDestinations.addDreamDestinations("Japan");
+        testDreamDestinations.addDreamDestinations("Vietnam");
+        assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Croatia"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Spain"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Japan"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Vietnam"));
+        assertEquals(5, testDreamDestinations.getNumDreamDestinations());
+    }
 
     @Test
     void testViewDreamDestination() {
@@ -42,6 +56,7 @@ public class DreamVacationTest {
         assertEquals("Croatia", result.get(1));
         assertEquals("Japan", result.get(2));
     }
+
 }
 
 
