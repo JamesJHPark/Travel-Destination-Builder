@@ -34,8 +34,10 @@ public class DreamVacationTest {
         testDreamDestinations.addDreamDestinations("Italy");
         testDreamDestinations.addDreamDestinations("Croatia");
         testDreamDestinations.addDreamDestinations("Japan");
+        assertTrue(testDreamDestinations.addDreamDestinations("Spain"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Japan"));
         ArrayList<String> result = testDreamDestinations.viewDreamDestinations();
-        assertEquals(3, testDreamDestinations.getNumDreamDestinations());
+        assertEquals(4, testDreamDestinations.getNumDreamDestinations());
         assertEquals("Italy", result.get(0));
         assertEquals("Croatia", result.get(1));
         assertEquals("Japan", result.get(2));

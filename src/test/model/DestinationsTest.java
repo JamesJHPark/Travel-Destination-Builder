@@ -59,6 +59,11 @@ class DestinationsTest {
         assertEquals("Miami, Los Angeles, New York", testDestination.getCityFromWinterDestinations("USA"));
     }
 
+    @Test
+    void testGetSwitzerland(){
+        assertEquals("Zurich, Lucerne, Geneva, Bern", testDestination.getCityFromWinterDestinations("Switzerland"));
+
+    }
 }
 
 
