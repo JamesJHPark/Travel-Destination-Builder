@@ -23,10 +23,13 @@ public class DreamVacationTest {
 
     @Test
     void testAddDreamDestinations() {
+        testDreamDestinations.addDreamDestinations("Spain");
+        assertFalse(testDreamDestinations.addDreamDestinations("Spain"));
         assertTrue(testDreamDestinations.addDreamDestinations("Italy"));
         assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
         assertTrue(testDreamDestinations.addDreamDestinations("Croatia"));
         assertFalse(testDreamDestinations.addDreamDestinations("Croatia"));
+        assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
     }
     @Test
     void testAddDreamsDestinations() {
