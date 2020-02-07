@@ -6,12 +6,15 @@ import model.Destinations;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Vacation chooser application
 public class VacationResolver {
 
     private Destinations chooseDestination;
     private DreamVacation createDreamDestinations;
     private Scanner input;
-    private ArrayList<String> dreamList;
+    private ArrayList dreamList;
+    private String command;
+
 
     public VacationResolver() {
         runResolver();
@@ -19,7 +22,6 @@ public class VacationResolver {
 
     private void runResolver() {
         boolean keepGoing = true;
-        String command;
 
         init();
 
@@ -32,8 +34,6 @@ public class VacationResolver {
             } else {
                 inputValue(command);
                 System.out.println("See you next time!");
-                return;
-
             }
         }
     }
@@ -68,12 +68,40 @@ public class VacationResolver {
         ArrayList<String> summer = chooseDestination.viewSummerDestinations();
         System.out.println(summer);
         System.out.println("Choose a country of your choice for next vacation!");
-
         String country = input.next();
         String nextDestination = chooseDestination.chooseSummerDestination(country);
-        System.out.println("Great! your next travel destination is " + nextDestination);
-        System.out.println("For your travel to " + nextDestination + ", here is the list of popular cities to visit:");
+        System.out.println("Great! your next travel destination is: " + nextDestination);
+
+        System.out.println("For your travel to: " + nextDestination + ", here is the list of popular cities to visit:");
         System.out.println(chooseDestination.getCityFromSummerDestinations(country));
+        System.out.println("Now, choose a country from our selection to include in your Dream Vacation list");
+        String dreamCountry = input.next();
+        createDreamDestinations.addDreamDestinations(dreamCountry);
+        dreamList = createDreamDestinations.viewDreamDestinations();
+        System.out.println(dreamList);
+
+        System.out.println("Now, add 1 more country to your Dream Vacation list!");
+        String anotherDreamCountry = input.next();
+        createDreamDestinations.addDreamDestinations(anotherDreamCountry);
+
+        System.out.println("To view your Dream Vacation list, type YES");
+        String answer = input.next();
+        typeAnswer(answer);
+    }
+
+
+    private void showWinterDestinations() {
+        dreamList = new ArrayList();
+        System.out.println("Here is the list of winter travel destinations!");
+        ArrayList<String> winter = chooseDestination.viewWinterDestinations();
+        System.out.println(winter);
+        System.out.println("Choose a country of your choice for next vacation!");
+
+        String country = input.next();
+        String nextDestination = chooseDestination.chooseWinterDestination(country);
+        System.out.println("Great! your next travel destination is: " + nextDestination);
+        System.out.println("For your travel to: " + nextDestination + ", here is the list of popular cities to visit:");
+        System.out.println(chooseDestination.getCityFromWinterDestinations(country));
 
 
         System.out.println("Now, choose a country from our selection to include in your Dream Vacation list");
@@ -99,33 +127,5 @@ public class VacationResolver {
         }
     }
 
-    private void showWinterDestinations() {
-        dreamList = new ArrayList();
-        System.out.println("Here is the list of winter travel destinations!");
-        ArrayList<String> winter = chooseDestination.viewWinterDestinations();
-        System.out.println(winter);
-        System.out.println("Choose a country of your choice for next vacation!");
-
-        String country = input.next();
-        String nextDestination = chooseDestination.chooseWinterDestination(country);
-        System.out.println("Great! your next travel destination is " + nextDestination);
-        System.out.println("For your travel to " + nextDestination + ", here is the list of popular cities to visit:");
-        System.out.println(chooseDestination.getCityFromWinterDestinations(country));
-
-
-        System.out.println("Now, choose a country from our selection to include in your Dream Vacation list");
-        String dreamCountry = input.next();
-        createDreamDestinations.addDreamDestinations(dreamCountry);
-        dreamList = createDreamDestinations.viewDreamDestinations();
-        System.out.println(dreamList);
-
-        System.out.println("Now, add 1 more country to your Dream Vacation list!");
-        String anotherDreamCountry = input.next();
-        createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-
-        System.out.println("To view your Dream Vacation list, type YES");
-        String answer = input.next();
-        typeAnswer(answer);
-    }
 }
 
