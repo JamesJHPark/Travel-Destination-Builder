@@ -31,7 +31,7 @@ class DestinationsTest {
     void testChooseSummerDestination() {
         assertEquals("Italy", testDestination.chooseSummerDestination("Italy"));
         assertEquals("Vietnam", testDestination.chooseSummerDestination("Vietnam"));
-        assertEquals("Sorry, the typed country is not in the list", testDestination.chooseSummerDestination("India"));
+        assertEquals("Sorry, that's wrong input", testDestination.chooseSummerDestination("India"));
     }
 
     @Test
@@ -47,7 +47,7 @@ class DestinationsTest {
     void testChooseWinterDestination() {
         assertEquals("Mexico", testDestination.chooseWinterDestination("Mexico"));
         assertEquals("Iceland", testDestination.chooseWinterDestination("Iceland"));
-        assertEquals("Sorry, the typed country is not in the list", testDestination.chooseWinterDestination("korea"));
+        assertEquals("Sorry, that's wrong input", testDestination.chooseWinterDestination("korea"));
     }
 
     @Test
@@ -60,7 +60,7 @@ class DestinationsTest {
     }
 
     @Test
-    void testGetSwitzerland() {
+    void testGetCityAgain() {
         assertEquals(null, testDestination.getCityFromWinterDestinations("Korea"));
     }
 

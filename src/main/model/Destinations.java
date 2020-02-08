@@ -13,11 +13,13 @@ public class Destinations {
     private String country3 = "Croatia";
     private String country4 = "Vietnam";
     private String country5 = "Japan";
-    private String countryw1 = "Mexico";
-    private String countryw2 = "Iceland";
-    private String countryw3 = "USA";
-    private String countryw4 = "Austria";
-    private String countryw5 = "Switzerland";
+    private String countryW1 = "Mexico";
+    private String countryW2 = "Iceland";
+    private String countryW3 = "USA";
+    private String countryW4 = "Austria";
+    private String countryW5 = "Switzerland";
+
+    //EFFECTS: Destinations has summer and winter destinations created into separate ArrayLists
 
     public Destinations() {
         summerDestinations = new ArrayList<>();
@@ -28,11 +30,11 @@ public class Destinations {
         summerDestinations.add(country5);
 
         winterDestinations = new ArrayList<>();
-        winterDestinations.add(countryw1);
-        winterDestinations.add(countryw2);
-        winterDestinations.add(countryw3);
-        winterDestinations.add(countryw4);
-        winterDestinations.add(countryw5);
+        winterDestinations.add(countryW1);
+        winterDestinations.add(countryW2);
+        winterDestinations.add(countryW3);
+        winterDestinations.add(countryW4);
+        winterDestinations.add(countryW5);
     }
 
     //EFFECTS: to return the length of the list of summer destinations
@@ -121,15 +123,15 @@ public class Destinations {
 
     public String getCityFromWinterDestinations(String country) {
         String city = null;
-        if (country.equals(countryw1)) {
+        if (country.equals(countryW1)) {
             city = "Cozumel, Tulum, Cancun, Mexico City";
-        } else if (country.equals(countryw2)) {
+        } else if (country.equals(countryW2)) {
             city = "Reykjavik, Selfoss";
-        } else if (country.equals(countryw3)) {
+        } else if (country.equals(countryW3)) {
             city = "Miami, Los Angeles, New York";
-        } else if (country.equals(countryw4)) {
+        } else if (country.equals(countryW4)) {
             city = "Hallstatt, Salzburg, Innsbruck";
-        } else if (country.equals(countryw5)) {
+        } else if (country.equals(countryW5)) {
             city = "Zurich, Lucerne, Geneva, Bern";
         }
         return city;

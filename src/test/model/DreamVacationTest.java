@@ -60,6 +60,28 @@ public class DreamVacationTest {
         assertEquals("Japan", result.get(2));
     }
 
+    @Test
+    void testAlreadyInDreamList() {
+        testDreamDestinations.addDreamDestinations("Japan");
+        testDreamDestinations.addDreamDestinations("Italy");
+        testDreamDestinations.addDreamDestinations("Spain");
+        testDreamDestinations.addDreamDestinations("Croatia");
+        testDreamDestinations.addDreamDestinations("Vietnam");
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Japan"));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Italy"));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Spain"));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Croatia"));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Vietnam"));
+    }
+    @Test
+    void notAlreadyInDreamList() {
+        testDreamDestinations.addDreamDestinations("Italy");
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Japan"));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Spain"));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Croatia"));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Vietnam"));
+    }
+
 }
 
 

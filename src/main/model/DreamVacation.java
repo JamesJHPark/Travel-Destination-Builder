@@ -26,6 +26,10 @@ public class DreamVacation {
         return canAdd;
     }
 
+    public Boolean alreadyInDreamDestinations(String country) {
+        return dreamDestinations.contains(country);
+    }
+
     //EFFECTS: to return the number of dream destinations in the list
     public int getNumDreamDestinations() {
         return dreamDestinations.size();
