@@ -6,7 +6,7 @@ import model.Destinations;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//Vacation chooser application
+//Vacation resolver application
 public class VacationResolver {
 
     private Destinations chooseDestination;
@@ -17,16 +17,17 @@ public class VacationResolver {
     private String dreamCountry;
     private String anotherDreamCountry;
 
-
+// EFFECTS: runs the resolver application
     public VacationResolver() {
         runResolver();
     }
-    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: processes the application according to the user inputs
     private void runResolver() {
         boolean keepGoing = true;
 
-        init();
+        start();
 
         while (keepGoing) {
             startDisplay();
@@ -42,14 +43,16 @@ public class VacationResolver {
     }
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: initializes Destinations and DreamVacation
 
-    private void init() {
+    private void start() {
         input = new Scanner(System.in);
         chooseDestination = new Destinations();
         createDreamDestinations = new DreamVacation();
     }
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: displays the seasons (summer, winter, or exit options) to the user
 
     private void startDisplay() {
         System.out.println("Choose the season for your next vacation");
@@ -59,6 +62,8 @@ public class VacationResolver {
 
     }
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: processes the input commands by the user
     private void inputValue(String command) {
         if (command.equals("Summer")) {
             showSummerDestination();
@@ -68,6 +73,8 @@ public class VacationResolver {
             System.out.println("You can select from either Summer or Winter");
         }
     }
+
+    // EFFECTS: allows the user to choose a destination country and view the list of cities of that country
 
     private void showSummerDestination() {
         System.out.println("Here is the list of summer travel destinations!");
@@ -88,6 +95,8 @@ public class VacationResolver {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
     private void makeDreamDestinations() {
         System.out.println("Choose another country from our selection to include in your Dream Vacation list");
         dreamCountry = input.next();
@@ -101,6 +110,9 @@ public class VacationResolver {
             selectAnother();
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
 
     private void selectAnother() {
         createDreamDestinations.addDreamDestinations(dreamCountry);
@@ -124,10 +136,13 @@ public class VacationResolver {
         }
     }
 
+    // EFFECTS: verifies the user's input of the country is included in the list of destinations provided
 
     private Boolean checkForCountry(String nextDestination) {
         return !nextDestination.equals("Sorry, that's wrong input");
     }
+
+    // EFFECTS: allows the user to choose a destination country and view the list of cities of that country
 
     private void showWinterDestination() {
         System.out.println("Here is the list of winter travel destinations!");
@@ -148,6 +163,9 @@ public class VacationResolver {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
+
     private void makeWinterDestination() {
         System.out.println("Choose another country from our selection to include in your Dream Vacation list");
         dreamCountry = input.next();
@@ -161,6 +179,9 @@ public class VacationResolver {
             selectAnotherForWinter();
         }
     }
+
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
 
     private void selectAnotherForWinter() {
         createDreamDestinations.addDreamDestinations(dreamCountry);
@@ -184,8 +205,9 @@ public class VacationResolver {
         }
     }
 
+    // EFFECTS: allows the user to view the DreamVacation list or to exit without viewing the list
 
-    public void typeAnswer(String answer) {
+    private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
             System.out.println(dreamList);
             System.out.println("See you next time!");

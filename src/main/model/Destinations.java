@@ -3,7 +3,6 @@ package model;
 import java.util.ArrayList;
 
 // Represents specific summer and winter destinations for future vacation
-
 public class Destinations {
 
     private ArrayList<String> summerDestinations;
@@ -19,7 +18,7 @@ public class Destinations {
     private String countryW4 = "Austria";
     private String countryW5 = "Switzerland";
 
-    //EFFECTS: Destinations has summer and winter destinations created into separate ArrayLists
+    //EFFECTS: Destinations has specified summer and winter destinations in separate ArrayLists
 
     public Destinations() {
         summerDestinations = new ArrayList<>();
