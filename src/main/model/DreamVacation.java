@@ -1,14 +1,21 @@
 package model;
 
+import persistence.Saveable;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
+
 
 // Represents the customized list of dream destinations that user has selected from the list of destinations
 
-public class DreamVacation {
+public class DreamVacation implements Saveable {
     private ArrayList<String> dreamDestinations;
+
+
 
     public DreamVacation() {
         dreamDestinations = new ArrayList<>();
+
     }
 
     //REQUIRES: the country to be added to the list of dream destinations has to be from the list of
@@ -41,6 +48,11 @@ public class DreamVacation {
     //EFFECTS: to return the list of dream destinations that the user has chosen
     public ArrayList<String> viewDreamDestinations() {
         return dreamDestinations;
+    }
+
+    @Override
+    public void save(PrintWriter printWriter) {
+        printWriter.print(viewDreamDestinations());
     }
 }
 

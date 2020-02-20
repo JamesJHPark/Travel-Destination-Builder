@@ -1,5 +1,6 @@
 package model;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 // Represents specific summer and winter destinations for future vacation
@@ -135,5 +136,6 @@ public class Destinations {
         }
         return city;
     }
+
 
 }
