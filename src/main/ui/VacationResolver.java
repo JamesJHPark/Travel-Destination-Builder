@@ -1,14 +1,11 @@
 package ui;
 
-import model.DreamVacation;
 import model.Destinations;
+import model.DreamVacation;
 import persistence.Reader;
 import persistence.Writer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,13 +15,13 @@ public class VacationResolver {
     private static final String ACCOUNTS_FILE = "./data/accounts.txt";
     private Destinations chooseDestination;
     private DreamVacation createDreamDestinations;
-    private ArrayList<String> dreamList;
     private Scanner input;
     private String nextDestination;
     private String dreamCountry;
     private String anotherDreamCountry;
 
     // EFFECTS: runs the resolver application
+
     public VacationResolver() {
         runResolver();
     }
@@ -36,7 +33,8 @@ public class VacationResolver {
         String command;
         input = new Scanner(System.in);
 
-        loadAccounts();
+        start();
+
         while (keepGoing) {
             startDisplay();
             command = input.next();
@@ -50,15 +48,19 @@ public class VacationResolver {
         }
     }
 
-    private void loadAccounts() {
+    public void loadAccounts() {
+
         try {
-            chooseDestination = new Destinations();
-            Reader.readDreamVacations(new File(ACCOUNTS_FILE));
+            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(ACCOUNTS_FILE));
+            createDreamDestinations = dreamVacations.get(0);
+            System.out.println(createDreamDestinations.viewDreamDestinations());
 
         } catch (IOException e) {
             start();
         }
     }
+
+
 
 
     private void saveAccounts() {
@@ -71,7 +73,6 @@ public class VacationResolver {
             System.out.println("Unable to save accounts to " + ACCOUNTS_FILE);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
-            // this is due to a programming error
         }
     }
 
@@ -83,6 +84,8 @@ public class VacationResolver {
         createDreamDestinations = new DreamVacation();
     }
 
+
+
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
     // EFFECTS: displays the seasons (summer, winter, or exit options) to the user
 
@@ -90,10 +93,11 @@ public class VacationResolver {
         System.out.println("Choose the season for your next vacation");
         System.out.println("\n Summer");
         System.out.println("\n Winter");
-        System.out.println("\n print");
+        System.out.println("\n View (to load previous Dream Vacation List)");
         System.out.println("\n exit");
 
     }
+
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
     // EFFECTS: processes the input commands by the user
@@ -102,8 +106,10 @@ public class VacationResolver {
             showSummerDestination();
         } else if (command.equals("Winter")) {
             showWinterDestination();
+        } else if (command.equals("View")) {
+            loadAccounts();
         } else {
-            System.out.println("You can select from either Summer or Winter");
+            System.out.println("You can select from either Summer, Winter, or View. See you!");
         }
     }
 
@@ -164,11 +170,11 @@ public class VacationResolver {
             selectAnother();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            dreamList = createDreamDestinations.viewDreamDestinations();
 
             System.out.println("To view your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
+            saveAccounts();
 
 
 
@@ -237,10 +243,10 @@ public class VacationResolver {
             selectAnotherForWinter();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            dreamList = createDreamDestinations.viewDreamDestinations();
             System.out.println("To view your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
+            saveAccounts();
         }
     }
 
@@ -250,8 +256,7 @@ public class VacationResolver {
     private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
 
-            System.out.println(dreamList);
-            saveAccounts();
+            System.out.println(createDreamDestinations.viewDreamDestinations());
             System.out.println("See you next time!");
         } else {
             System.out.println("good bye!");

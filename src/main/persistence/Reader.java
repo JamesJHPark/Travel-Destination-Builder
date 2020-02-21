@@ -12,14 +12,14 @@ import java.util.List;
 
 // A reader that can read account data from a file
 public class Reader {
-    public static final String DELIMITER = ", ";
+    public static final String DELIMITER = ",";
 
 
     // EFFECTS: returns a list of accounts parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
-    public static ArrayList readDreamVacations(File file) throws IOException {
+    public static List<DreamVacation> readDreamVacations(File file) throws IOException {
         List<String> fileContent = readFile(file);
-        return (ArrayList) parseContent(fileContent);
+        return parseContent(fileContent);
     }
     // EFFECTS: returns content of file as a list of strings, each string
     // containing the content of one row of the file
@@ -29,9 +29,29 @@ public class Reader {
     }
 
 
-    private static List<String> parseContent(List<String> fileContent) {
-        ArrayList<DreamVacation> dreamVacations = new ArrayList<>();
-        return fileContent;
+    private static List<DreamVacation> parseContent(List<String> fileContent) {
+        List<DreamVacation> dreamVacations = new ArrayList<>();
+
+        for (String line : fileContent) {
+            ArrayList<String> lineComponents = splitString(line);
+            dreamVacations.add(parseDreamVacations(lineComponents));
+        }
+        return dreamVacations;
+    }
+
+    private static ArrayList<String> splitString(String line) {
+        String[] splits = line.split(DELIMITER);
+        return new ArrayList<>(Arrays.asList(splits));
+    }
+
+    private static DreamVacation parseDreamVacations(List<String> components) {
+        String countryName1 = components.get(0);
+        String countryName2 = components.get(1);
+        DreamVacation newDreamVacation = new DreamVacation();
+        newDreamVacation.addDreamDestinations(countryName1);
+        newDreamVacation.addDreamDestinations(countryName2);
+
+        return newDreamVacation;
     }
 
 
