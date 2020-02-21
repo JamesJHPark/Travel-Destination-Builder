@@ -47,36 +47,36 @@ public class VacationResolver {
             }
         }
     }
+    //REFERENCES: https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+    //          : https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
 
-    public void loadAccounts() {
 
+    public void loadDreamVacations() {
         try {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
             createDreamDestinations = dreamVacations.get(0);
-            ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
-            String formattedString = list1.toString()
+            ArrayList<String> fixedList = createDreamDestinations.viewDreamDestinations();
+            String fixedToString = fixedList.toString()
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", "")
-                    .replaceAll("\\s+", ", ")
-                    .trim();
-
-            System.out.println(formattedString);
+                    .replaceAll("\\s+", ", ");
+            System.out.println(fixedToString);
 
         } catch (IOException e) {
             start();
         }
     }
 
-
-    private void saveAccounts() {
+    private void saveDreamVacations() {
         try {
             Writer writer = new Writer(new File(DREAM_VACATION_TXT));
+
             writer.write(createDreamDestinations);
             writer.close();
-            System.out.println("Accounts saved to file " + DREAM_VACATION_TXT);
+            System.out.println("Saved to DreamVacation file -> " + DREAM_VACATION_TXT);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to save accounts to " + DREAM_VACATION_TXT);
+            System.out.println("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -112,7 +112,7 @@ public class VacationResolver {
         } else if (command.equals("Winter")) {
             showWinterDestination();
         } else if (command.equals("View")) {
-            loadAccounts();
+            loadDreamVacations();
             runResolver();
         } else {
             System.out.println("You can select from either Summer, Winter, or View. See you!");
@@ -254,11 +254,9 @@ public class VacationResolver {
 
     // EFFECTS: allows the user to view the DreamVacation list or to exit without viewing the list
 
-
     private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
-            System.out.println(createDreamDestinations.viewDreamDestinations());
-            saveAccounts();
+            saveDreamVacations();
             System.out.println("See you next time!");
         } else {
             System.out.println("good bye!");

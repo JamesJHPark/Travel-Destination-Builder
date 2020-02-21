@@ -10,7 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DreamVacationTest {
 
     private DreamVacation testDreamDestinations;
-    private String name;
     @BeforeEach
     void runBefore() {
         testDreamDestinations = new DreamVacation();

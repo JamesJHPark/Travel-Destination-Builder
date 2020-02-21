@@ -52,7 +52,15 @@ public class DreamVacation implements Saveable {
 
     @Override
     public void save(PrintWriter printWriter) {
-        printWriter.print(viewDreamDestinations());
+        ArrayList<String> fixedList = viewDreamDestinations();
+        String fixedToString = fixedList.toString()
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", "")
+                .replaceAll("\\s+", ", ");
+        System.out.println(fixedToString);
+
+        printWriter.print(fixedToString);
     }
 }
 

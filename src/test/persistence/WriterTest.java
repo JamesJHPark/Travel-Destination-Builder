@@ -1,3 +1,4 @@
+
 package persistence;
 
 
@@ -39,17 +40,17 @@ class WriterTest {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(TEST_FILE));
             DreamVacation createDreamDestinations = dreamVacations.get(0);
             ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
-            String formattedString = list1.toString()
+            String fixedToString = list1.toString()
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", "")
-                    .replaceAll("\\s+", ", ")
-                    .trim();
-            
-            assertEquals("Italy, Spain", formattedString);
+                    .replaceAll("\\s+", ", ");
+
+            assertEquals("Italy, Spain", fixedToString);
 
         } catch (IOException e) {
             fail("IOException should not have been thrown");
         }
     }
 }
+
