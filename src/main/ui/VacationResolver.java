@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 //Vacation resolver application
 public class VacationResolver {
-    private static final String ACCOUNTS_FILE = "./data/accounts.txt";
+    private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private Destinations chooseDestination;
     private DreamVacation createDreamDestinations;
     private Scanner input;
@@ -51,9 +51,17 @@ public class VacationResolver {
     public void loadAccounts() {
 
         try {
-            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(ACCOUNTS_FILE));
+            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
             createDreamDestinations = dreamVacations.get(0);
-            System.out.println(createDreamDestinations.viewDreamDestinations());
+            ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
+            String formattedString = list1.toString()
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", "")
+                    .replaceAll("\\s+", ", ")
+                    .trim();
+
+            System.out.println(formattedString);
 
         } catch (IOException e) {
             start();
@@ -61,16 +69,14 @@ public class VacationResolver {
     }
 
 
-
-
     private void saveAccounts() {
         try {
-            Writer writer = new Writer(new File(ACCOUNTS_FILE));
+            Writer writer = new Writer(new File(DREAM_VACATION_TXT));
             writer.write(createDreamDestinations);
             writer.close();
-            System.out.println("Accounts saved to file " + ACCOUNTS_FILE);
+            System.out.println("Accounts saved to file " + DREAM_VACATION_TXT);
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to save accounts to " + ACCOUNTS_FILE);
+            System.out.println("Unable to save accounts to " + DREAM_VACATION_TXT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -83,7 +89,6 @@ public class VacationResolver {
         chooseDestination = new Destinations();
         createDreamDestinations = new DreamVacation();
     }
-
 
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
@@ -108,11 +113,11 @@ public class VacationResolver {
             showWinterDestination();
         } else if (command.equals("View")) {
             loadAccounts();
+            runResolver();
         } else {
             System.out.println("You can select from either Summer, Winter, or View. See you!");
         }
     }
-
 
 
     // EFFECTS: allows the user to choose a destination country and view the list of cities of that country
@@ -170,12 +175,9 @@ public class VacationResolver {
             selectAnother();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-
-            System.out.println("To view your Dream Vacation list, type YES");
+            System.out.println("To view and save your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
-            saveAccounts();
-
 
 
         }
@@ -243,10 +245,10 @@ public class VacationResolver {
             selectAnotherForWinter();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To view your Dream Vacation list, type YES");
+            System.out.println("To save your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
-            saveAccounts();
+
         }
     }
 
@@ -255,8 +257,8 @@ public class VacationResolver {
 
     private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
-
             System.out.println(createDreamDestinations.viewDreamDestinations());
+            saveAccounts();
             System.out.println("See you next time!");
         } else {
             System.out.println("good bye!");
