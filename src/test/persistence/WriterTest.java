@@ -45,6 +45,7 @@ class WriterTest {
                     .replace(",", "")
                     .replaceAll("\\s+", ", ")
                     .trim();
+            
             assertEquals("Italy, Spain", formattedString);
 
         } catch (IOException e) {
