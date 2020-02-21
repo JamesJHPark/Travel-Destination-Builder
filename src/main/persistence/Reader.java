@@ -14,12 +14,11 @@ import java.util.List;
 // A reader that can read account data from a file
 public class Reader {
     public static final String DELIMITER = ",";
-
-    public Reader() {
-    }
+    private static Reader reader = new Reader();
 
     // EFFECTS: returns a list of accounts parsed from file; throws
     // IOException if an exception is raised when opening / reading from file
+
     public static List<DreamVacation> readDreamVacations(File file) throws IOException {
         List<String> fileContent = readFile(file);
         return parseContent(fileContent);
