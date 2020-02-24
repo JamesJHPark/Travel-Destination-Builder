@@ -33,7 +33,7 @@ public class Reader {
 
     private static List<DreamVacation> parseContent(List<String> fileContent) {
         List<DreamVacation> dreamVacations = new ArrayList<>();
-
+ 
         for (String line : fileContent) {
             ArrayList<String> lineComponents = splitString(line);
             dreamVacations.add(parseDreamVacations(lineComponents));
