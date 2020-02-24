@@ -23,6 +23,6 @@ in the future and add these places to a personalized **"dream vacation"** list.
 - As a user, I want to be able to view popular cities of the selected country for travel 
 - As a user, I want to be able to choose 2 countries that I wish to visit in the future and add these 2 countries to a “dream vacation list”
 - As a user, I want to be able to view my customized list of dream vacation
-- As a user, I want to be able to save the current progress of the vacation resolver application to file
-- As a user, I want to be able to load the previous state of the progress through the vacation resolver application when the program starts
+- As a user, I want to be able to save the customized dream vacation list to a file
+- As a user, I want to be able to load the previous customized dream vacation list from a file 
     

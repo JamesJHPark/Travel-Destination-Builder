@@ -245,7 +245,7 @@ public class VacationResolver {
             selectAnotherForWinter();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To save your Dream Vacation list, type YES");
+            System.out.println("To view and save your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
 
