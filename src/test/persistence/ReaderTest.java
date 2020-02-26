@@ -20,6 +20,9 @@ class ReaderTest {
             DreamVacation createDreamDestinations = dreamVacations.get(0);
             ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
             String fixedToString = list1.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", "")
@@ -39,6 +42,9 @@ class ReaderTest {
             DreamVacation createDreamDestinations = dreamVacations.get(0);
             ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
             String fixedToString = list1.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", "")

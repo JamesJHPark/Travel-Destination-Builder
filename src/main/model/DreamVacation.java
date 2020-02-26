@@ -12,7 +12,6 @@ public class DreamVacation implements Saveable {
     private ArrayList<String> dreamDestinations;
 
 
-
     public DreamVacation() {
         dreamDestinations = new ArrayList<>();
 
@@ -50,10 +49,16 @@ public class DreamVacation implements Saveable {
         return dreamDestinations;
     }
 
+
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+
     @Override
     public void save(PrintWriter printWriter) {
         ArrayList<String> fixedList = viewDreamDestinations();
         String fixedToString = fixedList.toString()
+                //REFERENCES: code taken from URL:
+                //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "")

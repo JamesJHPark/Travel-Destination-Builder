@@ -21,13 +21,13 @@ public class VacationResolver {
     private String anotherDreamCountry;
 
     // EFFECTS: runs the resolver application
-
     public VacationResolver() {
         runResolver();
     }
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
     // EFFECTS: processes the application according to the user inputs
+
     private void runResolver() {
         boolean keepGoing = true;
         String command;
@@ -47,9 +47,12 @@ public class VacationResolver {
             }
         }
     }
-    //REFERENCES: https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-    //          : https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // MODIFIES: this
+    // EFFECTS:loads dreamVacations from DREAM_VACATION_TXT, if such file exists;
+    // if not, the method initializes application with default values for chooseDestination
+    // as well as createDreamDestinations
 
     public void loadDreamVacations() {
         try {
@@ -57,6 +60,9 @@ public class VacationResolver {
             createDreamDestinations = dreamVacations.get(0);
             ArrayList<String> fixedList = createDreamDestinations.viewDreamDestinations();
             String fixedToString = fixedList.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                     .replace("[", "")
                     .replace("]", "")
                     .replace(",", "")
@@ -68,10 +74,12 @@ public class VacationResolver {
         }
     }
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: to save the customized list of createDreamDestinations to DREAM_VACATION_TXT file
+
     private void saveDreamVacations() {
         try {
             Writer writer = new Writer(new File(DREAM_VACATION_TXT));
-
             writer.write(createDreamDestinations);
             writer.close();
             System.out.println("Saved to DreamVacation file -> " + DREAM_VACATION_TXT);
@@ -79,6 +87,7 @@ public class VacationResolver {
             System.out.println("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            // this is due to a programming error
         }
     }
 
@@ -92,13 +101,13 @@ public class VacationResolver {
 
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
-    // EFFECTS: displays the seasons (summer, winter, or exit options) to the user
+    // EFFECTS: displays the seasons (summer, winter, and view, exit options) to the user
 
     private void startDisplay() {
         System.out.println("Choose the season for your next vacation");
         System.out.println("\n Summer");
         System.out.println("\n Winter");
-        System.out.println("\n View (to load previous Dream Vacation List)");
+        System.out.println("\n View (to load previous customized Dream Vacation List)");
         System.out.println("\n exit");
 
     }
@@ -175,10 +184,12 @@ public class VacationResolver {
             selectAnother();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To view and save your Dream Vacation list, type YES");
+            System.out.println("To view your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
-
+            System.out.println("To save your customized Dream Vacation list, type SAVE");
+            String save = input.next();
+            saveYes(save);
 
         }
     }
@@ -245,21 +256,33 @@ public class VacationResolver {
             selectAnotherForWinter();
         } else {
             createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To view and save your Dream Vacation list, type YES");
+            System.out.println("To view your Dream Vacation list, type YES");
             String answer = input.next();
             typeAnswer(answer);
+            System.out.println("To save your customized Dream Vacation list, type SAVE");
+            String save = input.next();
+            saveYes(save);
 
         }
     }
 
-    // EFFECTS: allows the user to view the DreamVacation list or to exit without viewing the list
+    // EFFECTS: allows the user to choose to view the DreamVacation list
 
     private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
-            saveDreamVacations();
-            System.out.println("See you next time!");
+            System.out.println(createDreamDestinations.viewDreamDestinations());
         } else {
-            System.out.println("good bye!");
+            System.out.println("You chose not to view the list");
+        }
+    }
+
+    //EFFECTS: allows the user to save the customized DreamVacation list to DREAM_VACATION_TXT file
+
+    private void saveYes(String save) {
+        if (save.equals("SAVE") || save.equals("save") || save.equals("Save")) {
+            saveDreamVacations();
+        } else {
+            System.out.println("Not saved, See you next time!");
         }
     }
 }
