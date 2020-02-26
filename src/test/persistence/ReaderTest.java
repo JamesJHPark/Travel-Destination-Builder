@@ -57,8 +57,10 @@ class ReaderTest {
         }
     }
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+
     @Test
-    void testIOException() {
+    void testIOExceptionHere() {
         try {
             Reader.readDreamVacations(new File("./path/does/not/exist/testDreamVacation.txt"));
         } catch (IOException e) {

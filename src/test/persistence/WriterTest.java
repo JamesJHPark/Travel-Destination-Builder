@@ -35,7 +35,7 @@ class WriterTest {
         testWriter.write(createDreamDestinations);
         testWriter.close();
 
-        // now read them back in and verify that the accounts have the expected values
+        // now read them back in and verify that the DreamVacation have the expected values
         try {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(TEST_FILE));
             DreamVacation createDreamDestinations = dreamVacations.get(0);
