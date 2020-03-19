@@ -1,6 +1,8 @@
+
 package persistence;
 
 
+import model.Destination;
 import model.DreamVacation;
 
 import java.io.File;
@@ -15,7 +17,6 @@ import java.util.List;
 public class Reader {
     public static final String DELIMITER = ",";
     private static Reader reader = new Reader();
-
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
     // EFFECTS: returns a list of DreamVacation countries parsed from file; throws
@@ -62,15 +63,15 @@ public class Reader {
     // first country of the dream vacation list, and element 1 represents the
     // second country of the dream vacation list
     // EFFECTS: returns a new DreamVacation constructed from these components
-    private static DreamVacation parseDreamVacations(List<String> components) {
-        String countryName1 = components.get(0);
-        String countryName2 = components.get(1);
+    private static DreamVacation parseDreamVacations(ArrayList<String> components) {
         DreamVacation newDreamVacation = new DreamVacation();
-        newDreamVacation.addDreamDestinations(countryName1);
-        newDreamVacation.addDreamDestinations(countryName2);
+        for (String i : components) {
+            newDreamVacation.addDreamDestinations(new Destination(i));
+        }
 
         return newDreamVacation;
     }
-
-
 }
+
+
+

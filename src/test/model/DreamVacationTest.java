@@ -10,6 +10,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DreamVacationTest {
 
     private DreamVacation testDreamDestinations;
+    Destination italy = new Destination("Italy");
+    Destination spain = new Destination("Spain");
+    Destination croatia = new Destination("Croatia");
+    Destination vietnam = new Destination("Vietnam");
+    Destination japan = new Destination("Japan");
+
     @BeforeEach
     void runBefore() {
         testDreamDestinations = new DreamVacation();
@@ -20,65 +26,53 @@ public class DreamVacationTest {
         assertEquals(0, testDreamDestinations.getNumDreamDestinations());
     }
 
-    @Test
-    void testAddDreamDestinations() {
-        testDreamDestinations.addDreamDestinations("Spain");
-        assertFalse(testDreamDestinations.addDreamDestinations("Spain"));
-        assertTrue(testDreamDestinations.addDreamDestinations("Italy"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
-        assertTrue(testDreamDestinations.addDreamDestinations("Croatia"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Croatia"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
-    }
+
+
     @Test
     void testAddDreamsDestinations() {
-        testDreamDestinations.addDreamDestinations("Italy");
-        testDreamDestinations.addDreamDestinations("Croatia");
-        testDreamDestinations.addDreamDestinations("Spain");
-        testDreamDestinations.addDreamDestinations("Japan");
-        testDreamDestinations.addDreamDestinations("Vietnam");
-        assertFalse(testDreamDestinations.addDreamDestinations("Italy"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Croatia"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Spain"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Japan"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Vietnam"));
+        testDreamDestinations.addDreamDestinations(italy);
+        testDreamDestinations.addDreamDestinations(croatia);
+        testDreamDestinations.addDreamDestinations(spain);
+        testDreamDestinations.addDreamDestinations(japan);
+        testDreamDestinations.addDreamDestinations(vietnam);
         assertEquals(5, testDreamDestinations.getNumDreamDestinations());
     }
 
     @Test
     void testViewDreamDestination() {
-        testDreamDestinations.addDreamDestinations("Italy");
-        testDreamDestinations.addDreamDestinations("Croatia");
-        testDreamDestinations.addDreamDestinations("Japan");
-        assertTrue(testDreamDestinations.addDreamDestinations("Spain"));
-        assertFalse(testDreamDestinations.addDreamDestinations("Japan"));
-        ArrayList<String> result = testDreamDestinations.viewDreamDestinations();
+        testDreamDestinations.addDreamDestinations(italy);
+        testDreamDestinations.addDreamDestinations(croatia);
+        testDreamDestinations.addDreamDestinations(japan);
+        testDreamDestinations.addDreamDestinations(spain);
+        testDreamDestinations.addDreamDestinations(japan);
+        ArrayList<Destination> result = testDreamDestinations.viewDreamDestinations();
         assertEquals(4, testDreamDestinations.getNumDreamDestinations());
-        assertEquals("Italy", result.get(0));
-        assertEquals("Croatia", result.get(1));
-        assertEquals("Japan", result.get(2));
+        assertEquals("Italy", result.get(0).getDestinationCountryName());
+        assertEquals("Croatia", result.get(1).getDestinationCountryName());
+        assertEquals("Japan", result.get(2).getDestinationCountryName());
     }
 
     @Test
     void testAlreadyInDreamList() {
-        testDreamDestinations.addDreamDestinations("Japan");
-        testDreamDestinations.addDreamDestinations("Italy");
-        testDreamDestinations.addDreamDestinations("Spain");
-        testDreamDestinations.addDreamDestinations("Croatia");
-        testDreamDestinations.addDreamDestinations("Vietnam");
-        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Japan"));
-        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Italy"));
-        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Spain"));
-        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Croatia"));
-        assertTrue(testDreamDestinations.alreadyInDreamDestinations("Vietnam"));
+        testDreamDestinations.addDreamDestinations(japan);
+        testDreamDestinations.addDreamDestinations(italy);
+        testDreamDestinations.addDreamDestinations(spain);
+        testDreamDestinations.addDreamDestinations(croatia);
+        testDreamDestinations.addDreamDestinations(vietnam);
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations(japan));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations(italy));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations(spain));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations(croatia));
+        assertTrue(testDreamDestinations.alreadyInDreamDestinations(vietnam));
     }
     @Test
     void notAlreadyInDreamList() {
-        testDreamDestinations.addDreamDestinations("Italy");
-        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Japan"));
-        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Spain"));
-        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Croatia"));
-        assertFalse(testDreamDestinations.alreadyInDreamDestinations("Vietnam"));
+        testDreamDestinations.addDreamDestinations(italy);
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations(japan));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations(spain));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations(croatia));
+        assertFalse(testDreamDestinations.alreadyInDreamDestinations(vietnam));
+
     }
 
 }

@@ -1,29 +1,37 @@
+
 package ui;
 
+import model.Destination;
 import model.Destinations;
 import model.DreamVacation;
 import persistence.Reader;
 import persistence.Writer;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-//Vacation resolver application
+import java.io.*;
+import java.util.*;
+
+// Vacation resolver application
 public class VacationResolver {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private Destinations chooseDestination;
+    private Destinations showDestinations;
     private DreamVacation createDreamDestinations;
     private Scanner input;
-    private String nextDestination;
-    private String dreamCountry;
+    private Destination nextDestination;
+    private Destination dreamCountry;
     private String anotherDreamCountry;
+    private ArrayList<Destination> winterDreamList;
+    private ArrayList<Destination> summerDreamList;
+    ArrayList<Destination> testThis;
+    ArrayList<String> fixedList = new ArrayList<>();
+
 
     // EFFECTS: runs the resolver application
     public VacationResolver() {
         runResolver();
     }
+
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
     // EFFECTS: processes the application according to the user inputs
@@ -32,8 +40,7 @@ public class VacationResolver {
         boolean keepGoing = true;
         String command;
         input = new Scanner(System.in);
-
-        start();
+        loadDreamVacations();
 
         while (keepGoing) {
             startDisplay();
@@ -56,20 +63,12 @@ public class VacationResolver {
 
     public void loadDreamVacations() {
         try {
+
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
             createDreamDestinations = dreamVacations.get(0);
-            ArrayList<String> fixedList = createDreamDestinations.viewDreamDestinations();
-            String fixedToString = fixedList.toString()
-                    //REFERENCES: code taken from URL:
-                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", "")
-                    .replaceAll("\\s+", ", ");
-            System.out.println(fixedToString);
+            fixedList = createDreamDestinations.getDestinationObject();
 
-        } catch (IOException e) {
+        } catch (IOException | IndexOutOfBoundsException e) {
             start();
         }
     }
@@ -80,6 +79,7 @@ public class VacationResolver {
     private void saveDreamVacations() {
         try {
             Writer writer = new Writer(new File(DREAM_VACATION_TXT));
+
             writer.write(createDreamDestinations);
             writer.close();
             System.out.println("Saved to DreamVacation file -> " + DREAM_VACATION_TXT);
@@ -121,7 +121,7 @@ public class VacationResolver {
         } else if (command.equals("Winter")) {
             showWinterDestination();
         } else if (command.equals("View")) {
-            loadDreamVacations();
+            System.out.println(fixedList);
             runResolver();
         } else {
             System.out.println("You can select from either Summer, Winter, or View. See you!");
@@ -133,148 +133,68 @@ public class VacationResolver {
 
     private void showSummerDestination() {
         System.out.println("Here is the list of summer travel destinations!");
-        ArrayList<String> summer = chooseDestination.viewSummerDestinations();
-        System.out.println(summer);
-        System.out.println("Choose a country of your choice for next vacation!");
-        String country = input.next();
-        nextDestination = chooseDestination.chooseSummerDestination(country);
-        if (!checkForCountry(nextDestination)) {
-            System.out.println("Sorry, that's wrong input. We will take you to main menu again.");
-            runResolver();
-        } else {
-            System.out.println("Great! your next travel destination is: " + nextDestination);
-            System.out.println("For your travel to: " + nextDestination + ", here is the list of popular cities:");
-            System.out.println(chooseDestination.getCityFromSummerDestinations(country));
-            makeDreamDestinations();
-
+        chooseDestination = new Destinations();
+        chooseDestination.addedSummerDestinations();
+        for (Destination d : chooseDestination.getSummerDestinations()) {
+            System.out.println(d.getDestinationCountryName());
         }
+        System.out.println("Choose a country of your choice for next vacation from the list ");
+        String countryName = input.next();
+        nextDestination = new Destination(countryName);
+        System.out.println("Great! your next travel destination is: "
+                + nextDestination.getDestinationCountryName());
+        System.out.println("For your travel to: " + nextDestination.getDestinationCountryName()
+                + ", here is the list of popular cities:");
+        System.out.println(chooseDestination.getCityFromSummerDestinations(nextDestination));
+        makeDreamDestinations();
+
     }
+
 
     // MODIFIES: this
     // EFFECTS: allows the user to add a country to the DreamVacation list
     private void makeDreamDestinations() {
-        System.out.println("Choose another country from our selection to include in your Dream Vacation list");
-        dreamCountry = input.next();
-        if (!chooseDestination.viewSummerDestinations().contains(dreamCountry)) {
-            System.out.println("Sorry, that's wrong input. Please select again from our list");
-            makeDreamDestinations();
-        } else if (dreamCountry.equals(nextDestination)) {
-            System.out.println("Sorry, this was already chosen. Please select another country for Dream Vacation list");
-            makeDreamDestinations();
-        } else {
-            selectAnother();
-        }
+
+        System.out.println("Let's choose a country to include in your Dream Vacation list");
+        String country1 = input.next();
+        Destination testCountry1 = new Destination(country1);
+        chooseDestination = new Destinations();
+        createDreamDestinations.addDreamDestinations(testCountry1);
+        selectAnother();
+
     }
+
 
     // MODIFIES: this
     // EFFECTS: allows the user to add a country to the DreamVacation list
 
     private void selectAnother() {
-        createDreamDestinations.addDreamDestinations(dreamCountry);
-        System.out.println("Add another country from the above destinations to your Dream Vacation list!");
-        anotherDreamCountry = input.next();
-        if (!chooseDestination.viewSummerDestinations().contains(anotherDreamCountry)) {
-            System.out.println("Sorry, that's wrong input. Please select again from our list");
-            selectAnother();
-        } else if (createDreamDestinations.alreadyInDreamDestinations(anotherDreamCountry)) {
-            System.out.println("Sorry, please select another country");
-            selectAnother();
-        } else if (anotherDreamCountry.equals(nextDestination)) {
-            System.out.println("Sorry, please select another country");
-            selectAnother();
-        } else {
-            createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To view your Dream Vacation list, type YES");
-            String answer = input.next();
-            typeAnswer(answer);
-            System.out.println("To save your customized Dream Vacation list, type SAVE");
-            String save = input.next();
-            saveYes(save);
-
-        }
+        System.out.println("Add another country to your Dream Vacation list!");
+        String country2 = input.next();
+        Destination testCountry2 = new Destination(country2);
+        createDreamDestinations.addDreamDestinations(testCountry2);
+        finalStep();
     }
 
-    // EFFECTS: verifies the user's input of the country is included in the list of destinations provided
 
-    private Boolean checkForCountry(String nextDestination) {
-        return !nextDestination.equals("Sorry, that's wrong input");
+    private void finalStep() {
+        System.out.println("To view your Dream Vacation list, type YES");
+        String answer = input.next();
+        typeAnswer(answer);
+        System.out.println("To save this customized list, type SAVE");
+        String save = input.next();
+        saveYes(save);
     }
 
-    // EFFECTS: allows the user to choose a destination country and view the list of cities of that country
-
-    private void showWinterDestination() {
-        System.out.println("Here is the list of winter travel destinations!");
-        ArrayList<String> winter = chooseDestination.viewWinterDestinations();
-        System.out.println(winter);
-        System.out.println("Choose a country of your choice for next vacation!");
-        String country = input.next();
-        nextDestination = chooseDestination.chooseWinterDestination(country);
-        if (!checkForCountry(nextDestination)) {
-            System.out.println("Sorry, that's wrong input. We will take you to main menu again.");
-            runResolver();
-        } else {
-            System.out.println("Great! your next travel destination is: " + nextDestination);
-            System.out.println("For your travel to: " + nextDestination + ", here is the list of popular cities:");
-            System.out.println(chooseDestination.getCityFromWinterDestinations(country));
-            makeWinterDestination();
-
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: allows the user to add a country to the DreamVacation list
-
-    private void makeWinterDestination() {
-        System.out.println("Choose another country from our selection to include in your Dream Vacation list");
-        dreamCountry = input.next();
-        if (!chooseDestination.viewWinterDestinations().contains(dreamCountry)) {
-            System.out.println("Sorry, that's wrong input. Please select again from our list");
-            makeWinterDestination();
-        } else if (dreamCountry.equals(nextDestination)) {
-            System.out.println("Sorry, this was already chosen. Please select another country for Dream Vacation list");
-            makeWinterDestination();
-        } else {
-            selectAnotherForWinter();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: allows the user to add a country to the DreamVacation list
-
-    private void selectAnotherForWinter() {
-        createDreamDestinations.addDreamDestinations(dreamCountry);
-        System.out.println("Add another country from the above destinations to your Dream Vacation list!");
-        anotherDreamCountry = input.next();
-        if (!chooseDestination.viewWinterDestinations().contains(anotherDreamCountry)) {
-            System.out.println("Sorry, that's wrong input. Please select again from our list");
-            selectAnotherForWinter();
-        } else if (createDreamDestinations.alreadyInDreamDestinations(anotherDreamCountry)) {
-            System.out.println("Sorry, please select another country");
-            selectAnotherForWinter();
-        } else if (anotherDreamCountry.equals(nextDestination)) {
-            System.out.println("Sorry, please select another country");
-            selectAnotherForWinter();
-        } else {
-            createDreamDestinations.addDreamDestinations(anotherDreamCountry);
-            System.out.println("To view your Dream Vacation list, type YES");
-            String answer = input.next();
-            typeAnswer(answer);
-            System.out.println("To save your customized Dream Vacation list, type SAVE");
-            String save = input.next();
-            saveYes(save);
-
-        }
-    }
-
-    // EFFECTS: allows the user to choose to view the DreamVacation list
 
     private void typeAnswer(String answer) {
         if (answer.equals("YES") || answer.equals("yes") || answer.equals("Yes")) {
-            System.out.println(createDreamDestinations.viewDreamDestinations());
+            System.out.println(createDreamDestinations.getDestinationObject());
         } else {
             System.out.println("You chose not to view the list");
         }
     }
+
 
     //EFFECTS: allows the user to save the customized DreamVacation list to DREAM_VACATION_TXT file
 
@@ -284,6 +204,57 @@ public class VacationResolver {
         } else {
             System.out.println("Not saved, See you next time!");
         }
+    }
+
+
+    // EFFECTS: verifies the user's input of the country is included in the list of destinations provided
+
+
+    private void showWinterDestination() {
+        System.out.println("Here is the list of summer travel destinations!");
+        chooseDestination = new Destinations();
+        chooseDestination.addedWinterDestinations();
+        for (Destination d : chooseDestination.getWinterDestinations()) {
+            System.out.println(d.getDestinationCountryName());
+        }
+        System.out.println("Choose a country of your choice for next vacation from the list ");
+        String countryName = input.next();
+        nextDestination = new Destination(countryName);
+
+        System.out.println("Great! your next travel destination is: "
+                + nextDestination.getDestinationCountryName());
+        System.out.println("For your travel to: " + nextDestination.getDestinationCountryName()
+                + ", here is the list of popular cities:");
+        System.out.println(chooseDestination.getCityFromWinterDestinations(nextDestination));
+        makeDreamDestinationsWinter();
+
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
+    private void makeDreamDestinationsWinter() {
+
+        System.out.println("Let's choose a country to include in your Dream Vacation list");
+        String country1 = input.next();
+        Destination testCountry1 = new Destination(country1);
+        chooseDestination = new Destinations();
+        System.out.println(createDreamDestinations.getDestinationObject());
+        fixedList = createDreamDestinations.getDestinationObject();
+        createDreamDestinations.addDreamDestinations(testCountry1);
+        selectAnotherWinter();
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: allows the user to add a country to the DreamVacation list
+    private void selectAnotherWinter() {
+        System.out.println("Add another country to your Dream Vacation list!");
+        String country2 = input.next();
+        Destination testCountry2 = new Destination(country2);
+        chooseDestination = new Destinations();
+        createDreamDestinations.addDreamDestinations(testCountry2);
+        finalStep();
     }
 }
 

@@ -1,3 +1,4 @@
+
 package model;
 
 import persistence.Saveable;
@@ -9,12 +10,10 @@ import java.util.ArrayList;
 // Represents the customized list of dream destinations that user has selected from the list of destinations
 
 public class DreamVacation implements Saveable {
-    private ArrayList<String> dreamDestinations;
-
+    private ArrayList<Destination> dreamDestinations;
 
     public DreamVacation() {
         dreamDestinations = new ArrayList<>();
-
     }
 
     //REQUIRES: the country to be added to the list of dream destinations has to be from the list of
@@ -23,20 +22,25 @@ public class DreamVacation implements Saveable {
     //EFFECTS:  to add the dream destinations to the dreamDestinations list if the chosen vacation(s)
     //          are not already included in the list
 
-    public Boolean addDreamDestinations(String country) {
-        boolean canAdd = false;
-        if (!dreamDestinations.contains(country)) {
-            canAdd = true;
-            dreamDestinations.add(country);
+
+    public ArrayList<Destination> addDreamDestinations(Destination destination) {
+
+        if (!dreamDestinations.contains(destination)) {
+            dreamDestinations.add(destination);
         }
-        return canAdd;
+        return dreamDestinations;
     }
+
+    public boolean removeDreamDestinations(Destination destination) {
+        return dreamDestinations.remove(destination);
+    }
+
 
     //EFFECTS: to return a boolean value if the typed country is already in the dreamDestinations list, and
     //         false otherwise.
 
-    public Boolean alreadyInDreamDestinations(String country) {
-        return dreamDestinations.contains(country);
+    public Boolean alreadyInDreamDestinations(Destination destination) {
+        return dreamDestinations.contains(destination);
     }
 
     //EFFECTS: to return the number of dream destinations in the list
@@ -45,16 +49,23 @@ public class DreamVacation implements Saveable {
     }
 
     //EFFECTS: to return the list of dream destinations that the user has chosen
-    public ArrayList<String> viewDreamDestinations() {
+    public ArrayList<Destination> viewDreamDestinations() {
         return dreamDestinations;
     }
 
 
+    public ArrayList<String> getDestinationObject() {
+        ArrayList<String> dreamDestinationNames = new ArrayList<>();
+        for (Destination d : dreamDestinations) {
+            dreamDestinationNames.add(d.getDestinationCountryName());
+        }
+        return dreamDestinationNames;
+    }
+
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 
-    @Override
     public void save(PrintWriter printWriter) {
-        ArrayList<String> fixedList = viewDreamDestinations();
+        ArrayList<Destination> fixedList = dreamDestinations;
         String fixedToString = fixedList.toString()
                 //REFERENCES: code taken from URL:
                 //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
@@ -62,11 +73,13 @@ public class DreamVacation implements Saveable {
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "")
-                .replaceAll("\\s+", ", ");
-        System.out.println(fixedToString);
+
+                .replaceAll("\\s+", ",");
 
         printWriter.print(fixedToString);
+
     }
 }
+
 
 

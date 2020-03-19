@@ -1,6 +1,8 @@
+/*
 package persistence;
 
 
+import model.Destination;
 import model.DreamVacation;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +20,7 @@ class ReaderTest {
         try {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile2.txt"));
             DreamVacation createDreamDestinations = dreamVacations.get(0);
-            ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
+            ArrayList<Destination> list1 = createDreamDestinations.viewDreamDestinations();
             String fixedToString = list1.toString()
                     //REFERENCES: code taken from URL:
                     //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
@@ -40,7 +42,7 @@ class ReaderTest {
         try {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile3.txt"));
             DreamVacation createDreamDestinations = dreamVacations.get(0);
-            ArrayList<String> list1 = createDreamDestinations.viewDreamDestinations();
+            ArrayList<Destination> list1 = createDreamDestinations.viewDreamDestinations();
             String fixedToString = list1.toString()
                     //REFERENCES: code taken from URL:
                     //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
@@ -67,5 +69,6 @@ class ReaderTest {
             // expected
         }
     }
-}
+}*/
+
 
