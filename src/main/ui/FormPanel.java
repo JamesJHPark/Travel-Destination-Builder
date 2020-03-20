@@ -16,9 +16,9 @@ import java.io.IOException;
 
 public class FormPanel extends JPanel {
 
-    private JLabel destinationLabel;
-    private JLabel dreamVacationLabel;
-    private JLabel seasonLabel;
+    protected JLabel destinationLabel;
+    protected JLabel dreamVacationLabel;
+    protected JLabel seasonLabel;
     protected JTextField destinationField;
     protected JTextField dreamVacationField;
     protected JTextField seasonField;
@@ -96,6 +96,8 @@ public class FormPanel extends JPanel {
         });
     }
 
+
+
     //MODIFIES: this
     //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and
     // in this case, the purpose of the button is to load the saved data
@@ -164,7 +166,7 @@ public class FormPanel extends JPanel {
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
                 if (listenerRemove != null) {
-                    listenerRemove.formEventOccurred3(ev);
+                    listenerRemove.formEventOccurredRemove(ev);
 
                 }
             }
@@ -306,6 +308,7 @@ public class FormPanel extends JPanel {
         add(removeBtn, gc);
     }
 
+
     //EFFECTS: sets up the JButton for save on of the form panel of the program
 
     public void saveBtn(GridBagConstraints gc) {
@@ -379,7 +382,7 @@ public class FormPanel extends JPanel {
     //EFFECTS: sets up the JLabels, text fields, and buttons for the form panel of the program
     public void setPanel() {
         Dimension dim = getPreferredSize();
-        dim.width = 350;
+        dim.width = 370;
         setPreferredSize(dim);
         destinationLabel = new JLabel("Destination: ");
         dreamVacationLabel = new JLabel("Dream Vacation: ");
@@ -391,11 +394,10 @@ public class FormPanel extends JPanel {
         deleteBtn = new JButton("DELETE");
         enterBtn = new JButton("Alt+N adds X to list");
         removeBtn = new JButton("Alt+R removes X from list");
-        saveBtn = new JButton("SAVE");
-        loadBtn = new JButton("LOAD");
+        saveBtn = new JButton("SAVE LIST");
+        loadBtn = new JButton("LOAD LIST");
         enterBtn.setMnemonic(KeyEvent.VK_N);
         removeBtn.setMnemonic(KeyEvent.VK_R);
     }
-
 
 }

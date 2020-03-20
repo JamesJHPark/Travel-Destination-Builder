@@ -52,7 +52,10 @@ class WriterTest {
                     //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                     .replace("[", "")
                     .replace("]", "")
-                    .replace(",", ",");
+                    .replace(",", " ")
+
+                    .replaceAll("\\s+", ", ");
+
 
 
             assertEquals("Italy, Spain", fixedToString);

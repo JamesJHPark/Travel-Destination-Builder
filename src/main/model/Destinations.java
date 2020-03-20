@@ -111,16 +111,16 @@ public class Destinations {
     //EFFECTS: to retrieve the list of popular cities for the chosen country from the summer destinations list
 
     public String getCityFromSummerDestinations(Destination d) {
-        String city = "Wrong city selected! It was not from the provided list";
-        if (d.getDestinationCountryName().equals("Italy")) {
+        String city = "Wrong country selected! It was not from the provided list";
+        if (d.getDestinationCountryName().equalsIgnoreCase("Italy")) {
             city = "Florence, Venice, Rome";
-        } else if (d.getDestinationCountryName().equals("Spain")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Spain")) {
             city = "Barcelona, Madrid, Seville";
-        } else if (d.getDestinationCountryName().equals("Croatia")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Croatia")) {
             city = "Dubrovnik, Zagreb, Split";
-        } else if (d.getDestinationCountryName().equals("Vietnam")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Vietnam")) {
             city = "Ho Chih Minh, Da Nang, Hanoi";
-        } else if (d.getDestinationCountryName().equals("Japan")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Japan")) {
             city = "Kyoto, Tokyo, Osaka";
         }
         return city;
@@ -131,16 +131,16 @@ public class Destinations {
     //EFFECTS: to retrieve the list of popular cities for the chosen country from the winter destinations list
 
     public String getCityFromWinterDestinations(Destination d) {
-        String city = "Wrong city selected! It was not from the provided list";
-        if (d.getDestinationCountryName().equals("Mexico")) {
+        String city = "Wrong country selected! It was not from the provided list";
+        if (d.getDestinationCountryName().equalsIgnoreCase("Mexico")) {
             city = "Cozumel, Tulum, Cancun, Mexico City";
-        } else if (d.getDestinationCountryName().equals("Iceland")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Iceland")) {
             city = "Reykjavik, Selfoss";
-        } else if (d.getDestinationCountryName().equals("USA")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("USA")) {
             city = "Miami, Los Angeles, New York";
-        } else if (d.getDestinationCountryName().equals("France")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("France")) {
             city = "Paris, Strasbourg";
-        } else if (d.getDestinationCountryName().equals("Switzerland")) {
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Switzerland")) {
             city = "Zurich, Lucerne, Geneva, Bern";
         }
         return city;

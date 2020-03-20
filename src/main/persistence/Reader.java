@@ -69,6 +69,7 @@ public class Reader {
             newDreamVacation.addDreamDestinations(new Destination(i));
         }
 
+
         return newDreamVacation;
     }
 }

@@ -62,22 +62,13 @@ class DestinationsTest {
                 //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
                 //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                 .replace("[", "")
-                .replace("]", "")
-                .replace(",", ",");
+                .replace("]", "");
+
 
         assertEquals("Mexico, Iceland, USA, France, Switzerland", winterList1);
 
-
-
-
     }
 
-    /*@Test
-    void testChooseSummerDestination() {
-        assertEquals(italy, testDestination.chooseSummerDestination(italy));
-        assertEquals(vietnam, testDestination.chooseSummerDestination(vietnam));
-    }
-*/
 
     @Test
     void testGetCityFromSummerDestination() {
@@ -97,22 +88,15 @@ class DestinationsTest {
         assertEquals("Miami, Los Angeles, New York", testDestination.getCityFromWinterDestinations(usa));
     }
 
-  /*  @Test
-    void testChooseWinterDestination() {
-        assertEquals(mexico, testDestination.chooseWinterDestination(mexico));
-        assertEquals(iceland, testDestination.chooseWinterDestination(iceland));
-    }*/
-
-
     @Test
     void testGetCity() {
-        assertEquals("Wrong city selected! It was not from the provided list",
+        assertEquals("Wrong country selected! It was not from the provided list",
                 testDestination.getCityFromWinterDestinations(korea));
     }
 
     @Test
     void testGetCityAgain() {
-        assertEquals("Wrong city selected! It was not from the provided list",
+        assertEquals("Wrong country selected! It was not from the provided list",
                 testDestination.getCityFromSummerDestinations(korea));
     }
 

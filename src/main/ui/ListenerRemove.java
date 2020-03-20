@@ -4,5 +4,5 @@ package ui;
 
 //Represents ListenerRemove (Alt + R) of the program
 public interface ListenerRemove {
-    public void formEventOccurred3(FormEvent e);
+    public void formEventOccurredRemove(FormEvent e);
 }

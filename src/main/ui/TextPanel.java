@@ -12,20 +12,23 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 
-//REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+//REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents TextPanel of the program
 public class TextPanel extends JPanel {
+
 
     protected JTextArea textArea;
     private JPopupMenu popup;
     DreamVacation createDreamVacation = new DreamVacation();
     private ArrayList<String> fixedList = createDreamVacation.getDestinationObject();
+    ArrayList<String> masterList = Singleton.getMasterList();
+    DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
 
     //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
     //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
         textArea = new JTextArea();
-        Font changeFont = new Font("sanserif", Font.PLAIN, 14);
+        Font changeFont = new Font("sanserif", Font.PLAIN, 15);
         textArea.setFont(changeFont);
         setLayout(new BorderLayout());
         add(new JScrollPane(textArea), BorderLayout.CENTER);
@@ -55,11 +58,18 @@ public class TextPanel extends JPanel {
     }
 
     public void addOnText(String text) {
-        fixedList.add(text);
-        textArea.setText("Now, let's build your own Dream Vacation List."
-                + "\nEnter as many countries as you wish "
-                + "into Dream Vacation Panel on the left!"
-                + "\n" + fixedList.toString());
+        if (!fixedList.contains(text)) {
+            fixedList.add(text);
+        }
+        textArea.setText("Build your Dream Vacation List!"
+                + "\nType country name "
+                + "into Dream Vacation Panel"
+                + "\n" + fixedList
+                + "\n"
+                + "\nPlease click on SAVE LIST button when you are finished."
+                + "\n"
+                + "\n***For multiple entries of the SAME country name, we will only save "
+                + "the particular country ONCE in the list***");
     }
 
     public void setText(String s) {
@@ -72,12 +82,17 @@ public class TextPanel extends JPanel {
     }
 
     public void removeText(String dreamVacation) {
-        if (fixedList.contains(dreamVacation)) {
+        while (fixedList.contains(dreamVacation)) {
             fixedList.remove(dreamVacation);
-            textArea.setText("Now, let's build your own Dream Vacation List."
-                    + "\nEnter as many countries as you wish "
-                    + "into Dream Vacation Panel on the left!");
-            textArea.append("\n" + fixedList.toString());
+            textArea.setText("Build your Dream Vacation List!"
+                    + "\nType country name "
+                    + "into Dream Vacation Panel"
+                    + "\n" + fixedList
+                    + "\n"
+                    + "\nPlease click on SAVE LIST button when you are finished."
+                    + "\n"
+                    + "\n***For multiple entries of the SAME country name, we will only save "
+                    + "the particular country ONCE in the list***");
         }
     }
 

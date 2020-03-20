@@ -3,7 +3,6 @@ package model;
 import persistence.Saveable;
 
 import java.io.PrintWriter;
-
 import java.util.ArrayList;
 
 
@@ -32,14 +31,14 @@ public class DreamVacation implements Saveable {
     }
 
     //MODIFIES: this
-    //EFFECTS: to return a boolean value if the destination is removed from the dreamDestinations arraylist,
+    //EFFECTS: to return a boolean value if the destination is removed from the dreamDestinations array list,
     // false otherwise.
     public boolean removeDreamDestinations(Destination destination) {
         return dreamDestinations.remove(destination);
     }
 
 
-    //EFFECTS: to return a boolean value if the typed country is already in the dreamDestinations list, and
+//EFFECTS: to return a boolean value if the typed country is already in the dreamDestinations list, and
     //         false otherwise.
 
     public Boolean alreadyInDreamDestinations(Destination destination) {
@@ -76,9 +75,9 @@ public class DreamVacation implements Saveable {
                 //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
                 .replace("[", "")
                 .replace("]", "")
-                .replace(",", "")
+                .replace(",", " ")
 
-                .replaceAll("\\s+", ",");
+                .replaceAll("\\s+", ", ");
 
         printWriter.print(fixedToString);
 

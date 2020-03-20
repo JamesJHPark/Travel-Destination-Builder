@@ -62,6 +62,16 @@ public class VacationResolver {
             createDreamDestinations = dreamVacations.get(0);
             fixedList = createDreamDestinations.getDestinationObject();
 
+            String fixedToString = fixedList.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", " ")
+                    .replaceAll("\\s+", ", ");
+            System.out.println(fixedToString);
+
         } catch (IOException | IndexOutOfBoundsException e) {
             start();
         }

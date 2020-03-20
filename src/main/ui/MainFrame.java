@@ -12,17 +12,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-public class MainFrame extends JFrame  {
+public class MainFrame extends JFrame implements KeyListener {
     protected TextPanel textPanel;
     private Toolbar toolbar;
     protected FormPanel formPanel;
@@ -34,6 +34,8 @@ public class MainFrame extends JFrame  {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DreamVacation createDreamDestinations = new DreamVacation();
     ArrayList<String> fixedList = new ArrayList<>();
+    ArrayList<String> masterList = Singleton.getMasterList();
+    DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu = new JMenu("Data");
     JMenuItem exportDataItem = new JMenuItem("Save Data");
@@ -74,7 +76,7 @@ public class MainFrame extends JFrame  {
                 helperMethod(d1);
                 Destination destination = new Destination(dreamVacation);
                 createDreamDestinations.addDreamDestinations(destination);
-                playSound();
+                playAddSound();
             }
         });
     }
@@ -88,7 +90,8 @@ public class MainFrame extends JFrame  {
                 Destination removeVacacy = new Destination(dreamVacation);
                 createDreamDestinations.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
-                playSound();
+                playDeleteSound();
+                System.out.println(createDreamDestinations.getDestinationObject());
             }
         });
 
@@ -96,7 +99,7 @@ public class MainFrame extends JFrame  {
 
     public void removeKey() {
         formPanel.setFormListenerRemove(new ListenerRemove() {
-            public void formEventOccurred3(FormEvent e) {
+            public void formEventOccurredRemove(FormEvent e) {
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
                 textPanel.replaceSelection();
@@ -140,7 +143,18 @@ public class MainFrame extends JFrame  {
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     createDreamDestinations = dreamVacations.get(0);
                     fixedList = createDreamDestinations.getDestinationObject();
-                    textPanel.appendText(fixedList.toString());
+                    String fixedToString = fixedList.toString()
+                            //REFERENCES: code taken from URL:
+                            //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                            //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
+                            .replace("[", "")
+                            .replace("]", "")
+                            .replace(",", "")
+                            .replaceAll("\\s+", ", ");
+                    textPanel.appendText("Dream Vacation List Loaded: \n" + fixedToString + "\n\nOptions:");
+                    setLoading();
+
+
                 } catch (IOException | IndexOutOfBoundsException e) {
                     destinations = new Destinations();
                     createDreamDestinations = new DreamVacation();
@@ -150,16 +164,29 @@ public class MainFrame extends JFrame  {
     }
 
 
+    public void setLoading() {
+        textPanel.appendText("\n\n1.To start the App again and create a fresh, new Dream Vacation List,"
+                + " please click START button.");
+        textPanel.appendText("\n\n2.To continue modifying with current list, please type country name into "
+                + "Dream Vacation panel \nand press Submit or Alt+N to add OR delete or Alt+R to remove from list");
+        textPanel.appendText("\n\n3.To simply exit the program, please click Data menu and click Exit.");
+
+    }
+
+
+
+
+
 
 
     //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
     //REFERENCE: code taken from https://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
-    //REFERENCE: music from https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav
+    //REFERENCE: music from https://www.pacdv.com/sounds/interface_sound_effects/sound108.wav
 
-    public void playSound() {
+    public void playDeleteSound() {
         try {
-            URL url = new URL("https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav");
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(url);
+            File soundFile = new File("src/main/ui/music/javadeletesound.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -167,6 +194,25 @@ public class MainFrame extends JFrame  {
             e.printStackTrace();
         }
     }
+
+
+    //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
+    //REFERENCE: code taken from https://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
+    //REFERENCE: music from https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav
+
+    public void playAddSound() {
+        try {
+            File soundFile = new File("src/main/ui/music/addSound.wav");
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void saveFunction() {
         try {
@@ -261,7 +307,7 @@ public class MainFrame extends JFrame  {
         f.add(formPanel, BorderLayout.WEST);
         f.add(toolbar, BorderLayout.NORTH);
         f.add(textPanel, BorderLayout.CENTER);
-        f.setSize(1000, 950);
+        f.setSize(1300, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
         f.setJMenuBar(createMenuBar());
@@ -280,11 +326,12 @@ public class MainFrame extends JFrame  {
 
         addCountry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                        FormEvent recentCountry = new FormEvent(this, season, d1, dreamVacation);
-                        String d2 = recentCountry.getDreamVacation();
-                        helperMethod(d2);
-                    }
-                });
+                System.out.println(formPanel.dreamVacationField);
+                FormEvent recentCountry = new FormEvent(this, season, d1, dreamVacation);
+                String d2 = recentCountry.getDreamVacation();
+                helperMethod(d2);
+            }
+        });
 
         removeCountry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -363,5 +410,30 @@ public class MainFrame extends JFrame  {
         });
     }
 
-}
+    @Override
+    public void keyTyped(KeyEvent e) {
 
+        String destination = formPanel.destinationField.getText();
+        String dreamVacation = formPanel.dreamVacationField.getText();
+        String season = formPanel.seasonField.getText();
+        FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_ENTER) {
+            String add = formPanel.dreamVacationField.getText();
+            fixedList.add(add);
+            System.out.println("fdasfsdf");
+        }
+
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+}
