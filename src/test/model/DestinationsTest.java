@@ -21,7 +21,6 @@ class DestinationsTest {
     Destination france = new Destination("France");
     Destination switzerland = new Destination("Switzerland");
 
-    Destination india = new Destination ("India");
     Destination korea = new Destination ("Korea");
 
     @BeforeEach
@@ -107,12 +106,14 @@ class DestinationsTest {
 
     @Test
     void testGetCity() {
-        assertEquals(null, testDestination.getCityFromWinterDestinations(korea));
+        assertEquals("Wrong city selected! It was not from the provided list",
+                testDestination.getCityFromWinterDestinations(korea));
     }
 
     @Test
     void testGetCityAgain() {
-        assertEquals(null, testDestination.getCityFromWinterDestinations(korea));
+        assertEquals("Wrong city selected! It was not from the provided list",
+                testDestination.getCityFromSummerDestinations(korea));
     }
 
 }

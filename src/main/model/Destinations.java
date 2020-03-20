@@ -111,7 +111,7 @@ public class Destinations {
     //EFFECTS: to retrieve the list of popular cities for the chosen country from the summer destinations list
 
     public String getCityFromSummerDestinations(Destination d) {
-        String city = null;
+        String city = "Wrong city selected! It was not from the provided list";
         if (d.getDestinationCountryName().equals("Italy")) {
             city = "Florence, Venice, Rome";
         } else if (d.getDestinationCountryName().equals("Spain")) {
@@ -131,7 +131,7 @@ public class Destinations {
     //EFFECTS: to retrieve the list of popular cities for the chosen country from the winter destinations list
 
     public String getCityFromWinterDestinations(Destination d) {
-        String city = null;
+        String city = "Wrong city selected! It was not from the provided list";
         if (d.getDestinationCountryName().equals("Mexico")) {
             city = "Cozumel, Tulum, Cancun, Mexico City";
         } else if (d.getDestinationCountryName().equals("Iceland")) {
