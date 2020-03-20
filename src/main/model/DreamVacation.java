@@ -1,9 +1,9 @@
-
 package model;
 
 import persistence.Saveable;
 
 import java.io.PrintWriter;
+
 import java.util.ArrayList;
 
 
@@ -31,6 +31,9 @@ public class DreamVacation implements Saveable {
         return dreamDestinations;
     }
 
+    //MODIFIES: this
+    //EFFECTS: to return a boolean value if the destination is removed from the dreamDestinations arraylist,
+    // false otherwise.
     public boolean removeDreamDestinations(Destination destination) {
         return dreamDestinations.remove(destination);
     }
@@ -53,6 +56,7 @@ public class DreamVacation implements Saveable {
         return dreamDestinations;
     }
 
+    //EFFECTS: to return the list country names of dream destinations
 
     public ArrayList<String> getDestinationObject() {
         ArrayList<String> dreamDestinationNames = new ArrayList<>();
@@ -69,7 +73,7 @@ public class DreamVacation implements Saveable {
         String fixedToString = fixedList.toString()
                 //REFERENCES: code taken from URL:
                 //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+                //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "")

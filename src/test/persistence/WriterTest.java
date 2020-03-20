@@ -1,6 +1,5 @@
 
 
-/*
 package persistence;
 
 
@@ -21,18 +20,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class WriterTest {
     private static final String TEST_FILE = "./data/testDreamVacationFile1.txt";
     private Writer testWriter;
-    private DreamVacation createDreamDestinations;
-    private Destination Italy;
-    private Destination Spain;
+    DreamVacation createDreamDestinations = new DreamVacation();
+    Destination italy = new Destination("Italy");
+    Destination spain = new Destination("Spain");
+
+    ArrayList<String> fixedList = new ArrayList<>();
 
     @BeforeEach
     void runBefore() throws FileNotFoundException, UnsupportedEncodingException {
         testWriter = new Writer(new File(TEST_FILE));
-        createDreamDestinations = new DreamVacation();
-        createDreamDestinations.addDreamDestinations(Italy);
-        createDreamDestinations.addDreamDestinations(Spain);
-
+        createDreamDestinations.addDreamDestinations(italy);
+        createDreamDestinations.addDreamDestinations(spain);
     }
+
+
 
     @Test
     void testWriteDreamVacation() {
@@ -43,15 +44,16 @@ class WriterTest {
         // now read them back in and verify that the DreamVacation have the expected values
         try {
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(TEST_FILE));
-            DreamVacation createDreamDestinations = dreamVacations.get(0);
-            ArrayList<Destination> list1 = createDreamDestinations.viewDreamDestinations();
-            String fixedToString = list1.toString()
-                    //REFERENCES: https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                    //          : https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+            createDreamDestinations = dreamVacations.get(0);
+            fixedList = createDreamDestinations.getDestinationObject();
+            String fixedToString = fixedList.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
                     .replace("[", "")
                     .replace("]", "")
-                    .replace(",", "")
-                    .replaceAll("\\s+", ", ");
+                    .replace(",", ",");
+
 
             assertEquals("Italy, Spain", fixedToString);
 
@@ -61,5 +63,4 @@ class WriterTest {
     }
 }
 
-*/
 

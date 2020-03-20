@@ -15,15 +15,9 @@ import java.util.*;
 public class VacationResolver {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private Destinations chooseDestination;
-    private Destinations showDestinations;
     private DreamVacation createDreamDestinations;
     private Scanner input;
     private Destination nextDestination;
-    private Destination dreamCountry;
-    private String anotherDreamCountry;
-    private ArrayList<Destination> winterDreamList;
-    private ArrayList<Destination> summerDreamList;
-    ArrayList<Destination> testThis;
     ArrayList<String> fixedList = new ArrayList<>();
 
 

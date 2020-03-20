@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DestinationsTest {
@@ -38,20 +40,45 @@ class DestinationsTest {
 
     @Test
     void testSeasonChoice() {
-        assertEquals(testDestination.getSummerDestinations(), testDestination.chooseWinterOrSummer("summer"));
         assertEquals(5, testDestination.getSummerDestinations().size());
-        assertEquals(testDestination.getNumWinterDestinations(), testDestination.chooseWinterOrSummer("winter"));
         assertEquals(5, testDestination.getWinterDestinations().size());
     }
 
     @Test
+    void testWinterOrSummer() {
+        ArrayList<Destination> summerList = testDestination.chooseWinterOrSummer("summer");
+        String summerList1 = summerList.toString()
+                //REFERENCES: code taken from URL:
+                //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", ",");
+
+        assertEquals("Italy, Spain, Croatia, Vietnam, Japan", summerList1);
+
+        ArrayList<Destination> winterList = testDestination.chooseWinterOrSummer("winter");
+        String winterList1 = winterList.toString()
+                //REFERENCES: code taken from URL:
+                //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+                .replace("[", "")
+                .replace("]", "")
+                .replace(",", ",");
+
+        assertEquals("Mexico, Iceland, USA, France, Switzerland", winterList1);
+
+
+
+
+    }
+
+    /*@Test
     void testChooseSummerDestination() {
         assertEquals(italy, testDestination.chooseSummerDestination(italy));
         assertEquals(vietnam, testDestination.chooseSummerDestination(vietnam));
-        assertEquals("This is not in our list of Winter destinations",
-                testDestination.chooseWinterDestination(korea));
     }
-
+*/
 
     @Test
     void testGetCityFromSummerDestination() {
@@ -71,13 +98,11 @@ class DestinationsTest {
         assertEquals("Miami, Los Angeles, New York", testDestination.getCityFromWinterDestinations(usa));
     }
 
-    @Test
+  /*  @Test
     void testChooseWinterDestination() {
         assertEquals(mexico, testDestination.chooseWinterDestination(mexico));
         assertEquals(iceland, testDestination.chooseWinterDestination(iceland));
-        assertEquals("This is not in our list of Winter destinations",
-                testDestination.chooseWinterDestination(korea));
-    }
+    }*/
 
 
     @Test

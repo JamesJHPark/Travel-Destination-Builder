@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
+//REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 public class MainFrame extends JFrame  {
     protected TextPanel textPanel;
     private Toolbar toolbar;
@@ -34,20 +34,37 @@ public class MainFrame extends JFrame  {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DreamVacation createDreamDestinations = new DreamVacation();
     ArrayList<String> fixedList = new ArrayList<>();
-    JTextField keyText = new JTextField(80);
-    JLabel keyLabel = new JLabel("Press the fire button");
+    JMenuBar menuBar = new JMenuBar();
+    JMenu fileMenu = new JMenu("Data");
+    JMenuItem exportDataItem = new JMenuItem("Save Data");
+    JMenuItem importDataItem = new JMenuItem("Load Data");
+    JMenuItem removeCountry = new JMenuItem("Remove the Most Recent Country Added");
+    JMenuItem addCountry = new JMenuItem("Add the Most Recent Country Added Again");
+    JMenuItem exitItem = new JMenuItem("Exit");
+    JMenu secondMenu = new JMenu("Window");
+    JMenu showMenu = new JMenu("Launch");
+    JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Vacation Form");
+
 
 
     public MainFrame() {
         super("Dream Vacation");
         setPanel();
+        submitMethod();
+        deleteMethod();
+        removeKey();
+        enterKey();
+        saveMethod();
+        loadMethod();
         toolbar.setStringListener(new StringListener() {
             public void textEmitted(String text) {
                 textPanel.setText("");
                 textPanel.appendText(text);
             }
         });
-    //REFERENCE: music downloaded from https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav
+    }
+
+    public void submitMethod() {
 
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {
@@ -60,32 +77,50 @@ public class MainFrame extends JFrame  {
                 playSound();
             }
         });
+    }
 
+    public void deleteMethod() {
 
-        //REFERENCE: music downloaded from https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav
-
-        formPanel.setFormListenerDelete(new FormListener1() {
+        formPanel.setFormListenerDelete(new FormListenerDelete() {
             public void formEventOccurred1(FormEvent e) {
 
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
-                textPanel.replaceSelection();
                 createDreamDestinations.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
                 playSound();
             }
         });
-        formPanel.setFormListenerRemove(new FormListener3() {
+
+    }
+
+    public void removeKey() {
+        formPanel.setFormListenerRemove(new ListenerRemove() {
             public void formEventOccurred3(FormEvent e) {
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
                 textPanel.replaceSelection();
                 createDreamDestinations.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
-                playSound();
             }
         });
+    }
 
+    public void enterKey() {
+        formPanel.setFormListenerEnter(new ListenerEnterKey() {
+            public void formEventOccurred2(FormEvent e) {
+                d1 = e.getDestination();
+                dreamVacation = e.getDreamVacation();
+                season = e.getSeason();
+                helperMethod(d1);
+                Destination destination = new Destination(dreamVacation);
+                createDreamDestinations.addDreamDestinations(destination);
+
+            }
+        });
+    }
+
+    public void saveMethod() {
         formPanel.setFormListenerSave(new FormListenerSave() {
             public void formEventSave(FormEvent ev) {
                 d1 = ev.getDestination();
@@ -93,7 +128,9 @@ public class MainFrame extends JFrame  {
                 saveFunction();
             }
         });
+    }
 
+    public void loadMethod() {
         formPanel.setFormListenerLoad(new FormListenerLoad() {
             public void formEventLoad(FormEvent ev) {
                 d1 = ev.getDestination();
@@ -110,30 +147,10 @@ public class MainFrame extends JFrame  {
                 }
             }
         });
-
-
-        formPanel.setFormListenerEnter(new FormListener2() {
-            public void formEventOccurred2(FormEvent e) {
-                d1 = e.getDestination();
-                dreamVacation = e.getDreamVacation();
-                season = e.getSeason();
-                helperMethod(d1);
-                Destination destination = new Destination(dreamVacation);
-                createDreamDestinations.addDreamDestinations(destination);
-                playSound();
-
-            }
-        });
     }
 
-    public void formEventOccurred1(FormEvent e) {
-        dreamVacation = e.getDreamVacation();
-        Destination removeVacacy = new Destination(dreamVacation);
-        textPanel.replaceSelection();
-        createDreamDestinations.removeDreamDestinations(removeVacacy);
-        textPanel.removeText(dreamVacation);
-        playSound();
-    }
+
+
 
     //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
     //REFERENCE: code taken from https://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
@@ -187,8 +204,9 @@ public class MainFrame extends JFrame  {
             textPanel.appendText("\nHere is the list of summer travel destinations!");
             textPanel.appendText("\n" + destinations.getSummerDestinations().toString());
             textPanel.appendText("\n");
-            textPanel.appendText("\nEnter a country of your choice into Destination panel on the left "
-                    + "for your next vacation from the list");
+            textPanel.appendText("\nPlease choose 1 country from this above list only."
+                    + "\nThen, enter the country of your choice into Destination panel on the left"
+                    + " for your next vacation.");
         }
         if (d1.length() > 0) {
             textPanel.setText("You have chosen " + d1);
@@ -196,7 +214,8 @@ public class MainFrame extends JFrame  {
                     + ", here is the list of popular cities:"
                     + "\n"
                     + destinations.getCityFromSummerDestinations(destination));
-            textPanel.appendText("\nNow, choose countries to include in Dream Vacation list!\n");
+            textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
+                    + "\nPlease type the country name into Dream Vacation panel on the left.");
         }
 
     }
@@ -205,8 +224,10 @@ public class MainFrame extends JFrame  {
         if (season.equalsIgnoreCase("Winter")) {
             textPanel.appendText("\nHere is the list of winter travel destinations!");
             textPanel.appendText("\n" + destinationsW.getWinterDestinations().toString());
-            textPanel.appendText("\nEnter a country of your choice into Destination panel on the left "
-                    + "for your next vacation from the list");
+            textPanel.appendText("\n");
+            textPanel.appendText("\nPlease choose 1 country from this above list only."
+                    + "\nThen, enter the country of your choice into Destination panel on the left"
+                    + " for your next vacation.");
         }
         if (d1.length() > 0) {
             textPanel.setText("You have chosen " + d1);
@@ -214,7 +235,8 @@ public class MainFrame extends JFrame  {
                     + ", here is the list of popular cities:"
                     + "\n"
                     + destinationsW.getCityFromWinterDestinations(destination));
-            textPanel.appendText("\nNow, choose countries to include in Dream Vacation list!\n");
+            textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
+                    + "\nPlease type the country name into Dream Vacation panel on the left.");
         }
     }
 
@@ -239,7 +261,7 @@ public class MainFrame extends JFrame  {
         f.add(formPanel, BorderLayout.WEST);
         f.add(toolbar, BorderLayout.NORTH);
         f.add(textPanel, BorderLayout.CENTER);
-        f.setSize(1000, 600);
+        f.setSize(1000, 950);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
         f.setJMenuBar(createMenuBar());
@@ -250,40 +272,45 @@ public class MainFrame extends JFrame  {
 
 
     private JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("Data");
-        JMenuItem exportDataItem = new JMenuItem("Save Data");
-        JMenuItem importDataItem = new JMenuItem("Load Data");
-        JMenuItem removeCountry = new JMenuItem("Remove the Most Recent Country Added");
-        JMenuItem addCountry = new JMenuItem("Add the Most Recent Country Added Again");
-        JMenuItem exitItem = new JMenuItem("Exit");
+        fileMenuMethods();
+        exitMethod();
+        importMethod();
+        exportMethod();
+        showItemMethod();
+
+        addCountry.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                        FormEvent recentCountry = new FormEvent(this, season, d1, dreamVacation);
+                        String d2 = recentCountry.getDreamVacation();
+                        helperMethod(d2);
+                    }
+                });
+
+        removeCountry.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textPanel.removeText(dreamVacation);
+            }
+        });
+        return menuBar;
+    }
+
+    public void fileMenuMethods() {
         fileMenu.add(addCountry);
         fileMenu.add(removeCountry);
         fileMenu.add(exportDataItem);
         fileMenu.add(importDataItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
-        JMenu secondMenu = new JMenu("Window");
-        JMenu showMenu = new JMenu("Launch");
-        JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Vacation Form");
         showFormItem.setSelected(true);
-
         showMenu.add(showFormItem);
         secondMenu.add(showMenu);
-
         menuBar.add(fileMenu);
         menuBar.add(secondMenu);
-
-        showFormItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) ev.getSource();
-                formPanel.setVisible(menuItem.isSelected());
-            }
-        });
-
         fileMenu.setMnemonic(KeyEvent.VK_D);
         exitItem.setMnemonic(KeyEvent.VK_E);
+    }
 
+    public void exitMethod() {
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int action = JOptionPane.showConfirmDialog(MainFrame.this,
@@ -295,7 +322,9 @@ public class MainFrame extends JFrame  {
                 }
             }
         });
+    }
 
+    public void importMethod() {
         importDataItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
@@ -311,42 +340,27 @@ public class MainFrame extends JFrame  {
 
             }
         });
+    }
 
+    public void exportMethod() {
         exportDataItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveFunction();
             }
         });
+    }
 
-
-        addCountry.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                        FormEvent tryThis = new FormEvent(this, season, d1, dreamVacation);
-                        String d2 = tryThis.getDreamVacation();
-                        helperMethod(d2);
-
-
-
-
-
-                    }
-                });
-
-
-
+    public void showItemMethod() {
+        showFormItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) ev.getSource();
+                formPanel.setVisible(menuItem.isSelected());
+            }
+        });
         showFormItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
             }
         });
-
-        removeCountry.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                textPanel.removeText(dreamVacation);
-            }
-        });
-
-        return menuBar;
     }
 
 }

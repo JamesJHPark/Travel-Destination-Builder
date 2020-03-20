@@ -75,6 +75,27 @@ public class DreamVacationTest {
 
     }
 
+    @Test
+    void removeDreamDestinationTest() {
+        testDreamDestinations.addDreamDestinations(spain);
+        testDreamDestinations.addDreamDestinations(japan);
+        ArrayList<Destination> result = testDreamDestinations.viewDreamDestinations();
+        assertEquals("Spain", result.get(0).getDestinationCountryName());
+        assertTrue(testDreamDestinations.removeDreamDestinations(spain));
+        assertFalse(testDreamDestinations.removeDreamDestinations(spain));
+        assertEquals("Japan", result.get(0).getDestinationCountryName());
+    }
+
+    @Test
+    void getDestObjectTest() {
+        testDreamDestinations.addDreamDestinations(spain);
+        testDreamDestinations.addDreamDestinations(japan);
+        ArrayList<String> result = testDreamDestinations.getDestinationObject();
+        assertEquals("Spain", result.get(0));
+        assertEquals("Japan", result.get(1));
+
+    }
+
 }
 
 

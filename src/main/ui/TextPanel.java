@@ -11,17 +11,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+
+//REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+//Represents TextPanel of the program
 public class TextPanel extends JPanel {
 
     protected JTextArea textArea;
     private JPopupMenu popup;
     DreamVacation createDreamVacation = new DreamVacation();
-    protected ArrayList<String> fixedList = createDreamVacation.getDestinationObject();
+    private ArrayList<String> fixedList = createDreamVacation.getDestinationObject();
 
+    //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
+    //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
         textArea = new JTextArea();
-        Font bigFont = new Font("sanserif", Font.PLAIN, 14);
-        textArea.setFont(bigFont);
+        Font changeFont = new Font("sanserif", Font.PLAIN, 14);
+        textArea.setFont(changeFont);
         setLayout(new BorderLayout());
         add(new JScrollPane(textArea), BorderLayout.CENTER);
         textArea.append("Welcome! To begin, please press the START button on top left of the screen");

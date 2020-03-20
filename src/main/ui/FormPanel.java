@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+//REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+//represents the FormPanel of the program
+
 public class FormPanel extends JPanel {
 
     private JLabel destinationLabel;
@@ -21,9 +24,9 @@ public class FormPanel extends JPanel {
     protected JTextField seasonField;
     private JButton okBtn;
     private FormListener formListener;
-    private FormListener1 formListener1;
-    private FormListener2 formListener2;
-    private FormListener3 formListener3;
+    private FormListenerDelete formListenerDelete;
+    private ListenerEnterKey listenerEnterKey;
+    private ListenerRemove listenerRemove;
     private FormListenerSave formListenerSave;
     private FormListenerLoad formListenerLoad;
     private JButton deleteBtn;
@@ -33,6 +36,8 @@ public class FormPanel extends JPanel {
     private JButton loadBtn;
     private BufferedImage image;
 
+    //REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+    //EFFECTS: to construct the FormPanel of the program
 
     public FormPanel() {
         setPanel();
@@ -52,20 +57,30 @@ public class FormPanel extends JPanel {
 
         // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
         // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
+        // EFFECTS: to read the image file from Resources package
 
         try {
-            image = ImageIO.read(new File("C:\\Users\\James\\Desktop\\123.JPG"));
+            image = ImageIO.read(
+                    new File("C:\\Users\\James\\Desktop\\project_y3o8\\src\\main\\Resources\\picture.jpg"));
         } catch (IOException ex) {
-            // handle exception...
+            System.out.println("IOException");
         }
     }
+
+    // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
+    // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
+    // EFFECTS: to paint the image on the form panel
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, -300, -500, this); // see javadoc for more info on the parameters
+        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and in this
+    // case, the purpose of the button is to submit the typed answer to the program
 
     public void okBtnCall() {
         okBtn.addActionListener(new ActionListener() {
@@ -80,6 +95,10 @@ public class FormPanel extends JPanel {
             }
         });
     }
+
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and
+    // in this case, the purpose of the button is to load the saved data
 
     public void setLoadBtn() {
         loadBtn.addActionListener(new ActionListener() {
@@ -96,6 +115,10 @@ public class FormPanel extends JPanel {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and
+    // in this case, the purpose of the button is to save the Dream Vacation list
+
     public void setSaveBtn() {
         saveBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -111,6 +134,9 @@ public class FormPanel extends JPanel {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when the alt+N key is pressed
+
     private void enterBtn() {
         enterBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -118,13 +144,17 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListener2 != null) {
-                    formListener2.formEventOccurred2(ev);
+                if (listenerEnterKey != null) {
+                    listenerEnterKey.formEventOccurred2(ev);
 
                 }
             }
         });
     }
+
+
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when alt+R key is pressed
 
     private void setRemoveBtn() {
         removeBtn.addActionListener(new ActionListener() {
@@ -133,8 +163,8 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListener3 != null) {
-                    formListener3.formEventOccurred3(ev);
+                if (listenerRemove != null) {
+                    listenerRemove.formEventOccurred3(ev);
 
                 }
             }
@@ -142,6 +172,10 @@ public class FormPanel extends JPanel {
 
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and in this
+    // case, the purpose of the button is to delete a typed country from the Dream Vacation list
 
     public void deleteBtnCall() {
         deleteBtn.addActionListener(new ActionListener() {
@@ -150,12 +184,15 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListener1 != null) {
-                    formListener1.formEventOccurred1(ev);
+                if (formListenerDelete != null) {
+                    formListenerDelete.formEventOccurred1(ev);
                 }
             }
         });
     }
+
+    //EFFECTS: calls all the methods that set up the buttons and labels/panels
+    // on the screen of the form panel of the program
 
     public void callAllButtonMethods() {
         GridBagConstraints gc = new GridBagConstraints();
@@ -168,6 +205,8 @@ public class FormPanel extends JPanel {
         saveBtn(gc);
         loadBtn(gc);
     }
+
+    //EFFECTS: sets up the label and text field for season on the screen of the form panel of the program
 
     public void setButtonForDestination(GridBagConstraints gc) {
         ///// FIRST ROW /////
@@ -185,6 +224,8 @@ public class FormPanel extends JPanel {
 
     }
 
+    //EFFECTS: sets up the label and text field for Dream Vacation on the screen of the form panel of the program
+
     public void setButtonForDreamVacation(GridBagConstraints gc) {
         ///// SECOND ROW /////
         gc.weightx = 1;
@@ -200,6 +241,7 @@ public class FormPanel extends JPanel {
 
     }
 
+    //EFFECTS: sets up the label and text field for Destination on the screen of the form panel of the program
 
     public void setButtonForSeason(GridBagConstraints gc) {
         ///// THIRD ROW /////
@@ -216,9 +258,10 @@ public class FormPanel extends JPanel {
         add(destinationField, gc);
     }
 
+    //EFFECTS: sets up the JButtons for submit and delete on the screen of the form panel of the program
+
     public void setTwoButtons(GridBagConstraints gc) {
 
-        ///// FOURTH ROW /////
         gc.weightx = 1;
         gc.weighty = 2.0;
 
@@ -228,7 +271,6 @@ public class FormPanel extends JPanel {
         gc.anchor = GridBagConstraints.LINE_END;
         add(okBtn, gc);
 
-        ///// FOURTH ROW DELETE BUTTON/////
         gc.weightx = 1;
         gc.weighty = 2.0;
 
@@ -240,6 +282,8 @@ public class FormPanel extends JPanel {
 
     }
 
+    //EFFECTS: sets up the JButton for Alt+N key on of the form panel of the program
+
     public void setEnterBtn(GridBagConstraints gc) {
         gc.weightx = 10;
         gc.weighty = 10;
@@ -249,6 +293,8 @@ public class FormPanel extends JPanel {
         gc.anchor = GridBagConstraints.LINE_END;
         add(enterBtn, gc);
     }
+
+    //EFFECTS: sets up the JButton for Alt+R key on of the form panel of the program
 
     public void removeBtn(GridBagConstraints gc) {
         gc.weightx = 1;
@@ -260,6 +306,7 @@ public class FormPanel extends JPanel {
         add(removeBtn, gc);
     }
 
+    //EFFECTS: sets up the JButton for save on of the form panel of the program
 
     public void saveBtn(GridBagConstraints gc) {
         gc.weightx = 1;
@@ -270,6 +317,8 @@ public class FormPanel extends JPanel {
         gc.anchor = GridBagConstraints.LINE_END;
         add(saveBtn, gc);
     }
+
+    //EFFECTS: sets up the JButton for load on of the form panel of the program
 
     public void loadBtn(GridBagConstraints gc) {
         gc.weightx = 1;
@@ -282,37 +331,52 @@ public class FormPanel extends JPanel {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: FormListener for the submit JButton
+
     public void setFormListener(FormListener listener) {
         this.formListener = listener;
     }
 
-    public void setFormListenerKey(FormListener listener) {
-        this.formListener = listener;
+    //MODIFIES: this
+    //EFFECTS: FormListener for the delete JButton
+
+    public void setFormListenerDelete(FormListenerDelete listener) {
+
+        this.formListenerDelete = listener;
     }
 
-    public void setFormListenerDelete(FormListener1 listener) {
+    //EFFECTS: this
+    //EFFECTS: FormListener for the Alt+E key pressed
 
-        this.formListener1 = listener;
+    public void setFormListenerEnter(ListenerEnterKey listener) {
+        this.listenerEnterKey = listener;
     }
 
-    public void setFormListenerEnter(FormListener2 listener) {
-        this.formListener2 = listener;
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the Alt+R key pressed
+
+    public void setFormListenerRemove(ListenerRemove listener) {
+        this.listenerRemove = listener;
     }
 
-    public void setFormListenerRemove(FormListener3 listener) {
-        this.formListener3 = listener;
-    }
+    //MODIFIES: this
+    //EFFECTS: FormListener for the JButton for save
 
     public void setFormListenerSave(FormListenerSave listener) {
         this.formListenerSave = listener;
     }
 
+    //MODIFIES: this
+    //EFFECTS: FormListener for the JButton for load
 
     public void setFormListenerLoad(FormListenerLoad listener) {
         this.formListenerLoad = listener;
     }
 
 
+    //EFFECTS: sets up the JLabels, text fields, and buttons for the form panel of the program
     public void setPanel() {
         Dimension dim = getPreferredSize();
         dim.width = 350;
@@ -325,8 +389,8 @@ public class FormPanel extends JPanel {
         seasonField = new JTextField(10);
         okBtn = new JButton("SUBMIT");
         deleteBtn = new JButton("DELETE");
-        enterBtn = new JButton("Alt+N adds to list");
-        removeBtn = new JButton("Alt+R removes from list");
+        enterBtn = new JButton("Alt+N adds X to list");
+        removeBtn = new JButton("Alt+R removes X from list");
         saveBtn = new JButton("SAVE");
         loadBtn = new JButton("LOAD");
         enterBtn.setMnemonic(KeyEvent.VK_N);

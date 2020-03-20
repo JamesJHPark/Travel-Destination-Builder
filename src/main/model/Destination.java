@@ -1,10 +1,7 @@
 package model;
 
-import java.io.Serializable;
-
-public class Destination implements Serializable {
+public class Destination {
     private String countryName;
-    private Destination destination;
 
     public Destination(String countryName) {
         this.countryName = countryName;
@@ -21,9 +18,6 @@ public class Destination implements Serializable {
         return this.countryName;
     }
 }
-
-   // public String getDestinationCapitalName(Destination destination) {
-     //   return this.capitalName;
 
 
 

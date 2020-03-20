@@ -22,6 +22,12 @@ public class DestinationTest {
     void testGetCountryName() {
         assertEquals("Korea", destination.getDestinationCountryName());
     }
+
+    @Test
+    void toStringMethod() {
+        assertEquals("Korea", destination.toString());
+
+    }
 }
 
 

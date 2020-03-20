@@ -1,8 +1,7 @@
-/*
+
 package persistence;
 
 
-import model.Destination;
 import model.DreamVacation;
 import org.junit.jupiter.api.Test;
 
@@ -15,47 +14,36 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class ReaderTest {
+    private DreamVacation createDreamDestinations;
+    ArrayList<String> fixedList = new ArrayList<>();
     @Test
     void testParseDreamVacationFile2() {
+
         try {
+
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile2.txt"));
-            DreamVacation createDreamDestinations = dreamVacations.get(0);
-            ArrayList<Destination> list1 = createDreamDestinations.viewDreamDestinations();
-            String fixedToString = list1.toString()
-                    //REFERENCES: code taken from URL:
-                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", "")
-                    .replaceAll("\\s+", ", ");
+            createDreamDestinations = dreamVacations.get(0);
+            fixedList = createDreamDestinations.getDestinationObject();
 
-
-            assertEquals("Iceland, USA", fixedToString);
-        } catch (IOException e) {
+        } catch (IOException | IndexOutOfBoundsException e) {
             fail("IOException should not have been thrown");
+            assertEquals("Iceland, USA", fixedList);
+
         }
     }
 
     @Test
     void testParseDreamVacationFile3() {
         try {
+
             List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile3.txt"));
-            DreamVacation createDreamDestinations = dreamVacations.get(0);
-            ArrayList<Destination> list1 = createDreamDestinations.viewDreamDestinations();
-            String fixedToString = list1.toString()
-                    //REFERENCES: code taken from URL:
-                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
-                    .replace("[", "")
-                    .replace("]", "")
-                    .replace(",", "")
-                    .replaceAll("\\s+", ", ");
+            createDreamDestinations = dreamVacations.get(0);
+            fixedList = createDreamDestinations.getDestinationObject();
 
-
-            assertEquals("Vietnam, Croatia", fixedToString);
-        } catch (IOException e) {
+        } catch (IOException | IndexOutOfBoundsException e) {
             fail("IOException should not have been thrown");
+            assertEquals("Iceland, USA", fixedList);
+
         }
     }
 
@@ -69,6 +57,6 @@ class ReaderTest {
             // expected
         }
     }
-}*/
+}
 
 
