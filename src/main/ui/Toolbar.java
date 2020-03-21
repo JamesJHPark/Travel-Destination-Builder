@@ -22,7 +22,6 @@ public class Toolbar extends JPanel implements ActionListener {
         startButton.addActionListener(this);
         goodbyeButton.addActionListener(this);
 
-
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         add(startButton);

@@ -59,16 +59,13 @@ public class Reader {
     }
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
-    // REQUIRES: components has size 2 where element 0 represents the
-    // first country of the dream vacation list, and element 1 represents the
-    // second country of the dream vacation list
+    // REQUIRES: components represent the countries
     // EFFECTS: returns a new DreamVacation constructed from these components
     private static DreamVacation parseDreamVacations(ArrayList<String> components) {
         DreamVacation newDreamVacation = new DreamVacation();
         for (String i : components) {
             newDreamVacation.addDreamDestinations(new Destination(i));
         }
-
 
         return newDreamVacation;
     }

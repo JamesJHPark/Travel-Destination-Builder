@@ -1,7 +1,5 @@
 package ui;
 
-import model.DreamVacation;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,19 +7,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //represents the FormPanel of the program
 
-public class FormPanel extends JPanel implements KeyListener {
-    Singleton singleton = Singleton.getInstance();
-    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
-    ArrayList<String> masterList = singleton.getMasterList();
+public class FormPanel extends JPanel {
+
     protected JLabel destinationLabel;
     protected JLabel dreamVacationLabel;
     protected JLabel seasonLabel;
@@ -153,7 +147,7 @@ public class FormPanel extends JPanel implements KeyListener {
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
                 if (listenerEnterKey != null) {
-                    listenerEnterKey.formEventOccurred2(ev);
+                    listenerEnterKey.formEventOccurredEnter(ev);
 
                 }
             }
@@ -193,7 +187,7 @@ public class FormPanel extends JPanel implements KeyListener {
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerDelete != null) {
-                    formListenerDelete.formEventOccurred1(ev);
+                    formListenerDelete.formEventDelete(ev);
                 }
             }
         });
@@ -406,30 +400,11 @@ public class FormPanel extends JPanel implements KeyListener {
         removeBtn.setMnemonic(KeyEvent.VK_R);
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_D) {
-            masterList.add(dreamVacationField.getText());
-        }
-
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
+    //EFFECTS: gets the JTextField of the dreamVacationField panel
 
     public static JTextField getDreamVacationField() {
         return dreamVacationField;
     }
-
 
 }

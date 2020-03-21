@@ -24,15 +24,28 @@ public class TextPanel extends JPanel {
     ArrayList<String> masterList = Singleton.getMasterList();
     DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
 
+    public JTextArea getTextArea() {
+        return textArea;
+    }
+
     //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
     //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
         textArea = new JTextArea();
+
         Font changeFont = new Font("sanserif", Font.PLAIN, 15);
         textArea.setFont(changeFont);
         setLayout(new BorderLayout());
         add(new JScrollPane(textArea), BorderLayout.CENTER);
         textArea.append("Welcome! To begin, please press the START button on top left of the screen");
+        deleteBySelectMethod();
+
+    }
+
+    //MODIFIES: this
+    //EFFECTS: deletes a selected country name from the list with a mouse event
+
+    public void deleteBySelectMethod() {
         JMenuItem removeItem = new JMenuItem("Remove this country from the list");
         popup = new JPopupMenu();
         popup.add(removeItem);
@@ -55,9 +68,15 @@ public class TextPanel extends JPanel {
 
     }
 
+    //EFFECTS: appends text to the textArea
+
     public void appendText(String text) {
         textArea.append(text);
     }
+
+
+
+    //EFFECTS: adds the country name in text to the masterList and sets the text for next step of the application
 
     public void addOnText(String text) {
         if (!masterList.contains(text)) {
@@ -70,9 +89,10 @@ public class TextPanel extends JPanel {
                 + "\n"
                 + "\nPlease click on SAVE LIST button when you are finished."
                 + "\n"
-                + "\n***Please note: You can only enter a country once. There is no point in "
-                + "adding multiple of the same country!***");
+                + "\n***Please note: You can only enter a country once***");
     }
+
+    //EFFECTS: sets the text according to the string s input
 
     public void setText(String s) {
         textArea.setText(s);
@@ -82,6 +102,8 @@ public class TextPanel extends JPanel {
         JTextComponent c = textArea;
         c.replaceSelection("");
     }*/
+
+    //EFFECTS: removes the country name in text from the masterList and sets the text for next step of the application
 
     public void removeText(String dreamVacation) {
         while (masterList.contains(dreamVacation)) {
@@ -93,8 +115,7 @@ public class TextPanel extends JPanel {
                     + "\n"
                     + "\nPlease click on SAVE LIST button when you are finished."
                     + "\n"
-                    + "\n***For multiple entries of the SAME country name, we will only save "
-                    + "the particular country ONCE in the list***");
+                    + "\n***Please note: You can only enter a country once***");
         }
     }
 

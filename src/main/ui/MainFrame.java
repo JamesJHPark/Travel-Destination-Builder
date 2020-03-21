@@ -9,10 +9,7 @@ import persistence.Writer;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,8 +19,10 @@ import java.util.List;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-public class MainFrame extends JFrame implements KeyListener {
-    protected TextPanel textPanel;
+
+public class MainFrame extends JFrame {
+
+    public TextPanel textPanel;
     private Toolbar toolbar;
     protected FormPanel formPanel;
     private Destinations destinationsW;
@@ -32,8 +31,6 @@ public class MainFrame extends JFrame implements KeyListener {
     private String season;
     private String dreamVacation;
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
-    private DreamVacation createDreamDestinations = new DreamVacation();
-    ArrayList<String> fixedList = new ArrayList<>();
     Singleton singleton = Singleton.getInstance();
     DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
     ArrayList<String> masterList = singleton.getMasterList();
@@ -41,15 +38,15 @@ public class MainFrame extends JFrame implements KeyListener {
     JMenu fileMenu = new JMenu("Data");
     JMenuItem exportDataItem = new JMenuItem("Save Data");
     JMenuItem importDataItem = new JMenuItem("Load Data");
-    JMenuItem removeCountry = new JMenuItem("Remove the Most Recent Country Added");
-    JMenuItem addCountry = new JMenuItem("Adds country typed in Dream Vacation panel to list");
+    JMenuItem addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
     JMenuItem exitItem = new JMenuItem("Exit");
     JMenu secondMenu = new JMenu("Window");
     JMenu showMenu = new JMenu("Launch");
     JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Vacation Form");
+    JTextField component = new JTextField();
+    JFrame frame = new JFrame();
 
-
-
+// EFFECTS: constructs the Main Frame of the GUI
     public MainFrame() {
         super("Dream Vacation");
         setPanel();
@@ -59,6 +56,7 @@ public class MainFrame extends JFrame implements KeyListener {
         enterKey();
         saveMethod();
         loadMethod();
+
         toolbar.setStringListener(new StringListener() {
             public void textEmitted(String text) {
                 textPanel.setText("");
@@ -66,6 +64,8 @@ public class MainFrame extends JFrame implements KeyListener {
             }
         });
     }
+    //MODIFIES: this
+    //EFFECTS: submits a typed country or season in the text field panels according to the program specifications
 
     public void submitMethod() {
 
@@ -82,10 +82,14 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
+    //MODIFIES: this
+    //EFFECTS: deletes a typed country in the text field panel from Dream Vacation List
+    // according to the program specifications
+
     public void deleteMethod() {
 
         formPanel.setFormListenerDelete(new FormListenerDelete() {
-            public void formEventOccurred1(FormEvent e) {
+            public void formEventDelete(FormEvent e) {
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
                 thisIsDreamVacation.removeDreamDestinations(removeVacacy);
@@ -95,6 +99,11 @@ public class MainFrame extends JFrame implements KeyListener {
         });
 
     }
+
+
+    //MODIFIES: this
+    //EFFECTS: removes a typed country with Alt+R in the text field panel from Dream Vacation List
+    // according to the program specifications
 
     public void removeKey() {
         formPanel.setFormListenerRemove(new ListenerRemove() {
@@ -104,7 +113,6 @@ public class MainFrame extends JFrame implements KeyListener {
                 thisIsDreamVacation.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
                 playDeleteSound();
-                System.out.println(thisIsDreamVacation.getDestinationObject());
 /*
                 textPanel.removeText(dreamVacation);
 */
@@ -112,30 +120,15 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_ENTER) {
-            masterList.add(FormPanel.getDreamVacationField().getText());
-            textPanel.appendText(FormPanel.getDreamVacationField().getText());
-        }
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    //MODIFIES: this
+    //EFFECTS: adds a typed country with Alt+E in the text field panel to Dream Vacation List
+    // according to the program specifications
 
 
     public void enterKey() {
         formPanel.setFormListenerEnter(new ListenerEnterKey() {
-            public void formEventOccurred2(FormEvent e) {
+            public void formEventOccurredEnter(FormEvent e) {
                 d1 = e.getDestination();
                 dreamVacation = e.getDreamVacation();
                 season = e.getSeason();
@@ -147,55 +140,60 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
+
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // MODIFIES: this
+    // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
+
     public void saveMethod() {
         formPanel.setFormListenerSave(new FormListenerSave() {
             public void formEventSave(FormEvent ev) {
-                d1 = ev.getDestination();
-                dreamVacation = ev.getDreamVacation();
                 saveFunction();
             }
         });
     }
 
+
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // MODIFIES: this
+    // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
+
     public void loadMethod() {
         formPanel.setFormListenerLoad(new FormListenerLoad() {
             public void formEventLoad(FormEvent ev) {
-                d1 = ev.getDestination();
-                dreamVacation = ev.getDreamVacation();
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
-                    fixedList = thisIsDreamVacation.getDestinationObject();
-                    masterList = fixedList;
-/*
-                    String fixedToString = masterList.toString()
+                    masterList = thisIsDreamVacation.getDestinationObject();
+                    ArrayList<String> tryList = new ArrayList<>();
+                    tryList.addAll(masterList);
+                    String fixedToString = tryList.toString()
                             //REFERENCES: code taken from URL:
-                            //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                            //           https://stackoverflow.com/questions/4389480/print-array-without-brackets-and-commas
                             //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
                             .replace("[", "")
                             .replace("]", "")
-                            .replace(",", " ")
-                            .replaceAll("\\s+", ", ");*/
+                            .replaceAll("\\s+", ", ");
 
-                    textPanel.appendText("Dream Vacation List Loaded: \n" + masterList + "\n\nOptions:");
+                    textPanel.appendText("The loaded Dream Vacation List includes" + fixedToString + "\n\nOptions:");
                     setLoading();
-                    repaint();
-
                 } catch (IOException | IndexOutOfBoundsException e) {
-                   //caught exception!
+                    //caught exception!
                 }
             }
         });
     }
 
 
+    //EFFECTS: sets the loading text panel with options for the program to run or exit
+
     public void setLoading() {
-        textPanel.appendText("\n\n1.To start the App again and create a fresh, new Dream Vacation List,"
+        textPanel.appendText("\n\n 1.To start the App again and create a fresh, new Dream Vacation List,"
                 + " please click START button.");
-        textPanel.appendText("\n\n2.To continue modifying with current list, please type country name into "
-                + "Dream Vacation panel \nand press Submit or Alt+N to add OR delete or Alt+R to remove from list");
-        textPanel.appendText("\n\n3.To simply exit the program, please click Data menu and click Exit.");
+        textPanel.appendText("\n\n 2.To continue adding to the current list, please type country name into "
+                + "Dream Vacation panel \nand press Submit or Alt+N to add, or click Data menu and select Add country");
+        textPanel.appendText("\n\n 3.To simply exit the program, please click Data menu and click Exit.");
 
     }
 
@@ -203,6 +201,7 @@ public class MainFrame extends JFrame implements KeyListener {
     //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
     //REFERENCE: code taken from https://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
     //REFERENCE: music from https://www.pacdv.com/sounds/interface_sound_effects/sound108.wav
+    //EFFECTS: to play sound
 
     public void playDeleteSound() {
         try {
@@ -220,6 +219,7 @@ public class MainFrame extends JFrame implements KeyListener {
     //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
     //REFERENCE: code taken from https://www3.ntu.edu.sg/home/ehchua/programming/java/J8c_PlayingSound.html
     //REFERENCE: music from https://www.pacdv.com/sounds/interface_sound_effects/sound106.wav
+    //EFFECTS: to play sound
 
     public void playAddSound() {
         try {
@@ -234,6 +234,8 @@ public class MainFrame extends JFrame implements KeyListener {
     }
 
 
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
 
     public void saveFunction() {
         try {
@@ -241,13 +243,17 @@ public class MainFrame extends JFrame implements KeyListener {
             writer.write(thisIsDreamVacation);
             writer.close();
             textPanel.appendText("\nYour customized dream vacation list has been saved. "
-                    + "\nTo exit the program, please click on data menu and then click exit. Thank you!");
+                    + "\n1.To exit the program, please click on data menu and then click exit. Thank you!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
     }
+
+    //EFFECTS: helper method to create destinations and destination objects and matches these according to the
+    // hard-coded answers in running the application
+
 
     public void helperMethod(String d1) {
         Destination destination = new Destination(d1);
@@ -265,6 +271,11 @@ public class MainFrame extends JFrame implements KeyListener {
 
         selectVacation(dreamVacation);
     }
+
+
+    //EFFECTS: helper method by setting the summer season and provides provides
+    // hard-coded answers in running the application
+
 
     public void summerCall(String d1, Destination destination) {
         if (season.equalsIgnoreCase("Summer")) {
@@ -287,6 +298,11 @@ public class MainFrame extends JFrame implements KeyListener {
 
     }
 
+
+
+    //EFFECTS: helper method by setting the winter season and provides provides
+    // hard-coded answers in running the application
+
     public void winterCall(String d1, Destination destination) {
         if (season.equalsIgnoreCase("Winter")) {
             textPanel.appendText("\nHere is the list of winter travel destinations!");
@@ -308,6 +324,9 @@ public class MainFrame extends JFrame implements KeyListener {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: selects and adds the dream vacation country to be added to the Dream Vacation list
+
     public void selectVacation(String dreamVacation) {
         if (dreamVacation.length() > 0) {
             textPanel.setText("");
@@ -317,26 +336,27 @@ public class MainFrame extends JFrame implements KeyListener {
         }
     }
 
+
+    //MODIFIES: this
+    //EFFECTS: sets up the frame, toolbar, textpanel, formpanel to run the application
+
     public void setPanel() {
-        JTextField component = new JTextField();
-        JFrame f = new JFrame();
-        f.add(component);
-        f.setLayout(new BorderLayout());
+        frame.add(component);
+        frame.setLayout(new BorderLayout());
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
-        f.add(formPanel, BorderLayout.WEST);
-        f.add(toolbar, BorderLayout.NORTH);
-        f.add(textPanel, BorderLayout.CENTER);
-        f.setSize(1300, 1000);
+        frame.add(formPanel, BorderLayout.WEST);
+        frame.add(toolbar, BorderLayout.NORTH);
+        frame.add(textPanel, BorderLayout.CENTER);
+        frame.setSize(1300, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setVisible(true);
-        f.setJMenuBar(createMenuBar());
-
+        frame.setVisible(true);
+        frame.setJMenuBar(createMenuBar());
     }
 
-
-
+    //MODIFIES: this
+    //EFFECTS: sets up the menu bar of the application with a method included to add country to Dream Vacation List
 
     private JMenuBar createMenuBar() {
         fileMenuMethods();
@@ -348,23 +368,19 @@ public class MainFrame extends JFrame implements KeyListener {
         addCountry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Destination addThisCountryToo = new Destination(FormPanel.getDreamVacationField().getText());
-                masterList.add(FormPanel.getDreamVacationField().getText());
                 textPanel.addOnText(FormPanel.getDreamVacationField().getText());
                 thisIsDreamVacation.addDreamDestinations(addThisCountryToo);
+                playAddSound();
             }
         });
 
-        removeCountry.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                textPanel.removeText(dreamVacation);
-            }
-        });
         return menuBar;
     }
 
+    //EFFECTS: sets up the menu bar of the application
+
     public void fileMenuMethods() {
         fileMenu.add(addCountry);
-        fileMenu.add(removeCountry);
         fileMenu.add(exportDataItem);
         fileMenu.add(importDataItem);
         fileMenu.addSeparator();
@@ -377,6 +393,8 @@ public class MainFrame extends JFrame implements KeyListener {
         fileMenu.setMnemonic(KeyEvent.VK_D);
         exitItem.setMnemonic(KeyEvent.VK_E);
     }
+
+    //EFFECTS: menu method to close the program
 
     public void exitMethod() {
         exitItem.addActionListener(new ActionListener() {
@@ -392,6 +410,11 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
+
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // MODIFIES: this
+    // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
+
     public void importMethod() {
         importDataItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -400,15 +423,30 @@ public class MainFrame extends JFrame implements KeyListener {
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
                     masterList = thisIsDreamVacation.getDestinationObject();
-                    textPanel.appendText(masterList.toString());
+                    ArrayList<String> tryList = new ArrayList<>();
+                    tryList.addAll(masterList);
+
+                    String fixedToString = tryList.toString()
+                            //REFERENCES: code taken from URL:
+                            //           https://stackoverflow.com/questions/4389480/print-array-without-brackets-and-commas
+                            //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
+                            .replace("[", "")
+                            .replace("]", "")
+                            .replaceAll("\\s+", " ");
+
+                    textPanel.appendText("Dream Vacation List Loaded:" + fixedToString + "\n\nOptions:");
+                    setLoading();
                 } catch (IOException | IndexOutOfBoundsException e) {
                     destinations = new Destinations();
                     thisIsDreamVacation = new DreamVacation();
                 }
-
             }
         });
     }
+
+
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
 
     public void exportMethod() {
         exportDataItem.addActionListener(new ActionListener() {
@@ -418,6 +456,7 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
+    //EFFECTS: makes the form panel visible if selected, otherwise the form panel is not visible to the user
     public void showItemMethod() {
         showFormItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -430,5 +469,50 @@ public class MainFrame extends JFrame implements KeyListener {
             }
         });
     }
-
 }
+
+/*
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_ENTER) {
+            Destination addCountryWithEnter = new Destination(FormPanel.getDreamVacationField().getText());
+            thisIsDreamVacation.addDreamDestinations(addCountryWithEnter);
+            System.out.println(thisIsDreamVacation.getDestinationObject());
+            masterList.add(FormPanel.getDreamVacationField().getText());
+            textPanel.setText(FormPanel.getDreamVacationField().getText());
+            repaint();
+
+        }
+    }
+
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+
+    public class AL extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            int key = e.getKeyCode();
+            if (key == e.VK_ENTER) {
+                Destination addCountryWithEnter = new Destination(FormPanel.getDreamVacationField().getText());
+                thisIsDreamVacation.addDreamDestinations(addCountryWithEnter);
+                System.out.println(thisIsDreamVacation.getDestinationObject());
+                masterList.add(FormPanel.getDreamVacationField().getText());
+                textPanel.setText(FormPanel.getDreamVacationField().getText());
+
+            }
+
+        }
+    }*/
+
+
+
+
