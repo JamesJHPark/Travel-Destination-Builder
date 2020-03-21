@@ -8,8 +8,12 @@ public class Destination {
     @Override
     public boolean equals(Object o) {
 
-        if (this == o) return true;
-        if (!(o instanceof Destination)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Destination)) {
+            return false;
+        }
         Destination that = (Destination) o;
         return countryName.equals(that.countryName);
     }

@@ -54,4 +54,4 @@ a blue sky with birds and clouds to fit the travel theme.
 your saved customized Dream Vacation list.
 - Thus, you can reload the state of my application by clicking on the LOAD LIST Button. 
 - You can also reload the state of my application by selecting the menu item under Data on top left of the screen: Load Data.
-- Thus, this concludes my phase 3 of the project. Thank you! 
+- This concludes my phase 3 of the project. Thank you! 

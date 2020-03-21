@@ -38,7 +38,7 @@ public class DreamVacation implements Saveable {
     }
 
 
-//EFFECTS: to return a boolean value if the typed country is already in the dreamDestinations list, and
+    //EFFECTS: to return a boolean value if the typed country is already in the dreamDestinations list, and
     //         false otherwise.
 
     public Boolean alreadyInDreamDestinations(Destination destination) {
