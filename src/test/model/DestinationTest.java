@@ -3,16 +3,16 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DestinationTest {
     private Destination destination;
-    private Destination italy = new Destination("Italy");
+    private Destination italy;
 
     @BeforeEach
     void runBefore() {
         destination = new Destination("Korea");
+        italy = new Destination("Italy");
     }
 
     @Test
@@ -25,7 +25,10 @@ public class DestinationTest {
         destination.getDestinationCountryName();
         assertFalse(destination.getDestinationCountryName().equals("USA"));
         assertEquals(72683689, destination.hashCode());
+        assertFalse(destination.equals("Korea"));
         assertFalse(destination.equals(italy));
+        assertFalse(destination.equals("Spain"));
+        assertTrue(destination.equals(destination));
 
     }
 
