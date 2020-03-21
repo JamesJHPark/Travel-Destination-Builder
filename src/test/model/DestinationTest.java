@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DestinationTest {
     private Destination destination;
@@ -16,6 +17,14 @@ public class DestinationTest {
     @Test
     void testConstructor() {
         assertEquals("Korea", destination.getDestinationCountryName());
+    }
+
+    @Test
+    void hashCodeTest() {
+        destination.getDestinationCountryName();
+        assertFalse(destination.getDestinationCountryName().equals("USA"));
+        assertEquals(72683689, destination.hashCode());
+
     }
 
     @Test
