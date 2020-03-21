@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DestinationTest {
     private Destination destination;
+    private Destination italy = new Destination("Italy");
 
     @BeforeEach
     void runBefore() {
@@ -24,6 +25,7 @@ public class DestinationTest {
         destination.getDestinationCountryName();
         assertFalse(destination.getDestinationCountryName().equals("USA"));
         assertEquals(72683689, destination.hashCode());
+        assertFalse(destination.equals(italy));
 
     }
 
