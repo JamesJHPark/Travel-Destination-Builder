@@ -1,9 +1,9 @@
 package ui;
 
+import model.Destination;
 import model.DreamVacation;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,6 +48,8 @@ public class TextPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String string = textArea.getSelectedText();
                 removeText(string);
+                Destination removeThisCountry = new Destination(string);
+                thisIsDreamVacation.removeDreamDestinations(removeThisCountry);
             }
         });
 
@@ -58,36 +60,36 @@ public class TextPanel extends JPanel {
     }
 
     public void addOnText(String text) {
-        if (!fixedList.contains(text)) {
-            fixedList.add(text);
+        if (!masterList.contains(text)) {
+            masterList.add(text);
         }
         textArea.setText("Build your Dream Vacation List!"
                 + "\nType country name "
                 + "into Dream Vacation Panel"
-                + "\n" + fixedList
+                + "\n" + masterList
                 + "\n"
                 + "\nPlease click on SAVE LIST button when you are finished."
                 + "\n"
-                + "\n***For multiple entries of the SAME country name, we will only save "
-                + "the particular country ONCE in the list***");
+                + "\n***Please note: You can only enter a country once. There is no point in "
+                + "adding multiple of the same country!***");
     }
 
     public void setText(String s) {
         textArea.setText(s);
     }
-
+/*
     public void replaceSelection() {
         JTextComponent c = textArea;
         c.replaceSelection("");
-    }
+    }*/
 
     public void removeText(String dreamVacation) {
-        while (fixedList.contains(dreamVacation)) {
-            fixedList.remove(dreamVacation);
+        while (masterList.contains(dreamVacation)) {
+            masterList.remove(dreamVacation);
             textArea.setText("Build your Dream Vacation List!"
                     + "\nType country name "
                     + "into Dream Vacation Panel"
-                    + "\n" + fixedList
+                    + "\n" + masterList
                     + "\n"
                     + "\nPlease click on SAVE LIST button when you are finished."
                     + "\n"

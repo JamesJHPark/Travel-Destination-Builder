@@ -34,14 +34,15 @@ public class MainFrame extends JFrame implements KeyListener {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DreamVacation createDreamDestinations = new DreamVacation();
     ArrayList<String> fixedList = new ArrayList<>();
-    ArrayList<String> masterList = Singleton.getMasterList();
-    DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
+    Singleton singleton = Singleton.getInstance();
+    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
+    ArrayList<String> masterList = singleton.getMasterList();
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu = new JMenu("Data");
     JMenuItem exportDataItem = new JMenuItem("Save Data");
     JMenuItem importDataItem = new JMenuItem("Load Data");
     JMenuItem removeCountry = new JMenuItem("Remove the Most Recent Country Added");
-    JMenuItem addCountry = new JMenuItem("Add the Most Recent Country Added Again");
+    JMenuItem addCountry = new JMenuItem("Adds country typed in Dream Vacation panel to list");
     JMenuItem exitItem = new JMenuItem("Exit");
     JMenu secondMenu = new JMenu("Window");
     JMenu showMenu = new JMenu("Launch");
@@ -75,7 +76,7 @@ public class MainFrame extends JFrame implements KeyListener {
                 season = e.getSeason();
                 helperMethod(d1);
                 Destination destination = new Destination(dreamVacation);
-                createDreamDestinations.addDreamDestinations(destination);
+                thisIsDreamVacation.addDreamDestinations(destination);
                 playAddSound();
             }
         });
@@ -85,13 +86,11 @@ public class MainFrame extends JFrame implements KeyListener {
 
         formPanel.setFormListenerDelete(new FormListenerDelete() {
             public void formEventOccurred1(FormEvent e) {
-
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
-                createDreamDestinations.removeDreamDestinations(removeVacacy);
+                thisIsDreamVacation.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
                 playDeleteSound();
-                System.out.println(createDreamDestinations.getDestinationObject());
             }
         });
 
@@ -102,12 +101,37 @@ public class MainFrame extends JFrame implements KeyListener {
             public void formEventOccurredRemove(FormEvent e) {
                 dreamVacation = e.getDreamVacation();
                 Destination removeVacacy = new Destination(dreamVacation);
-                textPanel.replaceSelection();
-                createDreamDestinations.removeDreamDestinations(removeVacacy);
+                thisIsDreamVacation.removeDreamDestinations(removeVacacy);
                 textPanel.removeText(dreamVacation);
+                playDeleteSound();
+                System.out.println(thisIsDreamVacation.getDestinationObject());
+/*
+                textPanel.removeText(dreamVacation);
+*/
             }
         });
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_ENTER) {
+            masterList.add(FormPanel.getDreamVacationField().getText());
+            textPanel.appendText(FormPanel.getDreamVacationField().getText());
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
 
     public void enterKey() {
         formPanel.setFormListenerEnter(new ListenerEnterKey() {
@@ -117,7 +141,7 @@ public class MainFrame extends JFrame implements KeyListener {
                 season = e.getSeason();
                 helperMethod(d1);
                 Destination destination = new Destination(dreamVacation);
-                createDreamDestinations.addDreamDestinations(destination);
+                thisIsDreamVacation.addDreamDestinations(destination);
 
             }
         });
@@ -141,23 +165,25 @@ public class MainFrame extends JFrame implements KeyListener {
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
-                    createDreamDestinations = dreamVacations.get(0);
-                    fixedList = createDreamDestinations.getDestinationObject();
-                    String fixedToString = fixedList.toString()
+                    thisIsDreamVacation = dreamVacations.get(0);
+                    fixedList = thisIsDreamVacation.getDestinationObject();
+                    masterList = fixedList;
+/*
+                    String fixedToString = masterList.toString()
                             //REFERENCES: code taken from URL:
                             //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
                             //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
                             .replace("[", "")
                             .replace("]", "")
-                            .replace(",", "")
-                            .replaceAll("\\s+", ", ");
-                    textPanel.appendText("Dream Vacation List Loaded: \n" + fixedToString + "\n\nOptions:");
-                    setLoading();
+                            .replace(",", " ")
+                            .replaceAll("\\s+", ", ");*/
 
+                    textPanel.appendText("Dream Vacation List Loaded: \n" + masterList + "\n\nOptions:");
+                    setLoading();
+                    repaint();
 
                 } catch (IOException | IndexOutOfBoundsException e) {
-                    destinations = new Destinations();
-                    createDreamDestinations = new DreamVacation();
+                   //caught exception!
                 }
             }
         });
@@ -172,11 +198,6 @@ public class MainFrame extends JFrame implements KeyListener {
         textPanel.appendText("\n\n3.To simply exit the program, please click Data menu and click Exit.");
 
     }
-
-
-
-
-
 
 
     //REFERENCE: code taken from http://suavesnippets.blogspot.com/2011/06/add-sound-on-jbutton-click-in-java.html
@@ -217,7 +238,7 @@ public class MainFrame extends JFrame implements KeyListener {
     public void saveFunction() {
         try {
             Writer writer = new Writer(new File(DREAM_VACATION_TXT));
-            writer.write(createDreamDestinations);
+            writer.write(thisIsDreamVacation);
             writer.close();
             textPanel.appendText("\nYour customized dream vacation list has been saved. "
                     + "\nTo exit the program, please click on data menu and then click exit. Thank you!");
@@ -326,10 +347,10 @@ public class MainFrame extends JFrame implements KeyListener {
 
         addCountry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println(formPanel.dreamVacationField);
-                FormEvent recentCountry = new FormEvent(this, season, d1, dreamVacation);
-                String d2 = recentCountry.getDreamVacation();
-                helperMethod(d2);
+                Destination addThisCountryToo = new Destination(FormPanel.getDreamVacationField().getText());
+                masterList.add(FormPanel.getDreamVacationField().getText());
+                textPanel.addOnText(FormPanel.getDreamVacationField().getText());
+                thisIsDreamVacation.addDreamDestinations(addThisCountryToo);
             }
         });
 
@@ -377,12 +398,12 @@ public class MainFrame extends JFrame implements KeyListener {
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
-                    createDreamDestinations = dreamVacations.get(0);
-                    fixedList = createDreamDestinations.getDestinationObject();
-                    textPanel.appendText(fixedList.toString());
+                    thisIsDreamVacation = dreamVacations.get(0);
+                    masterList = thisIsDreamVacation.getDestinationObject();
+                    textPanel.appendText(masterList.toString());
                 } catch (IOException | IndexOutOfBoundsException e) {
                     destinations = new Destinations();
-                    createDreamDestinations = new DreamVacation();
+                    thisIsDreamVacation = new DreamVacation();
                 }
 
             }
@@ -410,30 +431,4 @@ public class MainFrame extends JFrame implements KeyListener {
         });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-        String destination = formPanel.destinationField.getText();
-        String dreamVacation = formPanel.dreamVacationField.getText();
-        String season = formPanel.seasonField.getText();
-        FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_ENTER) {
-            String add = formPanel.dreamVacationField.getText();
-            fixedList.add(add);
-            System.out.println("fdasfsdf");
-        }
-
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }

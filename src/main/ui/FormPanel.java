@@ -1,5 +1,7 @@
 package ui;
 
+import model.DreamVacation;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -7,21 +9,25 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //represents the FormPanel of the program
 
-public class FormPanel extends JPanel {
-
+public class FormPanel extends JPanel implements KeyListener {
+    Singleton singleton = Singleton.getInstance();
+    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
+    ArrayList<String> masterList = singleton.getMasterList();
     protected JLabel destinationLabel;
     protected JLabel dreamVacationLabel;
     protected JLabel seasonLabel;
-    protected JTextField destinationField;
-    protected JTextField dreamVacationField;
-    protected JTextField seasonField;
+    public static JTextField destinationField;
+    public static JTextField dreamVacationField;
+    public static JTextField seasonField;
     private JButton okBtn;
     private FormListener formListener;
     private FormListenerDelete formListenerDelete;
@@ -399,5 +405,31 @@ public class FormPanel extends JPanel {
         enterBtn.setMnemonic(KeyEvent.VK_N);
         removeBtn.setMnemonic(KeyEvent.VK_R);
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        if (keyCode == KeyEvent.VK_D) {
+            masterList.add(dreamVacationField.getText());
+        }
+
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+
+    public static JTextField getDreamVacationField() {
+        return dreamVacationField;
+    }
+
 
 }
