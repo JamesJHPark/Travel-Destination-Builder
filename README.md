@@ -40,9 +40,9 @@ press Alt+N on keyboard or click ADD Button.
 Also, you can select the following menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 This will add the typed country in the Dream Vacation text field panel to the Dream Vacation list as well.
 - You can generate the second required event related to the required user story by first typing in a country 
-from the loaded Dream Vacation List (that was previously saved) into Dream Vacation text field panel. 
-Then, to remove this country from the Dream Vacation List, you can press Alt+R on keyboard or click on "Alt+R to remove button".
-This event will allow the user to remove a specific destination country from the Dream Vacation List that was saved and loaded.    
+from the loaded Dream Vacation list (that was previously saved) into the Dream Vacation text field panel. 
+After typing the country into the panel, you can press Alt+R on keyboard or click on "Alt+R to remove" Button.
+This event will allow the user to remove a specific destination country from the Dream Vacation List.    
 - You can locate my audio component by clicking on the ADD Button. Also, you can locate it by selecting the menu item 
 under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 Both events will produce the audio sound. 
