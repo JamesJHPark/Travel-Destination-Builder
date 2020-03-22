@@ -35,11 +35,14 @@ in the future and add these places to a personalized **"dream vacation"** list.
 into the Destination text field panel and click SUBMIT Button.
 - Now, it's time to create the Dream Vacation list! You can type in any country destination that you wish to add to 
 your customized Dream Vacation list into Dream Vacation text field panel.
-- You can generate the first required event of "add an X to a Y" by typing in a country in the text field panel of the Dream Vacation. 
-Then, you can press Alt+N on keyboard or click ADD Button as well. Either of these will add the destination country to the Dream Vacation list.
-- You can generate the second required event of "add an X to a Y" by typing in a country in the text field panel of the Dream Vacation. 
-Then, you can select the following menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
-This will add the typed destination country to the Dream Vacation list as well.
+- You can generate the first required event of "add an X to a Y" by typing in a country in the text field panel of the Dream Vacation, and
+press Alt+N on keyboard or click ADD Button. 
+Also, you can select the following menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
+This will add the typed country in the Dream Vacation text field panel to the Dream Vacation list as well.
+- You can generate the second required event related to the required user story by first typing in a country 
+from the loaded Dream Vacation List (that was previously saved) into Dream Vacation text field panel. 
+Then, to remove this country from the Dream Vacation List, you can press Alt+R on keyboard or click on "Alt+R to remove button".
+This event will allow the user to remove a specific destination country from the Dream Vacation List that was saved and loaded.    
 - You can locate my audio component by clicking on the ADD Button. Also, you can locate it by selecting the menu item 
 under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 Both events will produce the audio sound. 

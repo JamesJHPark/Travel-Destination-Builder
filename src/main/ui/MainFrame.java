@@ -208,8 +208,10 @@ public class MainFrame extends JFrame {
         textPanel.appendText("\n\n 1.To start the App again and create a fresh, new Dream Vacation List,"
                 + " please click START button and go through the program again.");
         textPanel.appendText("\n\n 2.To continue adding to the current list, please type country name into "
-                + "Dream Vacation panel \nand press Alt+N on keyboard, click Add button, "
-                + "or click Data menu and select Add country to add.");
+                + "Dream Vacation panel \n and press Alt+N on keyboard, click Add button, "
+                + "or click Data menu and select Add country to add."
+                + "\n If you wish to remove the country destination from list, please type the country name "
+                + "into Dream Vacation Panel and press Alt+R on keyboard.");
         textPanel.appendText("\n\n 3.To simply exit the program, please click Data menu and click Exit.");
 
     }
