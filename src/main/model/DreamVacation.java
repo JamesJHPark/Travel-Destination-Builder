@@ -77,7 +77,7 @@ public class DreamVacation implements Saveable {
                 .replace("]", "")
                 .replace(",", " ")
 
-                .replaceAll("\\s+", "  ");
+                .replaceAll("\\s+", ",");
 
         printWriter.print(fixedToString);
 

@@ -19,9 +19,7 @@ public class TextPanel extends JPanel {
 
     protected JTextArea textArea;
     private JPopupMenu popup;
-    DreamVacation createDreamVacation = new DreamVacation();
-    private ArrayList<String> fixedList = createDreamVacation.getDestinationObject();
-    ArrayList<String> masterList = Singleton.getMasterList();
+    ArrayList<Destination> masterList = Singleton.getMasterList();
     DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
 
     public JTextArea getTextArea() {
@@ -60,7 +58,9 @@ public class TextPanel extends JPanel {
         removeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String string = textArea.getSelectedText();
+/*
                 removeText(string);
+*/
                 Destination removeThisCountry = new Destination(string);
                 thisIsDreamVacation.removeDreamDestinations(removeThisCountry);
             }
@@ -78,9 +78,10 @@ public class TextPanel extends JPanel {
 
     //EFFECTS: adds the country name in text to the masterList and sets the text for next step of the application
 
-    public void addOnText(String text) {
-        if (!masterList.contains(text)) {
-            masterList.add(text);
+    /*public void addOnText(String text) {
+        Destination addThisCountry = new Destination(text);
+        if (!masterList.contains(addThisCountry)) {
+            masterList.add(addThisCountry);
         }
         textArea.setText("Build your Dream Vacation List!"
                 + "\nType country name "
@@ -91,7 +92,7 @@ public class TextPanel extends JPanel {
                 + "\n"
                 + "\n***Please note: You can only enter a country once***");
     }
-
+*/
     //EFFECTS: sets the text according to the string s input
 
     public void setText(String s) {
@@ -103,11 +104,14 @@ public class TextPanel extends JPanel {
         c.replaceSelection("");
     }*/
 
-    //EFFECTS: removes the country name in text from the masterList and sets the text for next step of the application
+    //MODIFIES: this
+    //EFFECTS: removes the destination from the masterList and sets the text panel for next step of the application
 
     public void removeText(String dreamVacation) {
-        while (masterList.contains(dreamVacation)) {
-            masterList.remove(dreamVacation);
+        Destination dreamDestination = new Destination(dreamVacation);
+        while (masterList.contains(dreamDestination)) {
+            System.out.println(masterList);
+            masterList.remove(dreamDestination);
             textArea.setText("Build your Dream Vacation List!"
                     + "\nType country name "
                     + "into Dream Vacation Panel"

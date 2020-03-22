@@ -1,15 +1,17 @@
 package ui;
 
+import model.Destination;
 import model.DreamVacation;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 // REFERENCE: class codes taken/referenced from https://www.geeksforgeeks.org/singleton-class-java/
 
 public class Singleton {
 
     private static Singleton single_instance = null;
-    private ArrayList<String> masterList = new ArrayList<>();
+    private ArrayList<Destination> masterList = new ArrayList<>();
     private DreamVacation createDreamVacation = new DreamVacation();
 
     //EFFECTS: constructs singleton object as private
@@ -24,8 +26,25 @@ public class Singleton {
         return single_instance;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Singleton)) {
+            return false;
+        }
+        Singleton singleton = (Singleton) o;
+        return masterList.equals(singleton.masterList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(masterList);
+    }
+
     //EFFECTS: gets the ArrayList<String> of Singleton
-    public static ArrayList<String> getMasterList() {
+    public static ArrayList<Destination> getMasterList() {
         return single_instance.masterList;
     }
 

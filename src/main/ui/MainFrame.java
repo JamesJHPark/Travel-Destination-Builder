@@ -33,7 +33,7 @@ public class MainFrame extends JFrame {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     Singleton singleton = Singleton.getInstance();
     DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
-    ArrayList<String> masterList = singleton.getMasterList();
+    ArrayList<Destination> masterList = singleton.getMasterList();
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu = new JMenu("Data");
     JMenuItem exportDataItem = new JMenuItem("Save Data");
@@ -46,12 +46,12 @@ public class MainFrame extends JFrame {
     JTextField component = new JTextField();
     JFrame frame = new JFrame();
 
-// EFFECTS: constructs the Main Frame of the GUI
+    // EFFECTS: constructs the Main Frame of the GUI
     public MainFrame() {
         super("Dream Vacation");
         setPanel();
         submitMethod();
-        deleteMethod();
+        addMethod();
         removeKey();
         enterKey();
         saveMethod();
@@ -65,36 +65,44 @@ public class MainFrame extends JFrame {
         });
     }
     //MODIFIES: this
-    //EFFECTS: submits a typed country or season in the text field panels according to the program specifications
+    //EFFECTS: submits a typed country into Destination panel, Dream Vacation panel,
+    // or season in the text field panels according to the program specifications
 
     public void submitMethod() {
-
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {
                 d1 = e.getDestination();
                 dreamVacation = e.getDreamVacation();
                 season = e.getSeason();
                 helperMethod(d1);
-                Destination destination = new Destination(dreamVacation);
-                thisIsDreamVacation.addDreamDestinations(destination);
-                playAddSound();
             }
         });
     }
 
     //MODIFIES: this
-    //EFFECTS: deletes a typed country in the text field panel from Dream Vacation List
+    //EFFECTS: adds Destination typed in the text field panel to the Dream Vacation List
     // according to the program specifications
 
-    public void deleteMethod() {
+    public void addMethod() {
 
-        formPanel.setFormListenerDelete(new FormListenerDelete() {
-            public void formEventDelete(FormEvent e) {
-                dreamVacation = e.getDreamVacation();
-                Destination removeVacacy = new Destination(dreamVacation);
-                thisIsDreamVacation.removeDreamDestinations(removeVacacy);
-                textPanel.removeText(dreamVacation);
-                playDeleteSound();
+        formPanel.setFormListenerAdd(new FormListenerAdd() {
+            public void formEventAdd(FormEvent e) {
+                playAddSound();
+                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (panelDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                }
+                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(panelDest);
+                }
+                textPanel.setText("Build your Dream Vacation List!"
+                        + "\nType country name "
+                        + "into Dream Vacation Panel"
+                        + "\n" + masterList
+                        + "\n"
+                        + "\nPlease click on SAVE LIST button when you are finished."
+                        + "\n"
+                        + "\n***Please note: You can only enter a country once***");
             }
         });
 
@@ -108,35 +116,50 @@ public class MainFrame extends JFrame {
     public void removeKey() {
         formPanel.setFormListenerRemove(new ListenerRemove() {
             public void formEventOccurredRemove(FormEvent e) {
-                dreamVacation = e.getDreamVacation();
-                Destination removeVacacy = new Destination(dreamVacation);
-                thisIsDreamVacation.removeDreamDestinations(removeVacacy);
-                textPanel.removeText(dreamVacation);
                 playDeleteSound();
-/*
-                textPanel.removeText(dreamVacation);
-*/
+                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (masterList.contains(panelDest)) {
+                    masterList.remove(panelDest);
+                    thisIsDreamVacation.removeDreamDestinations(panelDest);
+                }
+                textPanel.setText("Build your Dream Vacation List!"
+                        + "\nType country name "
+                        + "into Dream Vacation Panel"
+                        + "\n" + masterList
+                        + "\n"
+                        + "\nPlease click on SAVE LIST button when you are finished."
+                        + "\n"
+                        + "\n***Please note: You can only enter a country once***");
             }
         });
     }
 
 
     //MODIFIES: this
-    //EFFECTS: adds a typed country with Alt+E in the text field panel to Dream Vacation List
-    // according to the program specifications
-
+    //EFFECTS: adds a typed country in the text panel of Dream Vacation with Alt+E or by user clicking on this button
+    // to Dream Vacation List
 
     public void enterKey() {
         formPanel.setFormListenerEnter(new ListenerEnterKey() {
             public void formEventOccurredEnter(FormEvent e) {
-                d1 = e.getDestination();
-                dreamVacation = e.getDreamVacation();
-                season = e.getSeason();
-                helperMethod(d1);
-                Destination destination = new Destination(dreamVacation);
-                thisIsDreamVacation.addDreamDestinations(destination);
-
+                playAddSound();
+                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (panelDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                }
+                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(panelDest);
+                }
+                textPanel.setText("Build your Dream Vacation List!"
+                        + "\nType country name "
+                        + "into Dream Vacation Panel"
+                        + "\n" + masterList
+                        + "\n"
+                        + "\nPlease click on SAVE LIST button when you are finished."
+                        + "\n"
+                        + "\n***Please note: You can only enter a country once***");
             }
+
         });
     }
 
@@ -165,22 +188,16 @@ public class MainFrame extends JFrame {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
-                    masterList = thisIsDreamVacation.getDestinationObject();
-                    ArrayList<String> tryList = new ArrayList<>();
-                    tryList.addAll(masterList);
-                    String fixedToString = tryList.toString()
-                            //REFERENCES: code taken from URL:
-                            //           https://stackoverflow.com/questions/4389480/print-array-without-brackets-and-commas
-                            //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
-                            .replace("[", "")
-                            .replace("]", "")
-                            .replaceAll("\\s+", ", ");
-
-                    textPanel.appendText("The loaded Dream Vacation List includes" + fixedToString + "\n\nOptions:");
+                    masterList = thisIsDreamVacation.viewDreamDestinations();
+                    textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
+                            + masterList
+                            + "\n\nOptions:");
                     setLoading();
                 } catch (IOException | IndexOutOfBoundsException e) {
-                    //caught exception!
+                    masterList = new ArrayList<>();
+                    thisIsDreamVacation = new DreamVacation();
                 }
+
             }
         });
     }
@@ -190,9 +207,10 @@ public class MainFrame extends JFrame {
 
     public void setLoading() {
         textPanel.appendText("\n\n 1.To start the App again and create a fresh, new Dream Vacation List,"
-                + " please click START button.");
+                + " please click START button and go through the program again.");
         textPanel.appendText("\n\n 2.To continue adding to the current list, please type country name into "
-                + "Dream Vacation panel \nand press Submit or Alt+N to add, or click Data menu and select Add country");
+                + "Dream Vacation panel \nand press Alt+N on keyboard, click Add button, "
+                + "or click Data menu and select Add country to add.");
         textPanel.appendText("\n\n 3.To simply exit the program, please click Data menu and click Exit.");
 
     }
@@ -243,7 +261,7 @@ public class MainFrame extends JFrame {
             writer.write(thisIsDreamVacation);
             writer.close();
             textPanel.appendText("\nYour customized dream vacation list has been saved. "
-                    + "\n1.To exit the program, please click on data menu and then click exit. Thank you!");
+                    + "\nTo exit the program, please click on data menu and then click exit. Thank you!");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
         } catch (UnsupportedEncodingException e) {
@@ -265,11 +283,14 @@ public class MainFrame extends JFrame {
             textPanel.setText("Goodbye!");
         } else if (season.equalsIgnoreCase("Summer")) {
             summerCall(d1, destination);
+            thisIsDreamVacation = new DreamVacation();
+            masterList = new ArrayList<>();
         } else if (season.equalsIgnoreCase("Winter")) {
             winterCall(d1, destination);
+            thisIsDreamVacation = new DreamVacation();
+            masterList = new ArrayList<>();
         }
 
-        selectVacation(dreamVacation);
     }
 
 
@@ -283,7 +304,7 @@ public class MainFrame extends JFrame {
             textPanel.appendText("\n" + destinations.getSummerDestinations().toString());
             textPanel.appendText("\n");
             textPanel.appendText("\nPlease choose 1 country from this above list only."
-                    + "\nThen, enter the country of your choice into Destination panel on the left"
+                    + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT"
                     + " for your next vacation.");
         }
         if (d1.length() > 0) {
@@ -293,7 +314,10 @@ public class MainFrame extends JFrame {
                     + "\n"
                     + destinations.getCityFromSummerDestinations(destination));
             textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
-                    + "\nPlease type the country name into Dream Vacation panel on the left.");
+                    + "\nPlease type the country name into Dream Vacation panel on the left."
+                    + "\nThen, you can either:\n"
+                    + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
+                    + " to add to Dream Vacation List.");
         }
 
     }
@@ -309,7 +333,7 @@ public class MainFrame extends JFrame {
             textPanel.appendText("\n" + destinationsW.getWinterDestinations().toString());
             textPanel.appendText("\n");
             textPanel.appendText("\nPlease choose 1 country from this above list only."
-                    + "\nThen, enter the country of your choice into Destination panel on the left"
+                    + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT"
                     + " for your next vacation.");
         }
         if (d1.length() > 0) {
@@ -327,14 +351,16 @@ public class MainFrame extends JFrame {
     //MODIFIES: this
     //EFFECTS: selects and adds the dream vacation country to be added to the Dream Vacation list
 
-    public void selectVacation(String dreamVacation) {
+   /* public void selectVacation(String dreamVacation) {
         if (dreamVacation.length() > 0) {
             textPanel.setText("");
             textPanel.appendText("Now, let's create your customized Dream Vacation List for your future travels!\n");
+*//*
             textPanel.addOnText(dreamVacation);
+*//*
 
         }
-    }
+    }*/
 
 
     //MODIFIES: this
@@ -364,18 +390,39 @@ public class MainFrame extends JFrame {
         importMethod();
         exportMethod();
         showItemMethod();
-
-        addCountry.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Destination addThisCountryToo = new Destination(FormPanel.getDreamVacationField().getText());
-                textPanel.addOnText(FormPanel.getDreamVacationField().getText());
-                thisIsDreamVacation.addDreamDestinations(addThisCountryToo);
-                playAddSound();
-            }
-        });
+        addCountryWithMenu();
 
         return menuBar;
     }
+
+    //MODIFIES: this
+    //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
+
+    public void addCountryWithMenu() {
+        addCountry.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                playAddSound();
+                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (panelDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                }
+                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(panelDest);
+                }
+                textPanel.setText("Build your Dream Vacation List!"
+                        + "\nType country name "
+                        + "into Dream Vacation Panel"
+                        + "\n" + masterList
+                        + "\n"
+                        + "\nPlease click on SAVE LIST button when you are finished."
+                        + "\n"
+                        + "\n***Please note: You can only enter a country once***");
+            }
+
+        });
+
+    }
+
 
     //EFFECTS: sets up the menu bar of the application
 
@@ -394,15 +441,13 @@ public class MainFrame extends JFrame {
         exitItem.setMnemonic(KeyEvent.VK_E);
     }
 
-    //EFFECTS: menu method to close the program
-
+    //EFFECTS: menu method exit to close the program
     public void exitMethod() {
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int action = JOptionPane.showConfirmDialog(MainFrame.this,
                         "Would you like to close the Vacation App?",
                         "YES", JOptionPane.OK_CANCEL_OPTION);
-
                 if (action == JOptionPane.OK_OPTION) {
                     System.exit(0);
                 }
@@ -422,22 +467,14 @@ public class MainFrame extends JFrame {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
-                    masterList = thisIsDreamVacation.getDestinationObject();
-                    ArrayList<String> tryList = new ArrayList<>();
-                    tryList.addAll(masterList);
+                    masterList = thisIsDreamVacation.viewDreamDestinations();
 
-                    String fixedToString = tryList.toString()
-                            //REFERENCES: code taken from URL:
-                            //           https://stackoverflow.com/questions/4389480/print-array-without-brackets-and-commas
-                            //           https://javaconceptoftheday.com/remove-white-spaces -from-string-in-java/
-                            .replace("[", "")
-                            .replace("]", "")
-                            .replaceAll("\\s+", " ");
-
-                    textPanel.appendText("Dream Vacation List Loaded:" + fixedToString + "\n\nOptions:");
+                    textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
+                            + masterList
+                            + "\n\nOptions:");
                     setLoading();
                 } catch (IOException | IndexOutOfBoundsException e) {
-                    destinations = new Destinations();
+                    masterList = new ArrayList<>();
                     thisIsDreamVacation = new DreamVacation();
                 }
             }
@@ -474,9 +511,7 @@ public class MainFrame extends JFrame {
 /*
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -487,17 +522,11 @@ public class MainFrame extends JFrame {
             masterList.add(FormPanel.getDreamVacationField().getText());
             textPanel.setText(FormPanel.getDreamVacationField().getText());
             repaint();
-
         }
     }
-
-
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
-
-
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
@@ -507,12 +536,6 @@ public class MainFrame extends JFrame {
                 System.out.println(thisIsDreamVacation.getDestinationObject());
                 masterList.add(FormPanel.getDreamVacationField().getText());
                 textPanel.setText(FormPanel.getDreamVacationField().getText());
-
             }
-
         }
     }*/
-
-
-
-

@@ -1,9 +1,13 @@
 package ui;
 
+import model.Destination;
+import model.DreamVacation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents the Toolbar of the program
@@ -11,7 +15,9 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton goodbyeButton;
     private StringListener textListener;
-
+    Singleton singleton = Singleton.getInstance();
+    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
+    ArrayList<Destination> masterList = singleton.getMasterList();
 
 //EFFECTS: constructs the toolbar of the program
     public Toolbar() {
@@ -41,6 +47,7 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
         if (clicked == startButton) {
+
             if (textListener != null) {
                 intro();
 
@@ -59,13 +66,13 @@ public class Toolbar extends JPanel implements ActionListener {
         textListener.textEmitted("");
         textListener.textEmitted("Hello there! Choose the season for your next vacation: "
                 + "\n"
-                + "\nSummer (type Summer in the Season panel)"
+                + "\nSummer (type Summer in the Season text field and click SUBMIT)"
                 + "\n"
-                + "\nWinter (type Winter in the Season panel)"
+                + "\nWinter (type Winter in the Season text field and click SUBMIT)"
                 + "\n"
                 + "\nLoad (to view your previous Dream Vacation list, click LOAD LIST button on the bottom left)"
                 + "\n"
-                + "\nExit (click Data menu on top left of the screen, then click exit)"
+                + "\nExit (click Data menu on top left of the screen, select exit)"
                 + "\n");
 
     }

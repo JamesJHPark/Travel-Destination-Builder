@@ -24,7 +24,7 @@ public class FormPanel extends JPanel {
     public static JTextField seasonField;
     private JButton okBtn;
     private FormListener formListener;
-    private FormListenerDelete formListenerDelete;
+    private FormListenerAdd formListenerAdd;
     private ListenerEnterKey listenerEnterKey;
     private ListenerRemove listenerRemove;
     private FormListenerSave formListenerSave;
@@ -186,8 +186,8 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerDelete != null) {
-                    formListenerDelete.formEventDelete(ev);
+                if (formListenerAdd != null) {
+                    formListenerAdd.formEventAdd(ev);
                 }
             }
         });
@@ -344,9 +344,9 @@ public class FormPanel extends JPanel {
     //MODIFIES: this
     //EFFECTS: FormListener for the delete JButton
 
-    public void setFormListenerDelete(FormListenerDelete listener) {
+    public void setFormListenerAdd(FormListenerAdd listener) {
 
-        this.formListenerDelete = listener;
+        this.formListenerAdd = listener;
     }
 
     //EFFECTS: this
@@ -382,7 +382,7 @@ public class FormPanel extends JPanel {
     //EFFECTS: sets up the JLabels, text fields, and buttons for the form panel of the program
     public void setPanel() {
         Dimension dim = getPreferredSize();
-        dim.width = 370;
+        dim.width = 310;
         setPreferredSize(dim);
         destinationLabel = new JLabel("Destination: ");
         dreamVacationLabel = new JLabel("Dream Vacation: ");
@@ -391,9 +391,9 @@ public class FormPanel extends JPanel {
         dreamVacationField = new JTextField(10);
         seasonField = new JTextField(10);
         okBtn = new JButton("SUBMIT");
-        deleteBtn = new JButton("DELETE");
-        enterBtn = new JButton("Alt+N adds X to list");
-        removeBtn = new JButton("Alt+R removes X from list");
+        deleteBtn = new JButton("ADD button");
+        enterBtn = new JButton("Alt+N to Add");
+        removeBtn = new JButton("Alt+R to Remove");
         saveBtn = new JButton("SAVE LIST");
         loadBtn = new JButton("LOAD LIST");
         enterBtn.setMnemonic(KeyEvent.VK_N);
