@@ -11,7 +11,6 @@ public class FormEvent extends EventObject {
     private String season;
 
 // EFFECTS: to construct FormEvent with Object source, destination, dreamVacation, and season
-
     public FormEvent(Object source, String destination, String dreamVacation, String season) {
         super(source);
         this.destination = destination;
@@ -19,19 +18,18 @@ public class FormEvent extends EventObject {
         this.season = season;
     }
 
-    //EFFECTS: to return the string destination of the typed destination by user
+    //EFFECTS: to return the string destination of the typed destination in the text field by user
 
     public String getDestination() {
         return destination;
     }
 
-    //EFFECTS: to return the string season of the typed season by user
-
+    //EFFECTS: to return the string season of the typed season in the text field by user
     public String getSeason() {
         return season;
     }
 
-    //EFFECTS: to return the string dreamVacation of the typed dream destination by user
+    //EFFECTS: to return the string dreamVacation of the typed dream destination in the text field by user
 
     public String getDreamVacation() {
         return dreamVacation;

@@ -26,6 +26,7 @@ public class Singleton {
         return single_instance;
     }
 
+    //EFFECTS: hashcode and equals set to the class field, masterList
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -37,6 +38,8 @@ public class Singleton {
         Singleton singleton = (Singleton) o;
         return masterList.equals(singleton.masterList);
     }
+
+    //EFFECTS: returns the integer value of the hashcode
 
     @Override
     public int hashCode() {

@@ -35,15 +35,16 @@ in the future and add these places to a personalized **"dream vacation"** list.
 into the Destination text field panel and click SUBMIT Button.
 - Now, it's time to create the Dream Vacation list! You can type in any country destination that you wish to add to 
 your customized Dream Vacation list into Dream Vacation text field panel.
-- You can generate the first required event of "add an X to a Y" by typing in a destination country in the text field panel of the Dream Vacation. 
+- You can generate the first required event of "add an X to a Y" by typing in a country in the text field panel of the Dream Vacation. 
 Then, you can press Alt+N on keyboard or click ADD Button as well. Either of these will add the destination country to the Dream Vacation list.
-- You can generate the second required event of "add an X to a Y" by typing in a destination country in the text field panel of the Dream Vacation. 
-Then, you can select the following menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list"
+- You can generate the second required event of "add an X to a Y" by typing in a country in the text field panel of the Dream Vacation. 
+Then, you can select the following menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 This will add the typed destination country to the Dream Vacation list as well.
 - You can locate my audio component by clicking on the ADD Button. Also, you can locate it by selecting the menu item 
 under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 Both events will produce the audio sound. 
-- You can also locate my visual component (as an extra) right on the form panel of the GUI. 
+- You can also locate my visual component (as an extra) right on the form panel of the GUI. The blue sky with a bird and clouds
+fit the theme of travelling nicely. 
 - You can save the state of my application by clicking on the SAVE LIST Button after you have created a Dream Vacation List.
 - You can also save the state of my application by selecting the following menu item under Data on top left of the screen: Save Data.
 - You can close the program by selecting the menu item Exit under Data. 

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 //Represents TextPanel of the program
 public class TextPanel extends JPanel {
 
-
     protected JTextArea textArea;
     private JPopupMenu popup;
     ArrayList<Destination> masterList = Singleton.getMasterList();
@@ -68,6 +67,7 @@ public class TextPanel extends JPanel {
 
     }
 
+
     //EFFECTS: appends text to the textArea
 
     public void appendText(String text) {
@@ -107,7 +107,7 @@ public class TextPanel extends JPanel {
     //MODIFIES: this
     //EFFECTS: removes the destination from the masterList and sets the text panel for next step of the application
 
-    public void removeText(String dreamVacation) {
+   /* public void removeText(String dreamVacation) {
         Destination dreamDestination = new Destination(dreamVacation);
         while (masterList.contains(dreamDestination)) {
             System.out.println(masterList);
@@ -122,5 +122,5 @@ public class TextPanel extends JPanel {
                     + "\n***Please note: You can only enter a country once***");
         }
     }
-
+*/
 }

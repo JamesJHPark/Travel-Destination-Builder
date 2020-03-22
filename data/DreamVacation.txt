@@ -1,1 +1,1 @@
-korea,italy,farne
+Korea,Italy,France,Japan

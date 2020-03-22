@@ -19,7 +19,7 @@ import java.util.List;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-
+//represents the MainFrame of the App and extends JFrame
 public class MainFrame extends JFrame {
 
     public TextPanel textPanel;
@@ -84,16 +84,15 @@ public class MainFrame extends JFrame {
     // according to the program specifications
 
     public void addMethod() {
-
         formPanel.setFormListenerAdd(new FormListenerAdd() {
             public void formEventAdd(FormEvent e) {
                 playAddSound();
-                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
-                if (panelDest.getDestinationCountryName().length() > 1) {
-                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (dreamDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(dreamDest);
                 }
-                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
-                    masterList.add(panelDest);
+                if (!masterList.contains(dreamDest) && dreamDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(dreamDest);
                 }
                 textPanel.setText("Build your Dream Vacation List!"
                         + "\nType country name "
@@ -117,10 +116,10 @@ public class MainFrame extends JFrame {
         formPanel.setFormListenerRemove(new ListenerRemove() {
             public void formEventOccurredRemove(FormEvent e) {
                 playDeleteSound();
-                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
-                if (masterList.contains(panelDest)) {
-                    masterList.remove(panelDest);
-                    thisIsDreamVacation.removeDreamDestinations(panelDest);
+                Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (masterList.contains(dreamDest)) {
+                    masterList.remove(dreamDest);
+                    thisIsDreamVacation.removeDreamDestinations(dreamDest);
                 }
                 textPanel.setText("Build your Dream Vacation List!"
                         + "\nType country name "
@@ -143,12 +142,12 @@ public class MainFrame extends JFrame {
         formPanel.setFormListenerEnter(new ListenerEnterKey() {
             public void formEventOccurredEnter(FormEvent e) {
                 playAddSound();
-                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
-                if (panelDest.getDestinationCountryName().length() > 1) {
-                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (dreamDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(dreamDest);
                 }
-                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
-                    masterList.add(panelDest);
+                if (!masterList.contains(dreamDest) && dreamDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(dreamDest);
                 }
                 textPanel.setText("Build your Dream Vacation List!"
                         + "\nType country name "
@@ -402,12 +401,12 @@ public class MainFrame extends JFrame {
         addCountry.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playAddSound();
-                Destination panelDest = new Destination(FormPanel.getDreamVacationField().getText());
-                if (panelDest.getDestinationCountryName().length() > 1) {
-                    thisIsDreamVacation.addDreamDestinations(panelDest);
+                Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
+                if (dreamDest.getDestinationCountryName().length() > 1) {
+                    thisIsDreamVacation.addDreamDestinations(dreamDest);
                 }
-                if (!masterList.contains(panelDest) && panelDest.getDestinationCountryName().length() >= 1) {
-                    masterList.add(panelDest);
+                if (!masterList.contains(dreamDest) && dreamDest.getDestinationCountryName().length() >= 1) {
+                    masterList.add(dreamDest);
                 }
                 textPanel.setText("Build your Dream Vacation List!"
                         + "\nType country name "
