@@ -43,9 +43,9 @@ This will add the typed country in the Dream Vacation text field panel to the Dr
 from the loaded Dream Vacation list (that was previously saved) into the Dream Vacation text field panel. 
 After typing the country into the panel, you can press Alt+R on keyboard or click on "Alt+R to remove" Button.
 This event will allow the user to remove a specific destination country from the Dream Vacation List.    
-- You can locate my audio component by clicking on the ADD Button. Also, you can locate it by selecting the menu item 
-under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
-Both events will produce the audio sound. 
+- You can locate my audio component by clicking on the ADD Button, pressing Alt+N or Alt+R on keyboard. 
+Also, you can locate it by selecting the menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
+All these events will produce the audio sound. 
 - You can also locate my visual component (as an extra) right on the form panel of the GUI. The blue sky with a bird and clouds
 fit the theme of travelling nicely. 
 - You can save the state of my application by clicking on the SAVE LIST Button after you have created a Dream Vacation List.
