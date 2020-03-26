@@ -296,15 +296,14 @@ public class MainFrame extends JFrame {
     }
 
 
-    //EFFECTS: helper method by setting the summer season and provides provides
-    // hard-coded answers in running the application
-
+    //EFFECTS: sets the season with user's response of Summer and provides the user with
+    // list of summer Destinations to choose from and shows the list of the corresponding cities of summer Destination
+    // that the user has chosen
 
     public void summerCall(String d1, Destination destination) {
         if (season.equalsIgnoreCase("Summer")) {
             textPanel.appendText("\nHere is the list of summer travel destinations!");
-            textPanel.appendText("\n" + destinations.getSummerDestinations().toString());
-            textPanel.appendText("\n");
+            textPanel.appendText("\n" + destinations.getSummerDestinations().toString() + "\n");
             textPanel.appendText("\nPlease choose 1 country from this above list only."
                     + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT"
                     + " for your next vacation.");
@@ -322,26 +321,25 @@ public class MainFrame extends JFrame {
                         + "\nThen, you can either:\n"
                         + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
                         + " to add to Dream Vacation List.");
-
             } catch (IllegalCityException e) {
-                //catches IllegalCityException
-
+                //IllegalCityException caught
             }
-
         }
 
     }
 
 
 
-    //EFFECTS: helper method by setting the winter season and provides provides
-    // hard-coded answers in running the application
+
+
+    //EFFECTS: sets the season with user's response of Summer and provides the user with
+    // list of summer Destinations to choose from and shows the list of the corresponding cities of winter Destination
+    // that the user has chosen
 
     public void winterCall(String d1, Destination destination) {
         if (season.equalsIgnoreCase("Winter")) {
             textPanel.appendText("\nHere is the list of winter travel destinations!");
-            textPanel.appendText("\n" + destinationsW.getWinterDestinations().toString());
-            textPanel.appendText("\n");
+            textPanel.appendText("\n" + destinationsW.getWinterDestinations().toString() + "\n");
             textPanel.appendText("\nPlease choose 1 country from this above list only."
                     + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT"
                     + " for your next vacation.");
@@ -356,9 +354,12 @@ public class MainFrame extends JFrame {
                         + "\n"
                         + destinationsW.getCityFromWinterDestinations(destination));
                 textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
-                        + "\nPlease type the country name into Dream Vacation panel on the left.");
+                        + "\nPlease type the country name into Dream Vacation panel on the left."
+                        + "\nThen, you can either:\n"
+                        + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
+                        + " to add to Dream Vacation List.");
             } catch (IllegalCityException e) {
-                //catch IllegalCityException
+                //IllegalCityException caught
             }
         }
     }
