@@ -1,6 +1,7 @@
 
 package ui;
 
+import exceptions.IllegalCityException;
 import model.Destination;
 import model.Destinations;
 import model.DreamVacation;
@@ -140,8 +141,13 @@ public class VacationResolver {
                 + nextDestination.getDestinationCountryName());
         System.out.println("For your travel to: " + nextDestination.getDestinationCountryName()
                 + ", here is the list of popular cities:");
-        System.out.println(chooseDestination.getCityFromSummerDestinations(nextDestination));
-        makeDreamDestinations();
+        try {
+            chooseDestination.getCityFromSummerDestinations(nextDestination);
+            System.out.println(chooseDestination.getCityFromSummerDestinations(nextDestination));
+            makeDreamDestinations();
+        } catch (IllegalCityException e) {
+            System.out.println("IllegalCityException caught!");
+        }
 
     }
 
@@ -220,8 +226,13 @@ public class VacationResolver {
                 + nextDestination.getDestinationCountryName());
         System.out.println("For your travel to: " + nextDestination.getDestinationCountryName()
                 + ", here is the list of popular cities:");
-        System.out.println(chooseDestination.getCityFromWinterDestinations(nextDestination));
-        makeDreamDestinationsWinter();
+        try {
+            chooseDestination.getCityFromWinterDestinations(nextDestination);
+            System.out.println(chooseDestination.getCityFromWinterDestinations(nextDestination));
+            makeDreamDestinationsWinter();
+        } catch (IllegalCityException e) {
+            System.out.println("IllegalCityException caught!");
+        }
 
     }
 

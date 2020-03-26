@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.IllegalCityException;
 import model.Destination;
 import model.Destinations;
 import model.DreamVacation;
@@ -309,16 +310,24 @@ public class MainFrame extends JFrame {
                     + " for your next vacation.");
         }
         if (d1.length() > 0) {
-            textPanel.setText("You have chosen " + d1);
-            textPanel.appendText("\nFor your travel to: " + d1
-                    + ", here is the list of popular cities:"
-                    + "\n"
-                    + destinations.getCityFromSummerDestinations(destination));
-            textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
-                    + "\nPlease type the country name into Dream Vacation panel on the left."
-                    + "\nThen, you can either:\n"
-                    + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
-                    + " to add to Dream Vacation List.");
+            try {
+                destinations.getCityFromSummerDestinations(destination);
+                textPanel.setText("You have chosen " + d1);
+                textPanel.appendText("\nFor your travel to: " + d1
+                        + ", here is the list of popular cities:"
+                        + "\n"
+                        + destinations.getCityFromSummerDestinations(destination));
+                textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
+                        + "\nPlease type the country name into Dream Vacation panel on the left."
+                        + "\nThen, you can either:\n"
+                        + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
+                        + " to add to Dream Vacation List.");
+
+            } catch (IllegalCityException e) {
+                //catches IllegalCityException
+
+            }
+
         }
 
     }
@@ -338,13 +347,19 @@ public class MainFrame extends JFrame {
                     + " for your next vacation.");
         }
         if (d1.length() > 0) {
-            textPanel.setText("You have chosen " + d1);
-            textPanel.appendText("\nFor your travel to: " + d1
-                    + ", here is the list of popular cities:"
-                    + "\n"
-                    + destinationsW.getCityFromWinterDestinations(destination));
-            textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
-                    + "\nPlease type the country name into Dream Vacation panel on the left.");
+
+            try {
+                destinationsW.getCityFromWinterDestinations(destination);
+                textPanel.setText("You have chosen " + d1);
+                textPanel.appendText("\nFor your travel to: " + d1
+                        + ", here is the list of popular cities:"
+                        + "\n"
+                        + destinationsW.getCityFromWinterDestinations(destination));
+                textPanel.appendText("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
+                        + "\nPlease type the country name into Dream Vacation panel on the left.");
+            } catch (IllegalCityException e) {
+                //catch IllegalCityException
+            }
         }
     }
 

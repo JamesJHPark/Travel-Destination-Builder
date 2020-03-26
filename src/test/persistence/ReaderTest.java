@@ -21,13 +21,23 @@ class ReaderTest {
 
         try {
 
-            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile2.txt"));
+            List<DreamVacation> dreamVacations = Reader.readDreamVacations
+                    (new File("./data/testDreamVacationFile2.txt"));
             createDreamDestinations = dreamVacations.get(0);
             fixedList = createDreamDestinations.getDestinationObject();
+            String fixedToString = fixedList.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", " ")
+
+                    .replaceAll("\\s+", ", ");
+            assertEquals("Iceland, USA", fixedToString);
 
         } catch (IOException | IndexOutOfBoundsException e) {
             fail("IOException should not have been thrown");
-            assertEquals("Iceland, USA", fixedList);
 
         }
     }
@@ -36,13 +46,23 @@ class ReaderTest {
     void testParseDreamVacationFile3() {
         try {
 
-            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File("./data/testDreamVacationFile3.txt"));
+            List<DreamVacation> dreamVacations = Reader.readDreamVacations
+                    (new File("./data/testDreamVacationFile3.txt"));
             createDreamDestinations = dreamVacations.get(0);
             fixedList = createDreamDestinations.getDestinationObject();
+            String fixedToString = fixedList.toString()
+                    //REFERENCES: code taken from URL:
+                    //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
+                    //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace(",", " ")
+
+                    .replaceAll("\\s+", ", ");
+            assertEquals("Vietnam, Croatia", fixedToString);
 
         } catch (IOException | IndexOutOfBoundsException e) {
             fail("IOException should not have been thrown");
-            assertEquals("Iceland, USA", fixedList);
 
         }
     }

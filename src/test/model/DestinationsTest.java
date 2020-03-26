@@ -1,11 +1,11 @@
 package model;
 
+import exceptions.IllegalCityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class DestinationsTest {
     private Destinations testDestination;
@@ -43,7 +43,7 @@ class DestinationsTest {
         assertEquals(5, testDestination.getWinterDestinations().size());
     }
 
-    @Test
+   /* @Test
     void testWinterOrSummer() {
         ArrayList<Destination> summerList = testDestination.chooseWinterOrSummer("summer");
         String summerList1 = summerList.toString()
@@ -68,36 +68,134 @@ class DestinationsTest {
         assertEquals("Mexico, Iceland, USA, France, Switzerland", winterList1);
 
     }
-
+*/
 
     @Test
-    void testGetCityFromSummerDestination() {
-        assertEquals("Florence, Venice, Rome", testDestination.getCityFromSummerDestinations(italy));
-        assertEquals("Dubrovnik, Zagreb, Split", testDestination.getCityFromSummerDestinations(croatia));
-        assertEquals("Kyoto, Tokyo, Osaka", testDestination.getCityFromSummerDestinations(japan));
-        assertEquals("Barcelona, Madrid, Seville", testDestination.getCityFromSummerDestinations(spain));
-        assertEquals("Ho Chih Minh, Da Nang, Hanoi", testDestination.getCityFromSummerDestinations(vietnam));
+    void testGetCityFromItaly() {
+        try {
+            testDestination.getCityFromSummerDestinations(italy);
+            assertEquals("Florence, Venice, Rome", testDestination.getCityFromSummerDestinations(italy));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
     }
 
     @Test
-    void testGetCityFromWinterDestination() {
-        assertEquals("Cozumel, Tulum, Cancun, Mexico City", testDestination.getCityFromWinterDestinations(mexico));
-        assertEquals("Paris, Strasbourg", testDestination.getCityFromWinterDestinations(france));
-        assertEquals("Zurich, Lucerne, Geneva, Bern", testDestination.getCityFromWinterDestinations(switzerland));
-        assertEquals("Reykjavik, Selfoss", testDestination.getCityFromWinterDestinations(iceland));
-        assertEquals("Miami, Los Angeles, New York", testDestination.getCityFromWinterDestinations(usa));
+    void testGetCityFromCroatia() {
+        try {
+            testDestination.getCityFromSummerDestinations(croatia);
+            assertEquals("Dubrovnik, Zagreb, Split", testDestination.getCityFromSummerDestinations(croatia));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
     }
 
     @Test
-    void testGetCity() {
-        assertEquals("Wrong country selected! It was not from the provided list",
-                testDestination.getCityFromWinterDestinations(korea));
+    void testGetCityFromSpain() {
+        try {
+            testDestination.getCityFromSummerDestinations(spain);
+            assertEquals("Barcelona, Madrid, Seville", testDestination.getCityFromSummerDestinations(spain));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
     }
 
     @Test
-    void testGetCityAgain() {
-        assertEquals("Wrong country selected! It was not from the provided list",
-                testDestination.getCityFromSummerDestinations(korea));
+    void testGetCityFromJapan() {
+        try {
+            testDestination.getCityFromSummerDestinations(japan);
+            assertEquals("Kyoto, Tokyo, Osaka", testDestination.getCityFromSummerDestinations(japan));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityFromVietnam() {
+        try {
+            testDestination.getCityFromSummerDestinations(vietnam);
+            assertEquals("Ho Chih Minh, Da Nang, Hanoi",
+                    testDestination.getCityFromSummerDestinations(vietnam));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityFromMexico() {
+        try {
+            testDestination.getCityFromWinterDestinations(mexico);
+            assertEquals("Cozumel, Tulum, Cancun, Mexico City",
+                    testDestination.getCityFromWinterDestinations(mexico));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityFromFrance() {
+        try {
+            testDestination.getCityFromWinterDestinations(france);
+            assertEquals("Paris, Strasbourg",
+                    testDestination.getCityFromWinterDestinations(france));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityFromSwitzerland() {
+        try {
+            testDestination.getCityFromWinterDestinations(switzerland);
+            assertEquals("Zurich, Lucerne, Geneva, Bern",
+                    testDestination.getCityFromWinterDestinations(switzerland));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+
+    @Test
+    void testGetCityFromIceland() {
+        try {
+            testDestination.getCityFromWinterDestinations(iceland);
+            assertEquals("Reykjavik, Selfoss",
+                    testDestination.getCityFromWinterDestinations(iceland));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have been thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityFromUsa() {
+        try {
+            testDestination.getCityFromWinterDestinations(usa);
+            assertEquals("Miami, Los Angeles, New York",
+                    testDestination.getCityFromWinterDestinations(usa));
+        } catch (IllegalCityException e) {
+            fail("IllegalCityException shouldn't have thrown!");
+        }
+    }
+
+    @Test
+    void testGetCityCatchExceptionSummer() {
+        try {
+            testDestination.getCityFromSummerDestinations(korea);
+            fail("IllegalCityException should have been thrown!");
+        } catch (IllegalCityException e) {
+            System.out.println("expected to catch IllegalCityException!");
+        }
+    }
+
+    @Test
+    void testGetCityCatchExceptionWinter() {
+        try {
+            testDestination.getCityFromWinterDestinations(korea);
+            fail("IllegalCityException should have been thrown!");
+        } catch (IllegalCityException e) {
+            System.out.println("expected to catch IllegalCityException!");
+
+        }
     }
 
 }

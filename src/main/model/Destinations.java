@@ -1,5 +1,7 @@
 package model;
 
+import exceptions.IllegalCityException;
+
 import java.util.ArrayList;
 
 // Represents specific summer and winter destinations for future vacation
@@ -8,8 +10,7 @@ public class Destinations {
     private ArrayList<Destination> summerDestinations;
     private ArrayList<Destination> winterDestinations;
 
-    //EFFECTS: Destinations has specified summer and winter destinations in separate ArrayLists
-
+    //EFFECTS: Constructor of Destinations has specified summer and winter destinations in separate ArrayLists
     public Destinations() {
         summerDestinations = new ArrayList<>();
         winterDestinations = new ArrayList<>();
@@ -26,6 +27,8 @@ public class Destinations {
         return winterDestinations.size();
     }
 
+/*
+
     //REQUIRES: the season has to be either summer or winter
     //EFFECTS: to return the list of destinations based on the chosen season
 
@@ -39,6 +42,7 @@ public class Destinations {
         }
         return chosenSeason;
     }
+*/
 
 
     //EFFECTS: to return the list of all summer destinations
@@ -52,7 +56,7 @@ public class Destinations {
     }
 
     //MODIFIES: this
-    //EFFECTS: to add the list of summer destinations into summerDestinations
+    //EFFECTS: to add summer Destinations into summerDestinations list
     public void addedSummerDestinations() {
         Destination italy = new Destination("Italy");
         Destination spain = new Destination("Spain");
@@ -69,7 +73,7 @@ public class Destinations {
 
 
     //MODIFIES: this
-    //EFFECTS: to add the list of winter destinations into winterDestinations
+    //EFFECTS: to add winter Destinations into winterDestinations list
     public void addedWinterDestinations() {
         Destination mexico = new Destination("Mexico");
         Destination iceland = new Destination("Iceland");
@@ -83,7 +87,53 @@ public class Destinations {
         winterDestinations.add(switzerland);
     }
 
-    /*//REQUIRES: the country to be chosen has to be from the provided list of summer destinations
+    //EFFECTS: if the input parameter is not a valid summer Destination, throws IllegalCityException,
+    // otherwise, retrieves the list of popular cities for the entered Destination from the summerDestinations list
+
+    public String getCityFromSummerDestinations(Destination d) throws IllegalCityException {
+/*
+        String city = "Wrong country selected! It was not from the provided list";
+*/
+        String city;
+        if (d.getDestinationCountryName().equalsIgnoreCase("Italy")) {
+            city = "Florence, Venice, Rome";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Spain")) {
+            city = "Barcelona, Madrid, Seville";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Croatia")) {
+            city = "Dubrovnik, Zagreb, Split";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Vietnam")) {
+            city = "Ho Chih Minh, Da Nang, Hanoi";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Japan")) {
+            city = "Kyoto, Tokyo, Osaka";
+        } else {
+            throw new IllegalCityException();
+        }
+        return city;
+    }
+
+    //EFFECTS: if the input parameter is not a valid winter Destination, throws IllegalCityException,
+    // otherwise, retrieves the list of popular cities for the entered Destination from the winterDestinations list
+
+    public String getCityFromWinterDestinations(Destination d) throws IllegalCityException {
+        String city;
+        if (d.getDestinationCountryName().equalsIgnoreCase("Mexico")) {
+            city = "Cozumel, Tulum, Cancun, Mexico City";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Iceland")) {
+            city = "Reykjavik, Selfoss";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("USA")) {
+            city = "Miami, Los Angeles, New York";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("France")) {
+            city = "Paris, Strasbourg";
+        } else if (d.getDestinationCountryName().equalsIgnoreCase("Switzerland")) {
+            city = "Zurich, Lucerne, Geneva, Bern";
+        } else {
+            throw new IllegalCityException();
+        }
+        return city;
+    }
+
+
+     /*//REQUIRES: the country to be chosen has to be from the provided list of Summer destinations
     //EFFECTS: to choose the next travel summer vacation from the list of summer destinations
 
     public Destination chooseSummerDestination(Destination destination) {
@@ -107,43 +157,5 @@ public class Destinations {
         return destination;
     }*/
 
-    //REQUIRES: the country to be typed in has to be from the specific list of countries provided
-    //EFFECTS: to retrieve the list of popular cities for the chosen country from the summer destinations list
-
-    public String getCityFromSummerDestinations(Destination d) {
-        String city = "Wrong country selected! It was not from the provided list";
-        if (d.getDestinationCountryName().equalsIgnoreCase("Italy")) {
-            city = "Florence, Venice, Rome";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Spain")) {
-            city = "Barcelona, Madrid, Seville";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Croatia")) {
-            city = "Dubrovnik, Zagreb, Split";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Vietnam")) {
-            city = "Ho Chih Minh, Da Nang, Hanoi";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Japan")) {
-            city = "Kyoto, Tokyo, Osaka";
-        }
-        return city;
-    }
-
-
-    //REQUIRES: the country to be typed in has to be from the specific list of countries provided
-    //EFFECTS: to retrieve the list of popular cities for the chosen country from the winter destinations list
-
-    public String getCityFromWinterDestinations(Destination d) {
-        String city = "Wrong country selected! It was not from the provided list";
-        if (d.getDestinationCountryName().equalsIgnoreCase("Mexico")) {
-            city = "Cozumel, Tulum, Cancun, Mexico City";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Iceland")) {
-            city = "Reykjavik, Selfoss";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("USA")) {
-            city = "Miami, Los Angeles, New York";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("France")) {
-            city = "Paris, Strasbourg";
-        } else if (d.getDestinationCountryName().equalsIgnoreCase("Switzerland")) {
-            city = "Zurich, Lucerne, Geneva, Bern";
-        }
-        return city;
-    }
 
 }
