@@ -111,11 +111,11 @@ public class MainFrame extends JFrame {
 
     private JMenuBar createMenuBar() {
         menuItemsCohesionFix.fileMenuMethods();
-        menuItemsCohesionFix.exitMethod();
-        menuItemsCohesionFix.importMethod();
+        handleExit();
+        handleImport();
         exportMethod();
         showItemMethod();
-        addCountryWithMenu();
+        handleAddCountryWithMenu();
         return menuItemsCohesionFix.getMenuBar();
     }
 
@@ -417,26 +417,12 @@ public class MainFrame extends JFrame {
     }
 
 
-    //MODIFIES: this
-    //EFFECTS: selects and adds the dream vacation country to be added to the Dream Vacation list
-
-   /* public void selectVacation(String dreamVacation) {
-        if (dreamVacation.length() > 0) {
-            textPanel.setText("");
-            textPanel.appendText("Now, let's create your customized Dream Vacation List for your future travels!\n");
-*//*
-            textPanel.addOnText(dreamVacation);
-*//*
-
-        }
-    }*/
-
 
     //MODIFIES: this
     //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
-
-    public void addCountryWithMenu() {
-        menuItemsCohesionFix.getAddCountry().addActionListener(new ActionListener() {
+    public void handleAddCountryWithMenu() {
+        this.menuItemsCohesionFix.addCountryWithMenu(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 playAddSound();
                 Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
@@ -454,19 +440,24 @@ public class MainFrame extends JFrame {
                         + "\nPlease click on SAVE LIST button when you are finished."
                         + "\n"
                         + "\n***Please note: You can only enter a country once***");
+
             }
-
         });
-
     }
 
+
     public void handleExit() {
-        int action = JOptionPane.showConfirmDialog(MainFrame.this,
-                "Would you like to close the Vacation App?",
-                "YES", JOptionPane.OK_CANCEL_OPTION);
-        if (action == JOptionPane.OK_OPTION) {
-            System.exit(0);
-        }
+        this.menuItemsCohesionFix.onExit(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int action = JOptionPane.showConfirmDialog(MainFrame.this,
+                        "Would you like to close the Vacation App?",
+                        "YES", JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
 
@@ -474,21 +465,27 @@ public class MainFrame extends JFrame {
         // MODIFIES: this
         // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
-    public static void handleImport() {
-        try {
-            textPanel.setText("");
-            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
-            thisIsDreamVacation = dreamVacations.get(0);
-            masterList = thisIsDreamVacation.viewDreamDestinations();
+    public void handleImport() {
+        this.menuItemsCohesionFix.onImport(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    textPanel.setText("");
+                    List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
+                    thisIsDreamVacation = dreamVacations.get(0);
+                    masterList = thisIsDreamVacation.viewDreamDestinations();
 
-            textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
-                    + masterList
-                    + "\n\nOptions:");
-            setLoading();
-        } catch (IOException | IndexOutOfBoundsException e) {
-            masterList = new ArrayList<>();
-            thisIsDreamVacation = new DreamVacation();
-        }
+                    textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
+                            + masterList
+                            + "\n\nOptions:");
+                    setLoading();
+                } catch (IOException | IndexOutOfBoundsException ev) {
+                    masterList = new ArrayList<>();
+                    thisIsDreamVacation = new DreamVacation();
+                }
+            }
+        });
+
     }
 
 
@@ -548,5 +545,21 @@ public class MainFrame extends JFrame {
                 masterList.add(FormPanel.getDreamVacationField().getText());
                 textPanel.setText(FormPanel.getDreamVacationField().getText());
             }
+        }
+    }*/
+
+
+
+//MODIFIES: this
+//EFFECTS: selects and adds the dream vacation country to be added to the Dream Vacation list
+
+   /* public void selectVacation(String dreamVacation) {
+        if (dreamVacation.length() > 0) {
+            textPanel.setText("");
+            textPanel.appendText("Now, let's create your customized Dream Vacation List for your future travels!\n");
+*//*
+            textPanel.addOnText(dreamVacation);
+*//*
+
         }
     }*/

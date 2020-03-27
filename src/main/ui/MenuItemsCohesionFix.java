@@ -1,7 +1,6 @@
 package ui;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
@@ -30,22 +29,17 @@ public class MenuItemsCohesionFix {
         showMenu = new JMenu("Launch");
     }
 
-    public void exitMethod() {
-        exitItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                MainFrame.handleExit();
-            }
-        });
+    public void onExit(ActionListener actionListener) {
+        exitItem.addActionListener(actionListener);
+    }
+
+    public void addCountryWithMenu(ActionListener actionListener) {
+        addCountry.addActionListener(actionListener);
     }
 
 
-
-    public void importMethod() {
-        importDataItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                MainFrame.handleImport();
-            }
-        });
+    public void onImport(ActionListener actionListener) {
+        importDataItem.addActionListener(actionListener);
     }
 
     public void fileMenuMethods() {
@@ -100,8 +94,6 @@ public class MenuItemsCohesionFix {
         return showFormItem;
     }
 
-    private void addCountryWithMenu() {
-    }
 
     private void showItemMethod() {
     }
