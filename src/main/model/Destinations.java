@@ -10,7 +10,7 @@ public class Destinations {
     private ArrayList<Destination> summerDestinations;
     private ArrayList<Destination> winterDestinations;
 
-    //EFFECTS: Constructor of Destinations has specified summer and winter destinations in separate ArrayLists
+    //EFFECTS: constructs specified summer and winter destinations in separate ArrayLists
     public Destinations() {
         summerDestinations = new ArrayList<>();
         winterDestinations = new ArrayList<>();
@@ -26,24 +26,7 @@ public class Destinations {
     public int getNumWinterDestinations() {
         return winterDestinations.size();
     }
-
-/*
-
-    //REQUIRES: the season has to be either summer or winter
-    //EFFECTS: to return the list of destinations based on the chosen season
-
-    public ArrayList<Destination> chooseWinterOrSummer(String season) {
-        ArrayList<Destination> chosenSeason = new ArrayList<>();
-        if (season.equals("summer")) {
-            chosenSeason = this.summerDestinations;
-        }
-        if (season.equals("winter")) {
-            chosenSeason = this.winterDestinations;
-        }
-        return chosenSeason;
-    }
-*/
-
+    
 
     //EFFECTS: to return the list of all summer destinations
     public ArrayList<Destination> getSummerDestinations() {
@@ -131,31 +114,6 @@ public class Destinations {
         }
         return city;
     }
-
-
-     /*//REQUIRES: the country to be chosen has to be from the provided list of Summer destinations
-    //EFFECTS: to choose the next travel summer vacation from the list of summer destinations
-
-    public Destination chooseSummerDestination(Destination destination) {
-        if (summerDestinations.contains(destination)) {
-            return destination;
-        } else {
-            System.out.println("This is not in our list of Summer destinations");
-        }
-        return destination;
-    }
-
-    //REQUIRES: the country to be chosen has to be from the provided list of winter destinations
-    //EFFECTS: to choose the next travel winter vacation from the list of winter destinations
-
-    public Destination chooseWinterDestination(Destination destination) {
-        if (winterDestinations.contains(destination)) {
-            return destination;
-        } else {
-            System.out.println("This is not in our list of Winter destinations");
-        }
-        return destination;
-    }*/
 
 
 }
