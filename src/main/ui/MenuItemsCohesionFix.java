@@ -1,6 +1,8 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 // This is the refactored class/codes from the MainFrame Class
@@ -26,6 +28,24 @@ public class MenuItemsCohesionFix {
         secondMenu = new JMenu("Window");
         showFormItem = new JCheckBoxMenuItem("Vacation Form");
         showMenu = new JMenu("Launch");
+    }
+
+    public void exitMethod() {
+        exitItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                MainFrame.handleExit();
+            }
+        });
+    }
+
+
+
+    public void importMethod() {
+        importDataItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                MainFrame.handleImport();
+            }
+        });
     }
 
     public void fileMenuMethods() {
@@ -88,12 +108,5 @@ public class MenuItemsCohesionFix {
 
     private void exportMethod() {
     }
-
-    private void importMethod() {
-    }
-
-    private void exitMethod() {
-    }
-
 
 }

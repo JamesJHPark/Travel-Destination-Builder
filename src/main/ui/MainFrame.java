@@ -111,8 +111,8 @@ public class MainFrame extends JFrame {
 
     private JMenuBar createMenuBar() {
         menuItemsCohesionFix.fileMenuMethods();
-        exitMethod();
-        importMethod();
+        menuItemsCohesionFix.exitMethod();
+        menuItemsCohesionFix.importMethod();
         exportMethod();
         showItemMethod();
         addCountryWithMenu();
@@ -384,9 +384,6 @@ public class MainFrame extends JFrame {
     }
 
 
-
-
-
     //EFFECTS: sets the season with user's response of Summer and provides the user with
     // list of summer Destinations to choose from and shows the list of the corresponding cities of winter Destination
     // that the user has chosen
@@ -435,7 +432,6 @@ public class MainFrame extends JFrame {
     }*/
 
 
-
     //MODIFIES: this
     //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
 
@@ -464,45 +460,35 @@ public class MainFrame extends JFrame {
 
     }
 
-
-    //EFFECTS: menu method exit to close the program
-    public void exitMethod() {
-        menuItemsCohesionFix.getExitItem().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int action = JOptionPane.showConfirmDialog(MainFrame.this,
-                        "Would you like to close the Vacation App?",
-                        "YES", JOptionPane.OK_CANCEL_OPTION);
-                if (action == JOptionPane.OK_OPTION) {
-                    System.exit(0);
-                }
-            }
-        });
+    public void handleExit() {
+        int action = JOptionPane.showConfirmDialog(MainFrame.this,
+                "Would you like to close the Vacation App?",
+                "YES", JOptionPane.OK_CANCEL_OPTION);
+        if (action == JOptionPane.OK_OPTION) {
+            System.exit(0);
+        }
     }
 
 
-    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
-    // MODIFIES: this
-    // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
+        // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+        // MODIFIES: this
+        // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
-    public void importMethod() {
-        menuItemsCohesionFix.getImportDataItem().addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ev) {
-                try {
-                    textPanel.setText("");
-                    List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
-                    thisIsDreamVacation = dreamVacations.get(0);
-                    masterList = thisIsDreamVacation.viewDreamDestinations();
+    public static void handleImport() {
+        try {
+            textPanel.setText("");
+            List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
+            thisIsDreamVacation = dreamVacations.get(0);
+            masterList = thisIsDreamVacation.viewDreamDestinations();
 
-                    textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
-                            + masterList
-                            + "\n\nOptions:");
-                    setLoading();
-                } catch (IOException | IndexOutOfBoundsException e) {
-                    masterList = new ArrayList<>();
-                    thisIsDreamVacation = new DreamVacation();
-                }
-            }
-        });
+            textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
+                    + masterList
+                    + "\n\nOptions:");
+            setLoading();
+        } catch (IOException | IndexOutOfBoundsException e) {
+            masterList = new ArrayList<>();
+            thisIsDreamVacation = new DreamVacation();
+        }
     }
 
 
@@ -531,6 +517,7 @@ public class MainFrame extends JFrame {
         });
     }
 }
+
 
 /*
     @Override
