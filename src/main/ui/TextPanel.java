@@ -9,17 +9,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents TextPanel of the program
 public class TextPanel extends JPanel {
 
-    protected JTextArea textArea;
+    private JTextArea textArea;
     private JPopupMenu popup;
-    ArrayList<Destination> masterList = Singleton.getMasterList();
-    DreamVacation thisIsDreamVacation = Singleton.getDreamVacation();
+    DreamVacation thisIsDreamVacation = new DreamVacation();
 
     public JTextArea getTextArea() {
         return textArea;
@@ -29,7 +27,6 @@ public class TextPanel extends JPanel {
     //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
         textArea = new JTextArea();
-
         Font changeFont = new Font("sanserif", Font.PLAIN, 15);
         textArea.setFont(changeFont);
         setLayout(new BorderLayout());

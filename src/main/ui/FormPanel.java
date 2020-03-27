@@ -16,19 +16,19 @@ import java.io.IOException;
 
 public class FormPanel extends JPanel {
 
-    protected JLabel destinationLabel;
-    protected JLabel dreamVacationLabel;
-    protected JLabel seasonLabel;
+    private JLabel destinationLabel;
+    private JLabel dreamVacationLabel;
+    private JLabel seasonLabel;
     public static JTextField destinationField;
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
-    private JButton okBtn;
     private FormListener formListener;
     private FormListenerAdd formListenerAdd;
-    private ListenerEnterKey listenerEnterKey;
-    private ListenerRemove listenerRemove;
+    private FormListenerEnter formListenerEnter;
+    private FormListenerRemove formListenerRemove;
     private FormListenerSave formListenerSave;
     private FormListenerLoad formListenerLoad;
+    private JButton submitBtn;
     private JButton deleteBtn;
     private JButton enterBtn;
     private JButton removeBtn;
@@ -41,7 +41,7 @@ public class FormPanel extends JPanel {
 
     public FormPanel() {
         setPanel();
-        okBtnCall();
+        submitButton();
         deleteBtnCall();
         enterBtn();
         setRemoveBtn();
@@ -82,8 +82,8 @@ public class FormPanel extends JPanel {
     //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and in this
     // case, the purpose of the button is to submit the typed answer to the program
 
-    public void okBtnCall() {
-        okBtn.addActionListener(new ActionListener() {
+    public void submitButton() {
+        submitBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
@@ -146,8 +146,8 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (listenerEnterKey != null) {
-                    listenerEnterKey.formEventOccurredEnter(ev);
+                if (formListenerEnter != null) {
+                    formListenerEnter.formEventOccurredEnter(ev);
 
                 }
             }
@@ -165,8 +165,8 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (listenerRemove != null) {
-                    listenerRemove.formEventOccurredRemove(ev);
+                if (formListenerRemove != null) {
+                    formListenerRemove.formEventOccurredRemove(ev);
 
                 }
             }
@@ -271,7 +271,7 @@ public class FormPanel extends JPanel {
         gc.gridx = 0;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_END;
-        add(okBtn, gc);
+        add(submitBtn, gc);
 
         gc.weightx = 1;
         gc.weighty = 2.0;
@@ -352,16 +352,16 @@ public class FormPanel extends JPanel {
     //EFFECTS: this
     //EFFECTS: FormListener for the Alt+E key pressed
 
-    public void setFormListenerEnter(ListenerEnterKey listener) {
-        this.listenerEnterKey = listener;
+    public void setFormListenerEnter(FormListenerEnter listener) {
+        this.formListenerEnter = listener;
     }
 
 
     //MODIFIES: this
     //EFFECTS: FormListener for the Alt+R key pressed
 
-    public void setFormListenerRemove(ListenerRemove listener) {
-        this.listenerRemove = listener;
+    public void setFormListenerRemove(FormListenerRemove listener) {
+        this.formListenerRemove = listener;
     }
 
     //MODIFIES: this
@@ -390,7 +390,7 @@ public class FormPanel extends JPanel {
         destinationField = new JTextField(10);
         dreamVacationField = new JTextField(10);
         seasonField = new JTextField(10);
-        okBtn = new JButton("SUBMIT");
+        submitBtn = new JButton("SUBMIT");
         deleteBtn = new JButton("ADD button");
         enterBtn = new JButton("Alt+N to Add");
         removeBtn = new JButton("Alt+R to Remove");

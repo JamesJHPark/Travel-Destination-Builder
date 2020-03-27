@@ -10,7 +10,8 @@ import persistence.Writer;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,33 +24,35 @@ import java.util.List;
 //represents the MainFrame of the App and extends JFrame
 public class MainFrame extends JFrame {
 
-    public TextPanel textPanel;
+    private TextPanel textPanel;
     private Toolbar toolbar;
-    protected FormPanel formPanel;
+    private FormPanel formPanel;
     private Destinations destinationsW;
     private Destinations destinations;
-    private String d1;
     private String season;
-    private String dreamVacation;
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
-    Singleton singleton = Singleton.getInstance();
-    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
-    ArrayList<Destination> masterList = singleton.getMasterList();
-    JMenuBar menuBar = new JMenuBar();
-    JMenu fileMenu = new JMenu("Data");
-    JMenuItem exportDataItem = new JMenuItem("Save Data");
-    JMenuItem importDataItem = new JMenuItem("Load Data");
-    JMenuItem addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
-    JMenuItem exitItem = new JMenuItem("Exit");
-    JMenu secondMenu = new JMenu("Window");
-    JMenu showMenu = new JMenu("Launch");
-    JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Vacation Form");
-    JTextField component = new JTextField();
-    JFrame frame = new JFrame();
+    private DreamVacation thisIsDreamVacation;
+    private ArrayList<Destination> masterList;
+    private JTextField component;
+    private JFrame frame;
+    private MenuItemsCohesionFix menuItemsCohesionFix;
+    // **THE BELOW fields have been REFACTORED -- created a new class called MenuItemsCohesionFix
+    // and moved these fields to that class. Check to make sure that this is resolving a cohesion issue!
+   /* private JMenu fileMenu;
+    private JMenuItem exportDataItem;
+    private JMenuItem importDataItem;
+    private JMenuItem addCountry;
+    private JMenuItem exitItem;
+    private JMenuItem secondMenu;
+    private JMenuItem showMenu;
+    private JMenuBar menuBar;
+    private JCheckBoxMenuItem showFormItem;*/
+
 
     // EFFECTS: constructs the Main Frame of the GUI
     public MainFrame() {
         super("Dream Vacation");
+        initializer();
         setPanel();
         submitMethod();
         addMethod();
@@ -65,6 +68,58 @@ public class MainFrame extends JFrame {
             }
         });
     }
+
+
+    public void initializer() {
+        thisIsDreamVacation = new DreamVacation();
+        masterList = new ArrayList<>();
+        component = new JTextField();
+        frame = new JFrame();
+        menuItemsCohesionFix = new MenuItemsCohesionFix();
+        //THESE HAVE BEEN REFACTORED - MOVED TO A NEW CLASS, MenuItemsCohesionFix**
+      /* menuBar = new JMenuBar();
+        fileMenu = new JMenu("Data");
+        exportDataItem = new JMenuItem("Save Data");
+        importDataItem = new JMenuItem("Load Data");
+        addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
+        exitItem = new JMenuItem("Exit");
+        secondMenu = new JMenu("Window");
+        showFormItem = new JCheckBoxMenuItem("Vacation Form");
+        showMenu = new JMenu("Launch");*/
+    }
+
+    //MODIFIES: this
+    //EFFECTS: sets up the frame, toolbar, JMenuBar, text panel, form panel of the program
+
+    public void setPanel() {
+        frame.add(component);
+        frame.setLayout(new BorderLayout());
+        toolbar = new Toolbar();
+        textPanel = new TextPanel();
+        formPanel = new FormPanel();
+        frame.add(formPanel, BorderLayout.WEST);
+        frame.add(toolbar, BorderLayout.NORTH);
+        frame.add(textPanel, BorderLayout.CENTER);
+        frame.setSize(1300, 1000);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setJMenuBar(createMenuBar());
+    }
+
+    //MODIFIES: this
+    //EFFECTS: sets up the JMenu bar of the application
+
+    private JMenuBar createMenuBar() {
+        menuItemsCohesionFix.fileMenuMethods();
+        exitMethod();
+        importMethod();
+        exportMethod();
+        showItemMethod();
+        addCountryWithMenu();
+        return menuItemsCohesionFix.getMenuBar();
+    }
+
+
     //MODIFIES: this
     //EFFECTS: submits a typed country into Destination panel, Dream Vacation panel,
     // or season in the text field panels according to the program specifications
@@ -72,8 +127,8 @@ public class MainFrame extends JFrame {
     public void submitMethod() {
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {
-                d1 = e.getDestination();
-                dreamVacation = e.getDreamVacation();
+                String d1 = e.getDestination();
+                String dreamVacation = e.getDreamVacation();
                 season = e.getSeason();
                 helperMethod(d1);
             }
@@ -114,7 +169,7 @@ public class MainFrame extends JFrame {
     // according to the program specifications
 
     public void removeKey() {
-        formPanel.setFormListenerRemove(new ListenerRemove() {
+        formPanel.setFormListenerRemove(new FormListenerRemove() {
             public void formEventOccurredRemove(FormEvent e) {
                 playDeleteSound();
                 Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
@@ -140,7 +195,7 @@ public class MainFrame extends JFrame {
     // to Dream Vacation List
 
     public void enterKey() {
-        formPanel.setFormListenerEnter(new ListenerEnterKey() {
+        formPanel.setFormListenerEnter(new FormListenerEnter() {
             public void formEventOccurredEnter(FormEvent e) {
                 playAddSound();
                 Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
@@ -380,43 +435,12 @@ public class MainFrame extends JFrame {
     }*/
 
 
-    //MODIFIES: this
-    //EFFECTS: sets up the frame, toolbar, textpanel, formpanel to run the application
-
-    public void setPanel() {
-        frame.add(component);
-        frame.setLayout(new BorderLayout());
-        toolbar = new Toolbar();
-        textPanel = new TextPanel();
-        formPanel = new FormPanel();
-        frame.add(formPanel, BorderLayout.WEST);
-        frame.add(toolbar, BorderLayout.NORTH);
-        frame.add(textPanel, BorderLayout.CENTER);
-        frame.setSize(1300, 1000);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setJMenuBar(createMenuBar());
-    }
-
-    //MODIFIES: this
-    //EFFECTS: sets up the menu bar of the application with a method included to add country to Dream Vacation List
-
-    private JMenuBar createMenuBar() {
-        fileMenuMethods();
-        exitMethod();
-        importMethod();
-        exportMethod();
-        showItemMethod();
-        addCountryWithMenu();
-
-        return menuBar;
-    }
 
     //MODIFIES: this
     //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
 
     public void addCountryWithMenu() {
-        addCountry.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getAddCountry().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playAddSound();
                 Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
@@ -441,26 +465,9 @@ public class MainFrame extends JFrame {
     }
 
 
-    //EFFECTS: sets up the menu bar of the application
-
-    public void fileMenuMethods() {
-        fileMenu.add(addCountry);
-        fileMenu.add(exportDataItem);
-        fileMenu.add(importDataItem);
-        fileMenu.addSeparator();
-        fileMenu.add(exitItem);
-        showFormItem.setSelected(true);
-        showMenu.add(showFormItem);
-        secondMenu.add(showMenu);
-        menuBar.add(fileMenu);
-        menuBar.add(secondMenu);
-        fileMenu.setMnemonic(KeyEvent.VK_D);
-        exitItem.setMnemonic(KeyEvent.VK_E);
-    }
-
     //EFFECTS: menu method exit to close the program
     public void exitMethod() {
-        exitItem.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getExitItem().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int action = JOptionPane.showConfirmDialog(MainFrame.this,
                         "Would you like to close the Vacation App?",
@@ -478,7 +485,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
     public void importMethod() {
-        importDataItem.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getImportDataItem().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     textPanel.setText("");
@@ -503,7 +510,7 @@ public class MainFrame extends JFrame {
     // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
 
     public void exportMethod() {
-        exportDataItem.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getExportDataItem().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 saveFunction();
             }
@@ -512,13 +519,13 @@ public class MainFrame extends JFrame {
 
     //EFFECTS: makes the form panel visible if selected, otherwise the form panel is not visible to the user
     public void showItemMethod() {
-        showFormItem.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getShowFormItem().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) ev.getSource();
                 formPanel.setVisible(menuItem.isSelected());
             }
         });
-        showFormItem.addActionListener(new ActionListener() {
+        menuItemsCohesionFix.getShowFormItem().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             }
         });

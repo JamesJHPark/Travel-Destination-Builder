@@ -1,4 +1,7 @@
-package ui;
+/*package ui;
+
+
+// MY PROJECT NO LONGER REQUIRES THE USE OF SINGLETON! will remove this class.
 
 import model.Destination;
 import model.DreamVacation;
@@ -55,4 +58,4 @@ public class Singleton {
     public static DreamVacation getDreamVacation() {
         return single_instance.createDreamVacation;
     }
-}
+}*/

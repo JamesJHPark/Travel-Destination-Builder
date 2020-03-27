@@ -26,7 +26,7 @@ public class Destinations {
     public int getNumWinterDestinations() {
         return winterDestinations.size();
     }
-    
+
 
     //EFFECTS: to return the list of all summer destinations
     public ArrayList<Destination> getSummerDestinations() {

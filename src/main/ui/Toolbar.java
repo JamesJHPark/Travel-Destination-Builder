@@ -1,13 +1,9 @@
 package ui;
 
-import model.Destination;
-import model.DreamVacation;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents the Toolbar of the program
@@ -15,21 +11,15 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton goodbyeButton;
     private StringListener textListener;
-    Singleton singleton = Singleton.getInstance();
-    DreamVacation thisIsDreamVacation = singleton.getDreamVacation();
-    ArrayList<Destination> masterList = singleton.getMasterList();
 
 //EFFECTS: constructs the toolbar of the program
     public Toolbar() {
         setBorder(BorderFactory.createEtchedBorder());
         startButton = new JButton("START");
         goodbyeButton = new JButton("GOODBYE");
-
         startButton.addActionListener(this);
         goodbyeButton.addActionListener(this);
-
         setLayout(new FlowLayout(FlowLayout.LEFT));
-
         add(startButton);
         add(goodbyeButton);
     }
