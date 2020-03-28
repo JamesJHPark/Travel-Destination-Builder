@@ -1,17 +1,17 @@
 package model;
 
-import exceptions.IllegalCityException;
+import exceptions.IllegalDestinationException;
 
 import java.util.ArrayList;
 
 // Represents specific summer and winter destinations for future vacation
-public class Destinations {
+public class DestinationsManager {
 
     private ArrayList<Destination> summerDestinations;
     private ArrayList<Destination> winterDestinations;
 
     //EFFECTS: constructs specified summer and winter destinations in separate ArrayLists
-    public Destinations() {
+    public DestinationsManager() {
         summerDestinations = new ArrayList<>();
         winterDestinations = new ArrayList<>();
     }
@@ -39,7 +39,7 @@ public class Destinations {
     }
 
     //MODIFIES: this
-    //EFFECTS: to add summer Destinations into summerDestinations list
+    //EFFECTS: to add summer DestinationsManager into summerDestinations list
     public void addedSummerDestinations() {
         Destination italy = new Destination("Italy");
         Destination spain = new Destination("Spain");
@@ -56,7 +56,7 @@ public class Destinations {
 
 
     //MODIFIES: this
-    //EFFECTS: to add winter Destinations into winterDestinations list
+    //EFFECTS: to add winter DestinationsManager into winterDestinations list
     public void addedWinterDestinations() {
         Destination mexico = new Destination("Mexico");
         Destination iceland = new Destination("Iceland");
@@ -70,10 +70,10 @@ public class Destinations {
         winterDestinations.add(switzerland);
     }
 
-    //EFFECTS: if the input parameter is not a valid summer Destination, throws IllegalCityException,
+    //EFFECTS: if the input parameter is not a valid summer Destination, throws IllegalDestinationException,
     // otherwise, retrieves the list of popular cities for the entered Destination from the summerDestinations list
 
-    public String getCityFromSummerDestinations(Destination d) throws IllegalCityException {
+    public String getCityFromSummerDestinations(Destination d) throws IllegalDestinationException {
 /*
         String city = "Wrong country selected! It was not from the provided list";
 */
@@ -89,15 +89,15 @@ public class Destinations {
         } else if (d.getDestinationCountryName().equalsIgnoreCase("Japan")) {
             city = "Kyoto, Tokyo, Osaka";
         } else {
-            throw new IllegalCityException();
+            throw new IllegalDestinationException();
         }
         return city;
     }
 
-    //EFFECTS: if the input parameter is not a valid winter Destination, throws IllegalCityException,
+    //EFFECTS: if the input parameter is not a valid winter Destination, throws IllegalDestinationException,
     // otherwise, retrieves the list of popular cities for the entered Destination from the winterDestinations list
 
-    public String getCityFromWinterDestinations(Destination d) throws IllegalCityException {
+    public String getCityFromWinterDestinations(Destination d) throws IllegalDestinationException {
         String city;
         if (d.getDestinationCountryName().equalsIgnoreCase("Mexico")) {
             city = "Cozumel, Tulum, Cancun, Mexico City";
@@ -110,7 +110,7 @@ public class Destinations {
         } else if (d.getDestinationCountryName().equalsIgnoreCase("Switzerland")) {
             city = "Zurich, Lucerne, Geneva, Bern";
         } else {
-            throw new IllegalCityException();
+            throw new IllegalDestinationException();
         }
         return city;
     }

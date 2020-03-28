@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 // This is the refactored class/codes from the MainFrame Class
 
-public class MenuItemsCohesionFix {
+public class MenuBuilder {
     private JMenuBar menuBar;
     private JMenu fileMenu;
     private JMenuItem exportDataItem;
@@ -17,16 +17,16 @@ public class MenuItemsCohesionFix {
     private JMenuItem showMenu;
     private JCheckBoxMenuItem showFormItem;
 
-    public MenuItemsCohesionFix() {
-        menuBar = new JMenuBar();
+    public MenuBuilder() {
         fileMenu = new JMenu("Data");
+        secondMenu = new JMenu("Window");
+        showMenu = new JMenu("Launch");
+        menuBar = new JMenuBar();
         exportDataItem = new JMenuItem("Save Data");
         importDataItem = new JMenuItem("Load Data");
         addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
         exitItem = new JMenuItem("Exit");
-        secondMenu = new JMenu("Window");
         showFormItem = new JCheckBoxMenuItem("Vacation Form");
-        showMenu = new JMenu("Launch");
     }
 
     public void onExit(ActionListener actionListener) {
@@ -37,9 +37,16 @@ public class MenuItemsCohesionFix {
         addCountry.addActionListener(actionListener);
     }
 
-
     public void onImport(ActionListener actionListener) {
         importDataItem.addActionListener(actionListener);
+    }
+
+    public void onExport(ActionListener actionListener) {
+        exportDataItem.addActionListener(actionListener);
+    }
+
+    public void forShowItem(ActionListener actionListener) {
+        showFormItem.addActionListener(actionListener);
     }
 
     public void fileMenuMethods() {
@@ -48,57 +55,26 @@ public class MenuItemsCohesionFix {
         fileMenu.add(importDataItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
-        showFormItem.setSelected(true);
-        showMenu.add(showFormItem);
-        secondMenu.add(showMenu);
-        menuBar.add(fileMenu);
-        menuBar.add(secondMenu);
+        showMenuMethodItems();
+        showMenuBar();
         fileMenu.setMnemonic(KeyEvent.VK_D);
         exitItem.setMnemonic(KeyEvent.VK_E);
     }
-    //EFFECTS: sets up the menu bar of the application
+
+    public void showMenuMethodItems() {
+        showFormItem.setSelected(true);
+        showMenu.add(showFormItem);
+        secondMenu.add(showMenu);
+    }
+
+    public void showMenuBar() {
+        menuBar.add(fileMenu);
+        menuBar.add(secondMenu);
+    }
+
+    //EFFECTS: returns the the menu bar of the application
 
     public JMenuBar getMenuBar() {
         return menuBar;
     }
-
-    public JMenu getFileMenu() {
-        return fileMenu;
-    }
-
-    public JMenuItem getExportDataItem() {
-        return exportDataItem;
-    }
-
-    public JMenuItem getImportDataItem() {
-        return importDataItem;
-    }
-
-    public JMenuItem getAddCountry() {
-        return addCountry;
-    }
-
-    public JMenuItem getExitItem() {
-        return exitItem;
-    }
-
-    public JMenuItem getSecondMenu() {
-        return secondMenu;
-    }
-
-    public JMenuItem getShowMenu() {
-        return showMenu;
-    }
-
-    public JCheckBoxMenuItem getShowFormItem() {
-        return showFormItem;
-    }
-
-
-    private void showItemMethod() {
-    }
-
-    private void exportMethod() {
-    }
-
 }

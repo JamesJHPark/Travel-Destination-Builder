@@ -16,7 +16,7 @@ public class DreamVacation implements Saveable {
     }
 
     //REQUIRES: the country to be added to the list of dream destinations has to be from the list of
-    //          either summer or winter destinations provided in the the class, Destinations
+    //          either summer or winter destinations provided in the the class, DestinationsManager
     //MODIFIES: this
     //EFFECTS:  to add the dream destinations to the dreamDestinations list if the chosen vacation(s)
     //          are not already included in the list

@@ -56,3 +56,27 @@ your saved customized Dream Vacation list.
 - Thus, you can reload the state of my application by clicking on the LOAD LIST Button. 
 - You can also reload the state of my application by selecting the menu item under Data on top left of the screen: Load Data.
 - This concludes my phase 3 and have fulfilled all the requirements of the project so far. Thank you! 
+
+
+## Phase 4: Task 2
+- I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed to 
+DestinationsManager) and I have changed the signature of the following methods in this class: 
+getCityFromSummerDestinations and getCityFromWinterDestinations to throw checked exception, IllegalDestinationException, 
+if the input of the method parameter is not valid. 
+- I have tested these methods inside the DestinationsManagerTest with try/catch blocks for both cases where 
+1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the MainFrame of the UI package 
+that called those methods from the DestinationManager class. 
+
+## Phase 4: Task 3
+- I have identified that there was poor cohesion in the MainFrame class of the UI package with respect to JMenu and JMenuItem fields/objects
+in this class. Thus, I have refactored the codes by creating a new class called MenuBuilder for JMenu and JMenuItem to improve the 
+cohesion issue in the original MainFrame class. In the MenuBuilder class, I was able to eliminate the need for getter methods in the
+by creating methods that take in action listener as an argument. In the MainFrame class, I have implemented
+to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry, handleShowItem.
+
+## Phase 4: Task 3
+- 
+
+## Phase 4: Task 3
+- I also removed the Singleton class from the project as this was not necessary in the application of my program. 
+

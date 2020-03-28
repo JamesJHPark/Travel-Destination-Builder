@@ -1,9 +1,9 @@
 
 package ui;
 
-import exceptions.IllegalCityException;
+import exceptions.IllegalDestinationException;
 import model.Destination;
-import model.Destinations;
+import model.DestinationsManager;
 import model.DreamVacation;
 import persistence.Reader;
 import persistence.Writer;
@@ -15,7 +15,7 @@ import java.util.*;
 // Vacation resolver application
 public class VacationResolver {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
-    private Destinations chooseDestination;
+    private DestinationsManager chooseDestination;
     private DreamVacation createDreamDestinations;
     private Scanner input;
     private Destination nextDestination;
@@ -88,10 +88,10 @@ public class VacationResolver {
     }
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
-    // EFFECTS: initializes Destinations and DreamVacation
+    // EFFECTS: initializes DestinationsManager and DreamVacation
 
     private void start() {
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         createDreamDestinations = new DreamVacation();
     }
 
@@ -129,7 +129,7 @@ public class VacationResolver {
 
     private void showSummerDestination() {
         System.out.println("Here is the list of summer travel destinations!");
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         chooseDestination.addedSummerDestinations();
         for (Destination d : chooseDestination.getSummerDestinations()) {
             System.out.println(d.getDestinationCountryName());
@@ -145,8 +145,8 @@ public class VacationResolver {
             chooseDestination.getCityFromSummerDestinations(nextDestination);
             System.out.println(chooseDestination.getCityFromSummerDestinations(nextDestination));
             makeDreamDestinations();
-        } catch (IllegalCityException e) {
-            System.out.println("IllegalCityException caught!");
+        } catch (IllegalDestinationException e) {
+            System.out.println("IllegalDestinationException caught!");
         }
 
     }
@@ -159,7 +159,7 @@ public class VacationResolver {
         System.out.println("Let's choose a country to include in your Dream Vacation list");
         String country1 = input.next();
         Destination testCountry1 = new Destination(country1);
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         createDreamDestinations.addDreamDestinations(testCountry1);
         selectAnother();
 
@@ -213,7 +213,7 @@ public class VacationResolver {
 
     private void showWinterDestination() {
         System.out.println("Here is the list of summer travel destinations!");
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         chooseDestination.addedWinterDestinations();
         for (Destination d : chooseDestination.getWinterDestinations()) {
             System.out.println(d.getDestinationCountryName());
@@ -230,8 +230,8 @@ public class VacationResolver {
             chooseDestination.getCityFromWinterDestinations(nextDestination);
             System.out.println(chooseDestination.getCityFromWinterDestinations(nextDestination));
             makeDreamDestinationsWinter();
-        } catch (IllegalCityException e) {
-            System.out.println("IllegalCityException caught!");
+        } catch (IllegalDestinationException e) {
+            System.out.println("IllegalDestinationException caught!");
         }
 
     }
@@ -244,7 +244,7 @@ public class VacationResolver {
         System.out.println("Let's choose a country to include in your Dream Vacation list");
         String country1 = input.next();
         Destination testCountry1 = new Destination(country1);
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         System.out.println(createDreamDestinations.getDestinationObject());
         fixedList = createDreamDestinations.getDestinationObject();
         createDreamDestinations.addDreamDestinations(testCountry1);
@@ -258,7 +258,7 @@ public class VacationResolver {
         System.out.println("Add another country to your Dream Vacation list!");
         String country2 = input.next();
         Destination testCountry2 = new Destination(country2);
-        chooseDestination = new Destinations();
+        chooseDestination = new DestinationsManager();
         createDreamDestinations.addDreamDestinations(testCountry2);
         finalStep();
     }

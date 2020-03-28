@@ -22,6 +22,7 @@ public class FormPanel extends JPanel {
     public static JTextField destinationField;
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
+    //REFACTORED CODES to improve cohesion:
     private FormListener formListener;
     private FormListenerAdd formListenerAdd;
     private FormListenerEnter formListenerEnter;
@@ -52,30 +53,25 @@ public class FormPanel extends JPanel {
         setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
         setLayout(new GridBagLayout());
         callAllButtonMethods();
-
-
-
-        // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
-        // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
-        // EFFECTS: to read the image file from Resources package
-
-        try {
-            image = ImageIO.read(
-                    new File("C:\\Users\\James\\Desktop\\project_y3o8\\src\\main\\Resources\\picture.jpg"));
-        } catch (IOException ex) {
-            System.out.println("IOException");
-        }
+        setBackgroundImage();
     }
+
+
+
 
     // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
     // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
-    // EFFECTS: to paint the image on the form panel
+    // EFFECTS: to read the image file from Resources package
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, 0, 0, this); // see javadoc for more info on the parameters
-    }
+    public void setBackgroundImage() {
+        try {
+            image = ImageIO.read(
+                    new File("data/picture.jpg"));
+        } catch (IOException ex) {
+            System.out.println("IOException");
+        }
+
+}
 
 
     //MODIFIES: this
@@ -400,11 +396,24 @@ public class FormPanel extends JPanel {
         removeBtn.setMnemonic(KeyEvent.VK_R);
     }
 
+    // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
+    // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
+    // EFFECTS: to paint the image on the form panel
+
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, this);
+    }
+    
 
     //EFFECTS: gets the JTextField of the dreamVacationField panel
 
     public static JTextField getDreamVacationField() {
         return dreamVacationField;
+    }
+
+    public static JTextField getVacationField() {
+        return destinationField;
     }
 
 }
