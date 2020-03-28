@@ -1,23 +1,16 @@
 package ui;
 
-import model.Destination;
-import model.DreamVacation;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents TextPanel of the program
 public class TextPanel extends JPanel {
 
-    private JTextArea textArea;
+
+    protected JTextArea textArea;
     private JPopupMenu popup;
-    DreamVacation thisIsDreamVacation = new DreamVacation();
 
     public JTextArea getTextArea() {
         return textArea;
@@ -27,18 +20,21 @@ public class TextPanel extends JPanel {
     //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
         textArea = new JTextArea();
+
         Font changeFont = new Font("sanserif", Font.PLAIN, 15);
         textArea.setFont(changeFont);
         setLayout(new BorderLayout());
         add(new JScrollPane(textArea), BorderLayout.CENTER);
         textArea.append("Welcome! To begin, please press the START button on top left of the screen");
+/*
         deleteBySelectMethod();
+*/
 
     }
 
     //MODIFIES: this
     //EFFECTS: deletes a selected country name from the list with a mouse event
-
+/*
     public void deleteBySelectMethod() {
         JMenuItem removeItem = new JMenuItem("Remove this country from the list");
         popup = new JPopupMenu();
@@ -54,16 +50,15 @@ public class TextPanel extends JPanel {
         removeItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String string = textArea.getSelectedText();
-/*
+*//*
                 removeText(string);
-*/
+*//*
                 Destination removeThisCountry = new Destination(string);
                 thisIsDreamVacation.removeDreamDestinations(removeThisCountry);
             }
         });
 
-    }
-
+    }*/
 
     //EFFECTS: appends text to the textArea
 
@@ -101,10 +96,10 @@ public class TextPanel extends JPanel {
         c.replaceSelection("");
     }*/
 
-    //MODIFIES: this
+ /*   //MODIFIES: this
     //EFFECTS: removes the destination from the masterList and sets the text panel for next step of the application
 
-   /* public void removeText(String dreamVacation) {
+    public void removeText(String dreamVacation) {
         Destination dreamDestination = new Destination(dreamVacation);
         while (masterList.contains(dreamDestination)) {
             System.out.println(masterList);

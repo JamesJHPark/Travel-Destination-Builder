@@ -7,8 +7,8 @@ import java.awt.event.KeyEvent;
 // This is the refactored class/codes from the MainFrame Class
 
 public class MenuBuilder {
-    private JMenuBar menuBar;
     private JMenu fileMenu;
+    private JMenuBar menuBar;
     private JMenuItem exportDataItem;
     private JMenuItem importDataItem;
     private JMenuItem addCountry;

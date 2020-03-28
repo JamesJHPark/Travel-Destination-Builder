@@ -60,12 +60,12 @@ your saved customized Dream Vacation list.
 
 ## Phase 4: Task 2
 - I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed to 
-DestinationsManager) and I have changed the signature of the following methods in this class: 
-getCityFromSummerDestinations and getCityFromWinterDestinations to throw checked exception, IllegalDestinationException, 
+DestinationsManager) and I have changed the signature of the following methods in this class,
+getCityFromSummerDestinations and getCityFromWinterDestinations, to throw the checked exception of IllegalDestinationException, 
 if the input of the method parameter is not valid. 
 - I have tested these methods inside the DestinationsManagerTest with try/catch blocks for both cases where 
 1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the MainFrame of the UI package 
-that called those methods from the DestinationManager class. 
+that called these two methods from the DestinationManager class.
 
 ## Phase 4: Task 3
 - I have identified that there was poor cohesion in the MainFrame class of the UI package with respect to JMenu and JMenuItem fields/objects
@@ -75,7 +75,10 @@ by creating methods that take in action listener as an argument. In the MainFram
 to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry, handleShowItem.
 
 ## Phase 4: Task 3
-- 
+- I have identified that there was coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,
+FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave). These interfaces could be dealt with by simply creating
+a single FormListener interface and set this as the sole FormListener in my FormPanel class to eliminate the need of multiple associations 
+of FormListener interfaces.
 
 ## Phase 4: Task 3
 - I also removed the Singleton class from the project as this was not necessary in the application of my program. 

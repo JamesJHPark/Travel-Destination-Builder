@@ -14,27 +14,32 @@ import java.io.IOException;
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //represents the FormPanel of the program
 
-public class FormPanel extends JPanel {
-
+public class FormPanel extends JPanel implements FormListener {
     private JLabel destinationLabel;
     private JLabel dreamVacationLabel;
     private JLabel seasonLabel;
     public static JTextField destinationField;
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
-    //REFACTORED CODES to improve cohesion:
+
+    //Can I resolve a coupling issue by refactoring these codes of FormListeners? Make sure that this is correct!
     private FormListener formListener;
     private FormListenerAdd formListenerAdd;
     private FormListenerEnter formListenerEnter;
     private FormListenerRemove formListenerRemove;
     private FormListenerSave formListenerSave;
     private FormListenerLoad formListenerLoad;
+
+
     private JButton submitBtn;
     private JButton deleteBtn;
     private JButton enterBtn;
     private JButton removeBtn;
     private JButton saveBtn;
     private JButton loadBtn;
+
+    private FormEvent ev;
+
     private BufferedImage image;
 
     //REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
@@ -59,21 +64,6 @@ public class FormPanel extends JPanel {
 
 
 
-    // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
-    // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
-    // EFFECTS: to read the image file from Resources package
-
-    public void setBackgroundImage() {
-        try {
-            image = ImageIO.read(
-                    new File("data/picture.jpg"));
-        } catch (IOException ex) {
-            System.out.println("IOException");
-        }
-
-}
-
-
     //MODIFIES: this
     //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and in this
     // case, the purpose of the button is to submit the typed answer to the program
@@ -84,7 +74,7 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListener != null) {
                     formListener.formEventOccurred(ev);
                 }
@@ -104,7 +94,7 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerLoad != null) {
                     formListenerLoad.formEventLoad(ev);
                 }
@@ -123,7 +113,7 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerSave != null) {
                     formListenerSave.formEventSave(ev);
                 }
@@ -141,7 +131,7 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerEnter != null) {
                     formListenerEnter.formEventOccurredEnter(ev);
 
@@ -160,7 +150,7 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerRemove != null) {
                     formListenerRemove.formEventOccurredRemove(ev);
 
@@ -181,12 +171,25 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
+                ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerAdd != null) {
                     formListenerAdd.formEventAdd(ev);
                 }
             }
         });
+    }
+
+
+    //EFFECTS: gets the JTextField of the dreamVacationField panel
+
+    public static JTextField getDreamVacationField() {
+        return dreamVacationField;
+    }
+
+    //EFFECTS: gets the JTextField of the VacationField panel
+
+    public static JTextField getVacationField() {
+        return destinationField;
     }
 
     //EFFECTS: calls all the methods that set up the buttons and labels/panels
@@ -386,6 +389,9 @@ public class FormPanel extends JPanel {
         destinationField = new JTextField(10);
         dreamVacationField = new JTextField(10);
         seasonField = new JTextField(10);
+
+        //REFACTOR THESE BUTTONS!
+
         submitBtn = new JButton("SUBMIT");
         deleteBtn = new JButton("ADD button");
         enterBtn = new JButton("Alt+N to Add");
@@ -396,6 +402,22 @@ public class FormPanel extends JPanel {
         removeBtn.setMnemonic(KeyEvent.VK_R);
     }
 
+
+
+    // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
+    // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
+    // EFFECTS: to read the image file from Resources package
+
+    public void setBackgroundImage() {
+        try {
+            image = ImageIO.read(
+                    new File("data/picture.jpg"));
+        } catch (IOException ex) {
+            System.out.println("IOException was caught!");
+        }
+    }
+
+
     // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
     // REFERENCE: IMAGE(.JPG) FROM: http://clipart-library.com/clipart/1705193.htm
     // EFFECTS: to paint the image on the form panel
@@ -404,16 +426,10 @@ public class FormPanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
     }
-    
 
-    //EFFECTS: gets the JTextField of the dreamVacationField panel
 
-    public static JTextField getDreamVacationField() {
-        return dreamVacationField;
+    @Override
+    public void formEventOccurred(FormEvent e) {
+
     }
-
-    public static JTextField getVacationField() {
-        return destinationField;
-    }
-
 }

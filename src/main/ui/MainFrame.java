@@ -25,17 +25,18 @@ import java.util.List;
 public class MainFrame extends JFrame {
 
     private TextPanel textPanel;
+    private JTextField component;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private JFrame frame;
+    private MenuBuilder menuBuilder;
     private DestinationsManager winterDestinations;
     private DestinationsManager summerDestinations;
+    private Destination dreamDestination;
     private String season;
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DreamVacation thisIsDreamVacation;
-    private ArrayList<Destination> masterList;
-    private JTextField component;
-    private JFrame frame;
-    private MenuBuilder menuBuilder;
+    private ArrayList<Destination> dreamDestinationList;
     // **THE BELOW fields have been REFACTORED -- created a new class called MenuBuilder
     // and moved these fields to that class. Check to make sure that this is resolving a cohesion issue!
    /* private JMenu fileMenu;
@@ -60,22 +61,21 @@ public class MainFrame extends JFrame {
         enterKey();
         saveMethod();
         loadMethod();
-
-        toolbar.setStringListener(new StringListener() {
-            public void textEmitted(String text) {
-                textPanel.setText("");
-                textPanel.appendText(text);
-            }
-        });
+        handleText();
     }
 
 
     public void initializer() {
         thisIsDreamVacation = new DreamVacation();
-        masterList = new ArrayList<>();
+        dreamDestinationList = new ArrayList<>();
         component = new JTextField();
         frame = new JFrame();
         menuBuilder = new MenuBuilder();
+        winterDestinations = new DestinationsManager();
+        winterDestinations.addedWinterDestinations();
+        summerDestinations = new DestinationsManager();
+        summerDestinations.addedSummerDestinations();
+        dreamDestination = new Destination("");
         //THESE HAVE BEEN REFACTORED - MOVED TO A NEW CLASS, MenuBuilder**
       /* menuBar = new JMenuBar();
         fileMenu = new JMenu("Data");
@@ -150,17 +150,18 @@ public class MainFrame extends JFrame {
 
     public void addMethodToList() {
         playAddSound();
-        Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
-        if (dreamDest.getDestinationCountryName().length() > 1) {
-            thisIsDreamVacation.addDreamDestinations(dreamDest);
+        Destination destination = new Destination(FormPanel.getDreamVacationField().getText());
+        if (destination.getDestinationCountryName().length() > 1) {
+            thisIsDreamVacation.addDreamDestinations(destination);
         }
-        if (!masterList.contains(dreamDest) && dreamDest.getDestinationCountryName().length() >= 1) {
-            masterList.add(dreamDest);
+        if (!dreamDestinationList.contains(destination)
+                && destination.getDestinationCountryName().length() >= 1) {
+            dreamDestinationList.add(destination);
         }
         textPanel.setText("Build your Dream Vacation List!"
                 + "\nType country name "
                 + "into Dream Vacation Panel"
-                + "\n" + masterList
+                + "\n" + dreamDestinationList
                 + "\n"
                 + "\nPlease click on SAVE LIST button when you are finished."
                 + "\n"
@@ -168,16 +169,6 @@ public class MainFrame extends JFrame {
     }
 
 
-    //MODIFIES: this
-    //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
-    public void handleAddCountryWithMenu() {
-        this.menuBuilder.addCountryWithMenu(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addMethodToList();
-            }
-        });
-    }
 
     //MODIFIES: this
     //EFFECTS: removes a typed country with Alt+R in the text field panel from Dream Vacation List
@@ -187,15 +178,15 @@ public class MainFrame extends JFrame {
         formPanel.setFormListenerRemove(new FormListenerRemove() {
             public void formEventOccurredRemove(FormEvent e) {
                 playDeleteSound();
-                Destination dreamDest = new Destination(FormPanel.getDreamVacationField().getText());
-                if (masterList.contains(dreamDest)) {
-                    masterList.remove(dreamDest);
-                    thisIsDreamVacation.removeDreamDestinations(dreamDest);
+                Destination destination = new Destination(FormPanel.getDreamVacationField().getText());
+                if (dreamDestinationList.contains(destination)) {
+                    dreamDestinationList.remove(destination);
+                    thisIsDreamVacation.removeDreamDestinations(destination);
                 }
                 textPanel.setText("Build your Dream Vacation List!"
                         + "\nType country name "
                         + "into Dream Vacation Panel"
-                        + "\n" + masterList
+                        + "\n" + dreamDestinationList
                         + "\n"
                         + "\nPlease click on SAVE LIST button when you are finished."
                         + "\n"
@@ -242,13 +233,13 @@ public class MainFrame extends JFrame {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
-                    masterList = thisIsDreamVacation.viewDreamDestinations();
+                    dreamDestinationList = thisIsDreamVacation.viewDreamDestinations();
                     textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
-                            + masterList
+                            + dreamDestinationList
                             + "\n\nOptions:");
                     setLoading();
                 } catch (IOException | IndexOutOfBoundsException e) {
-                    masterList = new ArrayList<>();
+                    dreamDestinationList = new ArrayList<>();
                     thisIsDreamVacation = new DreamVacation();
                 }
 
@@ -279,7 +270,7 @@ public class MainFrame extends JFrame {
 
     public void playDeleteSound() {
         try {
-            File soundFile = new File("data/javadeletesound.wav");
+            File soundFile = new File("./data/javadeletesound.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -297,7 +288,7 @@ public class MainFrame extends JFrame {
 
     public void playAddSound() {
         try {
-            File soundFile = new File("data/addSound.wav");
+            File soundFile = new File("./data/addSound.wav");
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
@@ -331,20 +322,16 @@ public class MainFrame extends JFrame {
 
     public void helperMethod(String d1) {
         Destination destination = new Destination(d1);
-        summerDestinations = new DestinationsManager();
-        summerDestinations.addedSummerDestinations();
-        winterDestinations = new DestinationsManager();
-        winterDestinations.addedWinterDestinations();
         if (season.equalsIgnoreCase("exit")) {
             textPanel.setText("Goodbye!");
         } else if (season.equalsIgnoreCase("Summer")) {
             summerCall(d1, destination);
             thisIsDreamVacation = new DreamVacation();
-            masterList = new ArrayList<>();
+            dreamDestinationList = new ArrayList<>();
         } else if (season.equalsIgnoreCase("Winter")) {
             winterCall(d1, destination);
             thisIsDreamVacation = new DreamVacation();
-            masterList = new ArrayList<>();
+            dreamDestinationList = new ArrayList<>();
         }
 
     }
@@ -352,8 +339,8 @@ public class MainFrame extends JFrame {
     public void textForChoosingRight() {
         textPanel.appendText(
                 "\n\n"
-                + FormPanel.getVacationField().getText()
-                + " is an invalid selection! Please select 1 country from the above list\n\n.");
+                        + FormPanel.getVacationField().getText()
+                        + " is an invalid selection! Please select 1 country from the above list\n\n.");
     }
 
     public void textForDreamVacation() {
@@ -418,27 +405,32 @@ public class MainFrame extends JFrame {
         }
     }
 
+    //EFFECTS: sets the text on the text panel of the program according to the textEmitted from Toolbar class
 
-
-    public void handleExit() {
-        this.menuBuilder.onExit(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int action = JOptionPane.showConfirmDialog(MainFrame.this,
-                        "Would you like to close the Vacation App?",
-                        "YES", JOptionPane.OK_CANCEL_OPTION);
-                if (action == JOptionPane.OK_OPTION) {
-                    System.exit(0);
-                }
+    public void handleText() {
+        this.toolbar.setStringListener(new StringListener() {
+            public void textEmitted(String text) {
+                textPanel.setText("");
+                textPanel.appendText(text);
             }
         });
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: adds destination typed in the Dream Vacation text field to the Dream Vacation List
+    public void handleAddCountryWithMenu() {
+        this.menuBuilder.addCountryWithMenu(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addMethodToList();
+            }
+        });
+    }
 
-        // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
-        // MODIFIES: this
-        // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
+    // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
+    // MODIFIES: this
+    // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
     public void handleImport() {
         this.menuBuilder.onImport(new ActionListener() {
@@ -448,14 +440,14 @@ public class MainFrame extends JFrame {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
                     thisIsDreamVacation = dreamVacations.get(0);
-                    masterList = thisIsDreamVacation.viewDreamDestinations();
+                    dreamDestinationList = thisIsDreamVacation.viewDreamDestinations();
 
                     textPanel.appendText("Your customized Dream Vacation List has been loaded:\n"
-                            + masterList
+                            + dreamDestinationList
                             + "\n\nOptions:");
                     setLoading();
                 } catch (IOException | IndexOutOfBoundsException ev) {
-                    masterList = new ArrayList<>();
+                    dreamDestinationList = new ArrayList<>();
                     thisIsDreamVacation = new DreamVacation();
                 }
             }
@@ -477,7 +469,6 @@ public class MainFrame extends JFrame {
     }
 
 
-
     //EFFECTS: makes the form panel visible if selected, otherwise the form panel is not visible to the user
     public void handleShowItem() {
         this.menuBuilder.forShowItem(new ActionListener() {
@@ -487,9 +478,23 @@ public class MainFrame extends JFrame {
             }
         });
     }
+
+
+    public void handleExit() {
+        this.menuBuilder.onExit(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int action = JOptionPane.showConfirmDialog(MainFrame.this,
+                        "Would you like to close the Vacation App?",
+                        "YES", JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+    }
+
 }
-
-
 /*
     @Override
     public void keyTyped(KeyEvent e) {

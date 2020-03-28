@@ -1,7 +1,5 @@
-/*package ui;
-
-
-// MY PROJECT NO LONGER REQUIRES THE USE OF SINGLETON! will remove this class.
+/*
+package ui;
 
 import model.Destination;
 import model.DreamVacation;

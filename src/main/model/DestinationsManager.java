@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 // Represents specific summer and winter destinations for future vacation
 public class DestinationsManager {
-
     private ArrayList<Destination> summerDestinations;
     private ArrayList<Destination> winterDestinations;
 
