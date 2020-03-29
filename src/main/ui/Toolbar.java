@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents the Toolbar of the program
-public class Toolbar extends JPanel implements ActionListener {
+public class Toolbar extends JPanel implements ActionListener, StringListener {
     private JButton startButton;
     private JButton goodbyeButton;
     private StringListener textListener;
@@ -66,6 +66,9 @@ public class Toolbar extends JPanel implements ActionListener {
 
     }
 
+    @Override
+    public void textEmitted(String text) {
+    }
 }
 
 

@@ -20,7 +20,15 @@ public class JButtons {
         removeBtn = new JButton("Alt+R to Remove");
         saveBtn = new JButton("SAVE LIST");
         loadBtn = new JButton("LOAD LIST");
+    }
+
+    public void callAllButtonMethods() {
         GridBagConstraints gc = new GridBagConstraints();
+        setTwoButtons(gc);
+        setEnterBtn(gc);
+        removeBtn(gc);
+        saveBtn(gc);
+        loadBtn(gc);
     }
 
 
@@ -99,6 +107,53 @@ public class JButtons {
 
      enterBtn.setMnemonic(KeyEvent.VK_N);
     removeBtn.setMnemonic(KeyEvent.VK_R);
+
+
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the submit JButton
+
+    public void setFormListener(FormListener listener) {
+        this.formListener = listener;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the delete JButton
+
+    public void setFormListenerAdd(FormListenerAdd listener) {
+
+        this.formListenerAdd = listener;
+    }
+
+    //EFFECTS: this
+    //EFFECTS: FormListener for the Alt+E key pressed
+
+    public void setFormListenerEnter(FormListenerEnter listener) {
+        this.formListenerEnter = listener;
+    }
+
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the Alt+R key pressed
+
+    public void setFormListenerRemove(FormListenerRemove listener) {
+        this.formListenerRemove = listener;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the JButton for save
+
+    public void setFormListenerSave(FormListenerSave listener) {
+        this.formListenerSave = listener;
+    }
+
+    //MODIFIES: this
+    //EFFECTS: FormListener for the JButton for load
+
+    public void setFormListenerLoad(FormListenerLoad listener) {
+        this.formListenerLoad = listener;
+    }
+
 
 }
 */

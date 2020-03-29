@@ -72,14 +72,44 @@ that called these two methods from the DestinationManager class.
 in this class. Thus, I have refactored the codes by creating a new class called MenuBuilder for JMenu and JMenuItem to improve the 
 cohesion issue in the original MainFrame class. In the MenuBuilder class, I was able to eliminate the need for getter methods in the
 by creating methods that take in action listener as an argument. In the MainFrame class, I have implemented
-to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry, handleShowItem.
+to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry,and handleShowItem.
 
 ## Phase 4: Task 3
-- I have identified that there was coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,
+- I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), as these methods
+can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle)
+for the sounds of addSound.wav and deleteSound.wav files in the data folder of the project. 
+
+## Phase 4: Task 3
+- I have identified an issue with cohesion in the MainFrame class with respect to the Single Responsibility Principle. 
+First, I resolved duplicate codes by extracting a method from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
+and called the newly created method, addMethodToList() inside those methods. Then, I identified 
+the cohesion issue within this method, addMethodToList(), of implementing TextPanel.setText with text description of building DreamVacation list to user. 
+I realized that since I already had the TextPanel class separately in the UI package,
+this particular code of addMethodToList() could be replaced with a call to the newly created method in the TextPanel class, 
+buildingDreamVacation(), to resolve a cohesion issue of the MainFrame class. 
+
+## Phase 4: Task 3
+- Inside the MainFrame class, the method setLoading() is called in loadMethod() and setLoading() methods of MainFrame Class. 
+This is another cohesion problem as setLoading() implements codes that should entirely be in its own TextPanel class. Therefore,
+I resolved this by creating a method inside the TextPanel class and replaced the setLoading() call in the body of both
+setLoading() and loadMethod() by calling this new method from the TextPanel class.  
+
+## Phase 4: Task 3
+- Within the MainFrame class, I replaced the textPanel.appendText of text body (duplicate codes) from the methods, summerCall() and winterCall(), with method calls to the new 
+ methods that I created, textForDreamVacation() as well as showCountriesWithWinterSeason
+ and showCountriesWithSummerSeason methods inside the TextPanel class. This is another fix of the cohesion problems of the MainFrame class. 
+
+
+## Phase 4: Task 3
+- I have identified that there was tight coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,
 FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave). These interfaces could be dealt with by simply creating
 a single FormListener interface and set this as the sole FormListener in my FormPanel class to eliminate the need of multiple associations 
-of FormListener interfaces.
+of FormListener interfaces within FormPanel class.
 
 ## Phase 4: Task 3
-- I also removed the Singleton class from the project as this was not necessary in the application of my program. 
+- I also removed the Singleton class from the project as this was not necessary in the application of my program, and this would
+reduce coupling between my classes (originally, this would have created coupling between the MainFrame class and TextPanel class as
+I passed the singleton instance of DreamVacation and list of destinations in these two classes in prior commits - but I decided
+to implement adding/removing X to/from Y (destination(s) to the DreamVacation list) in the MainFrame class alone).
+ 
 

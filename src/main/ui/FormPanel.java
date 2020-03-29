@@ -192,6 +192,11 @@ public class FormPanel extends JPanel implements FormListener {
         return destinationField;
     }
 
+    public static JTextField getSeasonField() {
+        return seasonField;
+    }
+
+
     //EFFECTS: calls all the methods that set up the buttons and labels/panels
     // on the screen of the form panel of the program
 
@@ -344,7 +349,6 @@ public class FormPanel extends JPanel implements FormListener {
     //EFFECTS: FormListener for the delete JButton
 
     public void setFormListenerAdd(FormListenerAdd listener) {
-
         this.formListenerAdd = listener;
     }
 
@@ -430,6 +434,5 @@ public class FormPanel extends JPanel implements FormListener {
 
     @Override
     public void formEventOccurred(FormEvent e) {
-
     }
 }
