@@ -59,20 +59,33 @@ your saved customized Dream Vacation list.
 
 
 ## Phase 4: Task 2
-- I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed to 
-DestinationsManager) and I have changed the signature of the following methods in this class,
+- I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed the
+class/file name DestinationsManager as this is more appropriate) and I have changed the signature of the following methods in this class,
 getCityFromSummerDestinations and getCityFromWinterDestinations, to throw the checked exception of IllegalDestinationException, 
-if the input of the method parameter is not valid. 
+if the input of the method parameter for both is not valid. 
 - I have tested these methods inside the DestinationsManagerTest with try/catch blocks for both cases where 
-1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the MainFrame of the UI package 
-that called these two methods from the DestinationManager class.
+1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the TextPanel class of the UI package 
+(specifically, the testSummerCall and testWinterCall methods) that called these two methods (getCityFromSummerDestinations and getCityFromWinterDestinations)
+from the DestinationManager class.
 
 ## Phase 4: Task 3
 - I have identified that there was poor cohesion in the MainFrame class of the UI package with respect to JMenu and JMenuItem fields/objects
-in this class. Thus, I have refactored the codes by creating a new class called MenuBuilder for JMenu and JMenuItem to improve the 
-cohesion issue in the original MainFrame class. In the MenuBuilder class, I was able to eliminate the need for getter methods in the
+in this class. Thus, I have refactored the codes by creating a new class called MenuBuilder for JMenu and JMenuItems to improve the 
+cohesion issue in the original MainFrame class by extracting out this part of additional functionality from the MainFrame class. 
+In the MenuBuilder class, I was able to eliminate the need for getter methods in the
 by creating methods that take in action listener as an argument. In the MainFrame class, I have implemented
 to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry,and handleShowItem.
+
+## Phase 4: Task 3
+- Within the MainFrame class, I extracted the entire methods of summerCall and winterCall code implementations into the TextPanel
+class (as the implementation of these methods would make it fit to belong in the TextPanel class) and replaced the method names with 
+testSummerCall and testWinterCall inside the TextPanel and passed in the parameters from
+the MainClass as appropriate for code implementation. Therefore, I was able to fix the cohesion issue by removing these methods from the MainFrame
+class entirely. I was able to call the newly created methods (testSummerCall and testWinterCall) inside the MainFrame class with the TextPanel object
+within the chooseSeasonMethod. Also, inside the MainFrame class, the method setLoading() is called in loadMethod() and setLoading() methods of MainFrame Class. 
+This is another cohesion problem as setLoading() implements codes that should entirely be in its own TextPanel class. Therefore,
+I resolved this by creating a method inside the TextPanel class and replaced the setLoading() call in the body of both
+setLoading() and loadMethod() by calling this new method from the TextPanel class.  
 
 ## Phase 4: Task 3
 - I have identified an issue with cohesion in the MainFrame class with respect to the Single Responsibility Principle. 
@@ -84,20 +97,10 @@ this particular code of addMethodToList() could be replaced with a call to the n
 buildingDreamVacation(), to resolve a cohesion issue of the MainFrame class. 
 
 ## Phase 4: Task 3
-- Inside the MainFrame class, the method setLoading() is called in loadMethod() and setLoading() methods of MainFrame Class. 
-This is another cohesion problem as setLoading() implements codes that should entirely be in its own TextPanel class. Therefore,
-I resolved this by creating a method inside the TextPanel class and replaced the setLoading() call in the body of both
-setLoading() and loadMethod() by calling this new method from the TextPanel class.  
-
-## Phase 4: Task 3
-- Within the MainFrame class, I replaced the textPanel.appendText of text body (duplicate codes) from the methods, summerCall() and winterCall(), with method calls to the new 
- methods that I created, textForDreamVacation() as well as showCountriesWithWinterSeason
- and showCountriesWithSummerSeason methods inside the TextPanel class. This is another fix of the cohesion problems of the MainFrame class. 
-
-## Phase 4: Task 3
 - I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), as these methods
-can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle)
-for the sounds of addSound.wav and deleteSound.wav files saved in the data folder of the project. 
+can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle) 
+for its own methods/responsibility of the sound methods with respect to addSound.wav and deleteSound.wav files saved in the data folder of the project,
+and this will help improve cohesion of the MainFrame class. 
 
 ## Phase 4: Task 3
 - I have identified that there was tight coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,

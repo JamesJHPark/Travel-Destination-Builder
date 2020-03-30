@@ -4,7 +4,12 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
+    // represents the Music class that contains methods to play sounds from wav. files stored in data folder of the
+    // project
+
 public class Music {
+
+    //EFFECTS: constructor of music class
 
     public Music() {
     }

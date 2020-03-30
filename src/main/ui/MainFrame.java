@@ -1,6 +1,5 @@
 package ui;
 
-import exceptions.IllegalDestinationException;
 import model.Destination;
 import model.DestinationsManager;
 import model.DreamVacation;
@@ -20,90 +19,53 @@ import java.util.List;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-//represents the MainFrame of the App and extends JFrame
+//represents the MainFrame of the App allowing interactive user application to build DreamVacation list
 public class MainFrame extends JFrame {
 
-/*
-    private MainFrameExperiment exo;
-*/
     private TextPanel textPanel;
     private JTextField component;
     private Toolbar toolbar;
     private JFrame frame;
     private FormPanel formPanel;
     private MenuBuilder menuBuilder;
-    private DestinationsManager winterDestinations;
-    private DestinationsManager summerDestinations;
+    private DestinationsManager destinationsManager;
     private String season;
-    private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DreamVacation thisIsDreamVacation;
     private ArrayList<Destination> dreamDestinationList;
     private Music music;
-    // **THE BELOW fields have been REFACTORED -- created a new class called MenuBuilder
-    // and moved these fields to that class. Check to make sure that this is resolving a cohesion issue!
-   /* private JMenu fileMenu;
-    private JMenuItem exportDataItem;
-    private JMenuItem importDataItem;
-    private JMenuItem addCountry;
-    private JMenuItem exitItem;
-    private JMenuItem secondMenu;
-    private JMenuItem showMenu;
-    private JMenuBar menuBar;
-    private JCheckBoxMenuItem showFormItem;*/
+    private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
 
 
-    // EFFECTS: constructs the Main Frame of the GUI
+    // EFFECTS: constructs the Main Frame of the GUI with text panel, form panel that interactively builds DreamVacation
+    //list based on user inputs
     public MainFrame() {
         super("Dream Vacation");
         initializer();
-        setPanel();
-
-        submitMethod();
-
-        addMethod();
-        removeKey();
-        enterKey();
-        saveMethod();
-        loadMethod();
-        handleText();
+        setPanels();
+        buildingDreamVacation();
     }
 
 
     public void initializer() {
- /*       exo = new MainFrameExperiment();
-        exo.submitMethod();*/
         thisIsDreamVacation = new DreamVacation();
-        dreamDestinationList = new ArrayList<>();
+        dreamDestinationList = thisIsDreamVacation.viewDreamDestinations();
         component = new JTextField();
         frame = new JFrame();
         menuBuilder = new MenuBuilder();
-        winterDestinations = new DestinationsManager();
-        winterDestinations.addedWinterDestinations();
-        summerDestinations = new DestinationsManager();
-        summerDestinations.addedSummerDestinations();
+        destinationsManager = new DestinationsManager();
+        destinationsManager.addedSummerDestinations();
+        destinationsManager.addedWinterDestinations();
         music = new Music();
-
-        //THESE HAVE BEEN REFACTORED - MOVED TO A NEW CLASS, MenuBuilder **
-      /* menuBar = new JMenuBar();
-        fileMenu = new JMenu("Data");
-        exportDataItem = new JMenuItem("Save Data");
-        importDataItem = new JMenuItem("Load Data");
-        addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
-        exitItem = new JMenuItem("Exit");
-        secondMenu = new JMenu("Window");
-        showFormItem = new JCheckBoxMenuItem("Vacation Form");
-        showMenu = new JMenu("Launch");*/
     }
 
     //MODIFIES: this
     //EFFECTS: sets up the frame, and initializes the toolbar, textPanel, formPanel of the program
-    public void setPanel() {
+    public void setPanels() {
         frame.add(component);
         frame.setLayout(new BorderLayout());
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
-
         frame.add(formPanel, BorderLayout.WEST);
         frame.add(toolbar, BorderLayout.NORTH);
         frame.add(textPanel, BorderLayout.CENTER);
@@ -127,6 +89,20 @@ public class MainFrame extends JFrame {
     }
 
     //MODIFIES: this
+    //EFFECTS: methods that submit user entries to the FormPanel, add, remove Destinations from the DreamVacation and
+    // dreamDestinationList, as well as saving/loading the DreamVacation List for the user to view.
+
+    private void buildingDreamVacation() {
+        submitMethod();
+        addMethod();
+        removeKey();
+        enterKey();
+        saveMethod();
+        loadMethod();
+        handleText();
+    }
+
+    //MODIFIES: this
     //EFFECTS: submits a typed country into Destination panel, Dream Vacation panel,
     // or season in the text field panels according to the program specifications
 
@@ -134,12 +110,32 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {
                 String countryName = e.getDestination();
-                season = FormPanel.getSeasonField().getText();
-                helperMethod(FormPanel.getVacationField().getText());
-                System.out.println("asdf");
+                season = e.getSeason();
+                chooseSeasonMethod(e.getDestination());
             }
         });
     }
+
+
+    //EFFECTS: helper method to create destination object with countryName and passes in the parameters of
+    // String countryName, Destination destination, and DestinationsManager destinationsManager into the
+    // testSummerCall, testWinterCall within TextPanel, and creates a new object of thisIsDreamVacation
+    // and dreamDestinationList every time the method is called.
+
+
+    public void chooseSeasonMethod(String countryName) {
+        Destination destination = new Destination(countryName);
+        if (season.equalsIgnoreCase("Summer")) {
+            textPanel.testSummerCall(countryName, destination, destinationsManager);
+            thisIsDreamVacation = new DreamVacation();
+            dreamDestinationList = new ArrayList<>();
+        } else if (season.equalsIgnoreCase("Winter")) {
+            textPanel.testWinterCall(countryName, destination, destinationsManager);
+            thisIsDreamVacation = new DreamVacation();
+            dreamDestinationList = new ArrayList<>();
+        }
+    }
+
 
 
     //MODIFIES: this
@@ -149,6 +145,18 @@ public class MainFrame extends JFrame {
     public void addMethod() {
         formPanel.setFormListenerAdd(new FormListenerAdd() {
             public void formEventAdd(FormEvent e) {
+                addMethodToList(dreamDestinationList);
+            }
+        });
+    }
+
+    //MODIFIES: this
+    //EFFECTS: adds a typed country in the text panel of Dream Vacation with Alt+E or by user clicking on this button
+    // to Dream Vacation List
+
+    public void enterKey() {
+        formPanel.setFormListenerEnter(new FormListenerEnter() {
+            public void formEventOccurredEnter(FormEvent e) {
                 addMethodToList(dreamDestinationList);
             }
         });
@@ -186,18 +194,6 @@ public class MainFrame extends JFrame {
         });
     }
 
-
-    //MODIFIES: this
-    //EFFECTS: adds a typed country in the text panel of Dream Vacation with Alt+E or by user clicking on this button
-    // to Dream Vacation List
-
-    public void enterKey() {
-        formPanel.setFormListenerEnter(new FormListenerEnter() {
-            public void formEventOccurredEnter(FormEvent e) {
-                addMethodToList(dreamDestinationList);
-            }
-        });
-    }
 
 
     // REFERENCE: code taken from URL: https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
@@ -253,65 +249,6 @@ public class MainFrame extends JFrame {
         }
     }
 
-    //EFFECTS: helper method to create destinationsManager and destination objects and matches these according to the
-    // hard-coded answers in running the application
-
-
-    public void helperMethod(String countryName) {
-        Destination destination = new Destination(countryName);
-        if (season.equalsIgnoreCase("exit")) {
-            textPanel.setText("Goodbye!");
-        } else if (season.equalsIgnoreCase("Summer")) {
-            summerCall(countryName, destination);
-            thisIsDreamVacation = new DreamVacation();
-            dreamDestinationList = new ArrayList<>();
-        } else if (season.equalsIgnoreCase("Winter")) {
-            winterCall(countryName, destination);
-            thisIsDreamVacation = new DreamVacation();
-            dreamDestinationList = new ArrayList<>();
-        }
-    }
-
-
-
-
-    //EFFECTS: sets the season with user's response of Summer and provides the user with
-    // list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
-    // summer Destination that the user has chosen
-
-    public void summerCall(String countryName, Destination destination) {
-        textPanel.showCountriesWithSummerSeason(summerDestinations);
-        if (countryName.length() > 0) {
-            try {
-                summerDestinations.getCityFromSummerDestinations(destination);
-                textPanel.popularCitiesRetrieve(countryName);
-                textPanel.appendText(summerDestinations.getCityFromSummerDestinations(destination));
-                textPanel.textForDreamVacation();
-            } catch (IllegalDestinationException e) {
-                textPanel.textForChoosingRightSummer(summerDestinations);
-            }
-        }
-
-    }
-
-    //EFFECTS: sets the season with user's response of Summer and provides the user with
-    // list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
-    // winter Destination that the user has chosen
-
-
-    public void winterCall(String countryName, Destination destination) {
-        textPanel.showCountriesWithWinterSeason(winterDestinations);
-        if (countryName.length() > 0) {
-            try {
-                winterDestinations.getCityFromWinterDestinations(destination);
-                textPanel.popularCitiesRetrieve(countryName);
-                textPanel.appendText(winterDestinations.getCityFromWinterDestinations(destination));
-                textPanel.textForDreamVacation();
-            } catch (IllegalDestinationException e) {
-                textPanel.textForChoosingRightWinter(winterDestinations);
-            }
-        }
-    }
 
 
     //EFFECTS: sets the text on the text panel of the program according to the textEmitted from Toolbar class
@@ -319,8 +256,7 @@ public class MainFrame extends JFrame {
     public void handleText() {
         this.toolbar.toolBarOnHello(new StringListener() {
             public void stringInText(String text) {
-                textPanel.setText("");
-                textPanel.appendText(text);
+                textPanel.getterForHandleText(text);
             }
         });
     }
@@ -469,3 +405,50 @@ public class MainFrame extends JFrame {
                 + "\n"
                 + "\n***Please note: You can only enter a country once***");
     }*/
+
+//EFFECTS: sets the season with user's response of Summer and provides the user with
+// list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
+// summer Destination that the user has chosen
+/*
+
+    public void summerCall(String countryName, Destination destination) {
+        textPanel.testSummerCall(countryName, destination, destinationsManager);
+*/
+
+ /*       textPanel.showCountriesWithSummerSeason(destinationsManager);
+        if (countryName.length() > 0) {
+            try {
+                destinationsManager.getCityFromSummerDestinations(destination);
+                textPanel.popularCitiesRetrieve(countryName);
+                textPanel.appendText(destinationsManager.getCityFromSummerDestinations(destination));
+                textPanel.textForDreamVacation();
+            } catch (IllegalDestinationException e) {
+                textPanel.textForChoosingRightSummer(destinationsManager);
+            }
+        }
+*/
+
+
+//EFFECTS: sets the season with user's response of Summer and provides the user with
+// list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
+// winter Destination that the user has chosen
+/*
+
+
+    public void winterCall(String countryName, Destination destination) {
+        textPanel.testWinterCall(countryName, destination, destinationsManager);
+    }
+
+*/
+
+
+//THESE HAVE BEEN REFACTORED - MOVED TO A NEW CLASS, MenuBuilder **
+      /* menuBar = new JMenuBar();
+        fileMenu = new JMenu("Data");
+        exportDataItem = new JMenuItem("Save Data");
+        importDataItem = new JMenuItem("Load Data");
+        addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
+        exitItem = new JMenuItem("Exit");
+        secondMenu = new JMenu("Window");
+        showFormItem = new JCheckBoxMenuItem("Vacation Form");
+        showMenu = new JMenu("Launch");*/

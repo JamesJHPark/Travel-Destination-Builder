@@ -1,5 +1,6 @@
 package ui;
 
+import exceptions.IllegalDestinationException;
 import model.Destination;
 import model.DestinationsManager;
 
@@ -13,8 +14,6 @@ import java.util.ArrayList;
 public class TextPanel extends JPanel {
 
     private JTextArea textArea;
-    private DestinationsManager summerDestination;
-
 
     //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
     //EFFECTS: constructs the TextPanel of the program with textArea
@@ -41,20 +40,62 @@ public class TextPanel extends JPanel {
         textArea.setText(s);
     }
 
+    //EFFECTS: sets the season with user's response of Summer and provides the user with
+    // list of summer Destinations to choose from and shows the list of the corresponding cities of
+    // summer Destination that the user has chosen
 
-    public void showCountriesWithSummerSeason(DestinationsManager summerDestinations) {
+    public void testSummerCall(String countryName, Destination destination,
+                                  DestinationsManager destinationsManager) {
+        showCountriesWithSummerSeason(destinationsManager);
+        if (countryName.length() > 0) {
+            try {
+                destinationsManager.getCityFromSummerDestinations(destination);
+                popularCitiesRetrieve(countryName);
+                textArea.append(destinationsManager.getCityFromSummerDestinations(destination));
+                textForDreamVacation();
+            } catch (IllegalDestinationException e) {
+                textForChoosingRightSummer(destinationsManager);
+            }
+        }
+    }
+
+
+    //EFFECTS: sets the season with user's response of Winter and provides the user with
+    // list of winter Destinations to choose from and shows the list of the corresponding cities of
+    // winter Destination that the user has chosen
+
+    public void testWinterCall(String countryName, Destination destination,
+                               DestinationsManager destinationsManager) {
+        showCountriesWithWinterSeason(destinationsManager);
+        if (countryName.length() > 0) {
+            try {
+                destinationsManager.getCityFromWinterDestinations(destination);
+                popularCitiesRetrieve(countryName);
+                textArea.append(destinationsManager.getCityFromWinterDestinations(destination));
+                textForDreamVacation();
+            } catch (IllegalDestinationException e) {
+                textForChoosingRightWinter(destinationsManager);
+            }
+        }
+    }
+
+
+    public void showCountriesWithSummerSeason(DestinationsManager destinationsManager) {
         if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Summer")) {
             textArea.append("\nHere is the list of summer travel destinations!");
-            textArea.append("\n" + summerDestinations.getSummerDestinations().toString() + "\n");
+            textArea.append("\n" + destinationsManager.getSummerDestinations().toString() + "\n");
             textArea.append("\nPlease choose 1 country from this above list only."
                     + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT");
         }
     }
 
-    public void showCountriesWithWinterSeason(DestinationsManager winterDestinations) {
+
+
+
+    public void showCountriesWithWinterSeason(DestinationsManager destinationsManager) {
         if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Winter")) {
             textArea.append("\nHere is the list of winter travel destinations!");
-            textArea.append("\n" + winterDestinations.getWinterDestinations().toString() + "\n");
+            textArea.append("\n" + destinationsManager.getWinterDestinations().toString() + "\n");
             textArea.append("\nPlease choose 1 country from this above list only."
                     + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT");
         }
@@ -79,6 +120,10 @@ public class TextPanel extends JPanel {
                 + "\n***Please note: You can only enter a country once***");
     }
 
+
+
+
+
     public void textForDreamVacation() {
         textArea.append("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
                 + "\nPlease type the country name into Dream Vacation panel on the left."
@@ -86,6 +131,10 @@ public class TextPanel extends JPanel {
                 + "Click Add button or press Alt+N on keyboard or select Add country under Data menu"
                 + " to add to Dream Vacation List.");
     }
+
+
+
+
 
     public void saveToFileText() {
         textArea.append("\nYour customized dream vacation list has been saved. "
@@ -115,24 +164,33 @@ public class TextPanel extends JPanel {
 
     }
 
-    public void textForChoosingRightSummer(DestinationsManager summerDestinations) {
+
+    public void textForChoosingRightSummer(DestinationsManager destinationsManager) {
         textArea.setText("");
         textArea.append(FormPanel.getVacationField().getText()
                 + " is an invalid selection! Please select 1 country from the list."
                 + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
-        textArea.append(summerDestinations.getSummerDestinations().toString());
+        textArea.append(destinationsManager.getSummerDestinations().toString());
     }
 
-    public void textForChoosingRightWinter(DestinationsManager winterDestinations) {
+    public void textForChoosingRightWinter(DestinationsManager destinationsManager) {
         textArea.setText("");
         textArea.append(FormPanel.getVacationField().getText()
                 + " is an invalid selection! Please select 1 country from the list."
                 + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
-        textArea.append(winterDestinations.getWinterDestinations().toString());
+        textArea.append(destinationsManager.getWinterDestinations().toString());
+    }
+
+    public void getterForHandleText(String text) {
+        textArea.setText("");
+        textArea.append(text);
     }
 
 
 }
+
+
+
 
 
 /*

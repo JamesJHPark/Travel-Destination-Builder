@@ -4,12 +4,12 @@ import exceptions.IllegalDestinationException;
 
 import java.util.ArrayList;
 
-// Represents specific summer and winter destinations for future vacation
+// Represents DestinationManager class that manages the summer and winter destinations for upcoming vacation
 public class DestinationsManager {
     private ArrayList<Destination> summerDestinations;
     private ArrayList<Destination> winterDestinations;
 
-    //EFFECTS: constructs specified summer and winter destinations in separate ArrayLists
+    //EFFECTS: constructs empty array lists of summer and winter destinations
     public DestinationsManager() {
         summerDestinations = new ArrayList<>();
         winterDestinations = new ArrayList<>();
@@ -32,13 +32,13 @@ public class DestinationsManager {
         return summerDestinations;
     }
 
-    //EFFECTS: to return the list of all winter destinations
+    //EFFECTS: to return the array list of all winter destinations
     public ArrayList<Destination> getWinterDestinations() {
         return winterDestinations;
     }
 
     //MODIFIES: this
-    //EFFECTS: to add summer DestinationsManager into summerDestinations list
+    //EFFECTS: to add the specified summer destinations into summerDestinations list
     public void addedSummerDestinations() {
         Destination italy = new Destination("Italy");
         Destination spain = new Destination("Spain");
@@ -55,7 +55,7 @@ public class DestinationsManager {
 
 
     //MODIFIES: this
-    //EFFECTS: to add winter DestinationsManager into winterDestinations list
+    //EFFECTS: to add the specified winter destinations into winterDestinations list
     public void addedWinterDestinations() {
         Destination mexico = new Destination("Mexico");
         Destination iceland = new Destination("Iceland");
