@@ -75,11 +75,6 @@ by creating methods that take in action listener as an argument. In the MainFram
 to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry,and handleShowItem.
 
 ## Phase 4: Task 3
-- I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), as these methods
-can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle)
-for the sounds of addSound.wav and deleteSound.wav files in the data folder of the project. 
-
-## Phase 4: Task 3
 - I have identified an issue with cohesion in the MainFrame class with respect to the Single Responsibility Principle. 
 First, I resolved duplicate codes by extracting a method from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
 and called the newly created method, addMethodToList() inside those methods. Then, I identified 
@@ -99,17 +94,21 @@ setLoading() and loadMethod() by calling this new method from the TextPanel clas
  methods that I created, textForDreamVacation() as well as showCountriesWithWinterSeason
  and showCountriesWithSummerSeason methods inside the TextPanel class. This is another fix of the cohesion problems of the MainFrame class. 
 
+## Phase 4: Task 3
+- I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), as these methods
+can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle)
+for the sounds of addSound.wav and deleteSound.wav files saved in the data folder of the project. 
 
 ## Phase 4: Task 3
 - I have identified that there was tight coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,
-FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave). These interfaces could be dealt with by simply creating
-a single FormListener interface and set this as the sole FormListener in my FormPanel class to eliminate the need of multiple associations 
-of FormListener interfaces within FormPanel class.
+FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave). I realized I had 6 interfaces that essentially specified
+the same behavior. Thus, all of these 6 interfaces could be dealt with by just having a single FormListener interface and set this as the sole FormListener in my FormPanel class 
+to eliminate the need of multiple associations of FormListener interfaces within FormPanel class. This would help to resolve cohesion in my code.
 
 ## Phase 4: Task 3
 - I also removed the Singleton class from the project as this was not necessary in the application of my program, and this would
-reduce coupling between my classes (originally, this would have created coupling between the MainFrame class and TextPanel class as
-I passed the singleton instance of DreamVacation and list of destinations in these two classes in prior commits - but I decided
+reduce coupling between my classes (originally, this would have created coupling among the Singleton Class, MainFrame class and TextPanel class as
+I passed the singleton instance of DreamVacation and list of destinations in these classes in prior commits - but I decided
 to implement adding/removing X to/from Y (destination(s) to the DreamVacation list) in the MainFrame class alone).
  
 

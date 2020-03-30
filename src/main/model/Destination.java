@@ -1,9 +1,12 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Destination {
     private String countryName;
+    private ArrayList<Destination> summerDestinationList;
+    private ArrayList<Destination> winterDestinationList;
 
     //EFFECTS: constructs the Destination object with a string parameter of the country name
     public Destination(String countryName) {
@@ -16,11 +19,15 @@ public class Destination {
         return this.countryName;
     }
 
+
+
     //EFFECTS: returns this.countryName of the destination object
     @Override
     public String toString() {
         return this.countryName;
     }
+
+
 
     //EFFECTS: hashcode and equals set to the class field, countryName
     @Override

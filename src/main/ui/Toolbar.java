@@ -7,10 +7,10 @@ import java.awt.event.ActionListener;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents the Toolbar of the program
-public class Toolbar extends JPanel implements ActionListener, StringListener {
+public class Toolbar extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton goodbyeButton;
-    private StringListener textListener;
+    private StringListener listenerForString;
 
 //EFFECTS: constructs the toolbar of the program
     public Toolbar() {
@@ -27,8 +27,8 @@ public class Toolbar extends JPanel implements ActionListener, StringListener {
     //MODIFIES: this
     //EFFECTS: sets the StringListener with input listener
 
-    public void setStringListener(StringListener listener) {
-        this.textListener = listener;
+    public void toolBarOnHello(StringListener listener) {
+        this.listenerForString = listener;
     }
 
 
@@ -38,13 +38,13 @@ public class Toolbar extends JPanel implements ActionListener, StringListener {
         JButton clicked = (JButton) e.getSource();
         if (clicked == startButton) {
 
-            if (textListener != null) {
+            if (listenerForString != null) {
                 intro();
 
             }
         } else if (clicked == goodbyeButton) {
-            if (textListener != null) {
-                textListener.textEmitted("Click Data menu on top left of the screen, then click exit!\n");
+            if (listenerForString != null) {
+                listenerForString.stringInText("Click Data menu on top left of the screen, then click exit!\n");
             }
         }
 
@@ -53,7 +53,7 @@ public class Toolbar extends JPanel implements ActionListener, StringListener {
     //EFFECTS: provides the text of the introduction of the program when START button is clicked
 
     private void intro() {
-        textListener.textEmitted("Hello there! Choose the season for your next vacation: "
+        listenerForString.stringInText("Hello there! Choose the season for your next vacation: "
                 + "\n"
                 + "\nSummer (type Summer in the Season text field and click SUBMIT)"
                 + "\n"
@@ -66,9 +66,6 @@ public class Toolbar extends JPanel implements ActionListener, StringListener {
 
     }
 
-    @Override
-    public void textEmitted(String text) {
-    }
 }
 
 

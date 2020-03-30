@@ -23,11 +23,14 @@ import java.util.List;
 //represents the MainFrame of the App and extends JFrame
 public class MainFrame extends JFrame {
 
+/*
+    private MainFrameExperiment exo;
+*/
     private TextPanel textPanel;
     private JTextField component;
     private Toolbar toolbar;
-    private FormPanel formPanel;
     private JFrame frame;
+    private FormPanel formPanel;
     private MenuBuilder menuBuilder;
     private DestinationsManager winterDestinations;
     private DestinationsManager summerDestinations;
@@ -54,7 +57,9 @@ public class MainFrame extends JFrame {
         super("Dream Vacation");
         initializer();
         setPanel();
+
         submitMethod();
+
         addMethod();
         removeKey();
         enterKey();
@@ -65,6 +70,8 @@ public class MainFrame extends JFrame {
 
 
     public void initializer() {
+ /*       exo = new MainFrameExperiment();
+        exo.submitMethod();*/
         thisIsDreamVacation = new DreamVacation();
         dreamDestinationList = new ArrayList<>();
         component = new JTextField();
@@ -96,6 +103,7 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
+
         frame.add(formPanel, BorderLayout.WEST);
         frame.add(toolbar, BorderLayout.NORTH);
         frame.add(textPanel, BorderLayout.CENTER);
@@ -126,11 +134,13 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {
                 String countryName = e.getDestination();
-                season = e.getSeason();
-                helperMethod(countryName);
+                season = FormPanel.getSeasonField().getText();
+                helperMethod(FormPanel.getVacationField().getText());
+                System.out.println("asdf");
             }
         });
     }
+
 
     //MODIFIES: this
     //EFFECTS: adds Destination typed in the text field panel to the Dream Vacation List
@@ -142,7 +152,6 @@ public class MainFrame extends JFrame {
                 addMethodToList(dreamDestinationList);
             }
         });
-
     }
 
     public void addMethodToList(ArrayList<Destination> dreamDestinationList) {
@@ -197,7 +206,7 @@ public class MainFrame extends JFrame {
 
     public void saveMethod() {
         formPanel.setFormListenerSave(new FormListenerSave() {
-            public void formEventSave(FormEvent ev) {
+            public void formEventSave(FormEvent e) {
                 saveFunction();
             }
         });
@@ -210,7 +219,7 @@ public class MainFrame extends JFrame {
 
     public void loadMethod() {
         formPanel.setFormListenerLoad(new FormListenerLoad() {
-            public void formEventLoad(FormEvent ev) {
+            public void formEventLoad(FormEvent e) {
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
@@ -218,7 +227,7 @@ public class MainFrame extends JFrame {
                     dreamDestinationList = thisIsDreamVacation.viewDreamDestinations();
                     textPanel.loadedText(dreamDestinationList);
                     textPanel.setLoading();
-                } catch (IOException | IndexOutOfBoundsException e) {
+                } catch (IOException | IndexOutOfBoundsException ev) {
                     dreamDestinationList = new ArrayList<>();
                     thisIsDreamVacation = new DreamVacation();
                 }
@@ -279,7 +288,7 @@ public class MainFrame extends JFrame {
                 textPanel.appendText(summerDestinations.getCityFromSummerDestinations(destination));
                 textPanel.textForDreamVacation();
             } catch (IllegalDestinationException e) {
-                textPanel.textForChoosingRight();
+                textPanel.textForChoosingRightSummer(summerDestinations);
             }
         }
 
@@ -288,6 +297,7 @@ public class MainFrame extends JFrame {
     //EFFECTS: sets the season with user's response of Summer and provides the user with
     // list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
     // winter Destination that the user has chosen
+
 
     public void winterCall(String countryName, Destination destination) {
         textPanel.showCountriesWithWinterSeason(winterDestinations);
@@ -298,16 +308,17 @@ public class MainFrame extends JFrame {
                 textPanel.appendText(winterDestinations.getCityFromWinterDestinations(destination));
                 textPanel.textForDreamVacation();
             } catch (IllegalDestinationException e) {
-                textPanel.textForChoosingRight();
+                textPanel.textForChoosingRightWinter(winterDestinations);
             }
         }
     }
 
+
     //EFFECTS: sets the text on the text panel of the program according to the textEmitted from Toolbar class
 
     public void handleText() {
-        this.toolbar.setStringListener(new StringListener() {
-            public void textEmitted(String text) {
+        this.toolbar.toolBarOnHello(new StringListener() {
+            public void stringInText(String text) {
                 textPanel.setText("");
                 textPanel.appendText(text);
             }

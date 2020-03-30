@@ -15,12 +15,7 @@ public class TextPanel extends JPanel {
     private JTextArea textArea;
     private DestinationsManager summerDestination;
 
-    /*
-    private JPopupMenu popup;
-    public JTextArea getTextArea() {
-        return textArea;
-    }
-*/
+
     //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
     //EFFECTS: constructs the TextPanel of the program with textArea
     public TextPanel() {
@@ -31,6 +26,7 @@ public class TextPanel extends JPanel {
         add(new JScrollPane(textArea), BorderLayout.CENTER);
         textArea.append("Welcome! To begin, please press the START button on top left of the screen");
     }
+
 
     //EFFECTS: appends text to the textArea
 
@@ -119,13 +115,21 @@ public class TextPanel extends JPanel {
 
     }
 
-    public void textForChoosingRight() {
-        textArea.append("\n\n"
-                        + FormPanel.getVacationField().getText()
-                        + " is an invalid selection! Please select 1 country from the above list\n\n.");
+    public void textForChoosingRightSummer(DestinationsManager summerDestinations) {
+        textArea.setText("");
+        textArea.append(FormPanel.getVacationField().getText()
+                + " is an invalid selection! Please select 1 country from the list."
+                + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
+        textArea.append(summerDestinations.getSummerDestinations().toString());
     }
 
-
+    public void textForChoosingRightWinter(DestinationsManager winterDestinations) {
+        textArea.setText("");
+        textArea.append(FormPanel.getVacationField().getText()
+                + " is an invalid selection! Please select 1 country from the list."
+                + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
+        textArea.append(winterDestinations.getWinterDestinations().toString());
+    }
 
 
 }
@@ -204,5 +208,12 @@ public class TextPanel extends JPanel {
                 + "\nPlease click on SAVE LIST button when you are finished."
                 + "\n"
                 + "\n***Please note: You can only enter a country once***");
+    }
+*/
+
+    /*
+    private JPopupMenu popup;
+    public JTextArea getTextArea() {
+        return textArea;
     }
 */

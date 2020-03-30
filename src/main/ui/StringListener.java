@@ -5,5 +5,5 @@ package ui;
 //represents the StringListener of the program
 
 public interface StringListener {
-    public void textEmitted(String text);
+    public void stringInText(String text);
 }

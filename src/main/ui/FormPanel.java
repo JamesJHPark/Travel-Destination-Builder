@@ -14,7 +14,7 @@ import java.io.IOException;
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //represents the FormPanel of the program
 
-public class FormPanel extends JPanel implements FormListener {
+public class FormPanel extends JPanel {
     private JLabel destinationLabel;
     private JLabel dreamVacationLabel;
     private JLabel seasonLabel;
@@ -22,17 +22,16 @@ public class FormPanel extends JPanel implements FormListener {
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
 
-    //Can I resolve a coupling issue by refactoring these codes of FormListeners? Make sure that this is correct!
+    //Can I resolve a coupling issue by refactoring these codes of FormListeners? prof gave confirmation yes!
     private FormListener formListener;
     private FormListenerAdd formListenerAdd;
-    private FormListenerEnter formListenerEnter;
-    private FormListenerRemove formListenerRemove;
     private FormListenerSave formListenerSave;
     private FormListenerLoad formListenerLoad;
-
+    private FormListenerEnter formListenerEnter;
+    private FormListenerRemove formListenerRemove;
 
     private JButton submitBtn;
-    private JButton deleteBtn;
+    private JButton addBtn;
     private JButton enterBtn;
     private JButton removeBtn;
     private JButton saveBtn;
@@ -47,19 +46,43 @@ public class FormPanel extends JPanel implements FormListener {
 
     public FormPanel() {
         setPanel();
+        Border innerBorder = BorderFactory.createTitledBorder("Add Vacation");
+        Border outerBorder = BorderFactory.createEmptyBorder(2, 3,  2, 3);
+        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
+        setLayout(new GridBagLayout());
+        callAllButtonsMade();
+        setBackgroundImage();
+
         submitButton();
         deleteBtnCall();
         enterBtn();
         setRemoveBtn();
         setSaveBtn();
         setLoadBtn();
-        Border innerBorder = BorderFactory.createTitledBorder("Add Vacation");
-        Border outerBorder = BorderFactory.createEmptyBorder(2, 3,  2, 3);
-        setBorder(BorderFactory.createCompoundBorder(outerBorder, innerBorder));
-        setLayout(new GridBagLayout());
-        callAllButtonMethods();
-        setBackgroundImage();
     }
+
+    //EFFECTS: sets up the JLabels, text fields, and buttons for the form panel of the program
+    public void setPanel() {
+        Dimension dim = getPreferredSize();
+        dim.width = 310;
+        setPreferredSize(dim);
+        destinationLabel = new JLabel("Destination: ");
+        dreamVacationLabel = new JLabel("Dream Vacation: ");
+        seasonLabel = new JLabel("Season: ");
+        destinationField = new JTextField(10);
+        dreamVacationField = new JTextField(10);
+        seasonField = new JTextField(10);
+        submitBtn = new JButton("SUBMIT");
+        addBtn = new JButton("ADD button");
+        enterBtn = new JButton("Alt+N to Add");
+        removeBtn = new JButton("Alt+R to Remove");
+        saveBtn = new JButton("SAVE LIST");
+        loadBtn = new JButton("LOAD LIST");
+        enterBtn.setMnemonic(KeyEvent.VK_N);
+        removeBtn.setMnemonic(KeyEvent.VK_R);
+    }
+
+
 
 
 
@@ -74,7 +97,7 @@ public class FormPanel extends JPanel implements FormListener {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
+                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListener != null) {
                     formListener.formEventOccurred(ev);
                 }
@@ -166,7 +189,7 @@ public class FormPanel extends JPanel implements FormListener {
     // case, the purpose of the button is to delete a typed country from the Dream Vacation list
 
     public void deleteBtnCall() {
-        deleteBtn.addActionListener(new ActionListener() {
+        addBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
@@ -178,6 +201,7 @@ public class FormPanel extends JPanel implements FormListener {
             }
         });
     }
+
 
 
     //EFFECTS: gets the JTextField of the dreamVacationField panel
@@ -192,6 +216,8 @@ public class FormPanel extends JPanel implements FormListener {
         return destinationField;
     }
 
+    //EFFECTS: gets the JTextField of the Season panel
+
     public static JTextField getSeasonField() {
         return seasonField;
     }
@@ -200,7 +226,7 @@ public class FormPanel extends JPanel implements FormListener {
     //EFFECTS: calls all the methods that set up the buttons and labels/panels
     // on the screen of the form panel of the program
 
-    public void callAllButtonMethods() {
+    public void callAllButtonsMade() {
         GridBagConstraints gc = new GridBagConstraints();
         setButtonForDestination(gc);
         setButtonForDreamVacation(gc);
@@ -264,7 +290,7 @@ public class FormPanel extends JPanel implements FormListener {
         add(destinationField, gc);
     }
 
-    //EFFECTS: sets up the JButtons for submit and delete on the screen of the form panel of the program
+    //EFFECTS: sets up the FormPanelActionManager for submit and delete on the screen of the form panel of the program
 
     public void setTwoButtons(GridBagConstraints gc) {
 
@@ -284,7 +310,7 @@ public class FormPanel extends JPanel implements FormListener {
         gc.gridx = 1;
         gc.fill = GridBagConstraints.NONE;
         gc.anchor = GridBagConstraints.LINE_END;
-        add(deleteBtn, gc);
+        add(addBtn, gc);
 
     }
 
@@ -345,6 +371,7 @@ public class FormPanel extends JPanel implements FormListener {
         this.formListener = listener;
     }
 
+    //COMMENTED THESE OUT; IMPROVING COHESION BY USING 1 INTERFACE OF FormListener instead of all 6 interfaces.
     //MODIFIES: this
     //EFFECTS: FormListener for the delete JButton
 
@@ -375,37 +402,11 @@ public class FormPanel extends JPanel implements FormListener {
     }
 
     //MODIFIES: this
-    //EFFECTS: FormListener for the JButton for load
+    //EFFECTS: FormListener for the JButton for loading
 
     public void setFormListenerLoad(FormListenerLoad listener) {
         this.formListenerLoad = listener;
     }
-
-
-    //EFFECTS: sets up the JLabels, text fields, and buttons for the form panel of the program
-    public void setPanel() {
-        Dimension dim = getPreferredSize();
-        dim.width = 310;
-        setPreferredSize(dim);
-        destinationLabel = new JLabel("Destination: ");
-        dreamVacationLabel = new JLabel("Dream Vacation: ");
-        seasonLabel = new JLabel("Season: ");
-        destinationField = new JTextField(10);
-        dreamVacationField = new JTextField(10);
-        seasonField = new JTextField(10);
-
-        //REFACTOR THESE BUTTONS!
-
-        submitBtn = new JButton("SUBMIT");
-        deleteBtn = new JButton("ADD button");
-        enterBtn = new JButton("Alt+N to Add");
-        removeBtn = new JButton("Alt+R to Remove");
-        saveBtn = new JButton("SAVE LIST");
-        loadBtn = new JButton("LOAD LIST");
-        enterBtn.setMnemonic(KeyEvent.VK_N);
-        removeBtn.setMnemonic(KeyEvent.VK_R);
-    }
-
 
 
     // REFERENCE: CODE TAKEN FROM https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
@@ -431,8 +432,4 @@ public class FormPanel extends JPanel implements FormListener {
         g.drawImage(image, 0, 0, this);
     }
 
-
-    @Override
-    public void formEventOccurred(FormEvent e) {
-    }
 }
