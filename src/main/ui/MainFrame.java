@@ -143,8 +143,8 @@ public class MainFrame extends JFrame {
     // according to the program specifications
 
     public void addMethod() {
-        formPanel.setFormListenerAdd(new FormListenerAdd() {
-            public void formEventAdd(FormEvent e) {
+        formPanel.setFormListenerAdd(new FormListener() {
+            public void formEventOccurred(FormEvent e) {
                 addMethodToList(dreamDestinationList);
             }
         });

@@ -59,10 +59,15 @@ your saved customized Dream Vacation list.
 
 
 ## Phase 4: Task 2
+- I have chosen to implement:
+Test and design a class that is robust. You must have at least one method that throws a checked exception.  
+You must have one test for the case where the exception is expected and another where the exception is not expected.
 - I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed the
 class/file name DestinationsManager as this is more appropriate) and I have changed the signature of the following methods in this class,
-getCityFromSummerDestinations and getCityFromWinterDestinations, to throw the checked exception of IllegalDestinationException, 
-if the input of the method parameter for both is not valid. 
+getCityFromSummerDestinations and getCityFromWinterDestinations, to throw the checked exception, IllegalDestinationException.
+This checked exception is thrown if the country name of the method input parameter, Destination, does not match any of the specified country names
+within these two methods. If the country name of input Destination matches one of the specified country names, the methods will
+return a string of cities of that particular country. 
 - I have tested these methods inside the DestinationsManagerTest with try/catch blocks for both cases where 
 1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the TextPanel class of the UI package 
 (specifically, the testSummerCall and testWinterCall methods) that called these two methods (getCityFromSummerDestinations and getCityFromWinterDestinations)

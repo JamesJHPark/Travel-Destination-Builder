@@ -24,7 +24,7 @@ public class FormPanel extends JPanel {
 
     //Can I resolve a coupling issue by refactoring these codes of FormListeners? prof gave confirmation yes!
     private FormListener formListener;
-    private FormListenerAdd formListenerAdd;
+  /*  private FormListenerAdd formListenerAdd;*/
     private FormListenerSave formListenerSave;
     private FormListenerLoad formListenerLoad;
     private FormListenerEnter formListenerEnter;
@@ -54,7 +54,7 @@ public class FormPanel extends JPanel {
         setBackgroundImage();
 
         submitButton();
-        deleteBtnCall();
+        addBtnCall();
         enterBtn();
         setRemoveBtn();
         setSaveBtn();
@@ -188,15 +188,15 @@ public class FormPanel extends JPanel {
     //EFFECTS: creates a new event with destination, dreamVacation, and season when the button is clicked, and in this
     // case, the purpose of the button is to delete a typed country from the Dream Vacation list
 
-    public void deleteBtnCall() {
+    public void addBtnCall() {
         addBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerAdd != null) {
-                    formListenerAdd.formEventAdd(ev);
+                if (formListener != null) {
+                    formListener.formEventOccurred(ev);
                 }
             }
         });
@@ -373,10 +373,9 @@ public class FormPanel extends JPanel {
 
     //COMMENTED THESE OUT; IMPROVING COHESION BY USING 1 INTERFACE OF FormListener instead of all 6 interfaces.
     //MODIFIES: this
-    //EFFECTS: FormListener for the delete JButton
-
-    public void setFormListenerAdd(FormListenerAdd listener) {
-        this.formListenerAdd = listener;
+    //EFFECTS: FormListener for the ADD JButton
+    public void setFormListenerAdd(FormListener listener) {
+        this.formListener = listener;
     }
 
     //EFFECTS: this

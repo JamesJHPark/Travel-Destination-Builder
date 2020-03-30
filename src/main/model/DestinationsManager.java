@@ -73,9 +73,6 @@ public class DestinationsManager {
     // otherwise, retrieves the list of popular cities for the entered Destination from the summerDestinations list
 
     public String getCityFromSummerDestinations(Destination d) throws IllegalDestinationException {
-/*
-        String city = "Wrong country selected! It was not from the provided list";
-*/
         String city;
         if (d.getDestinationCountryName().equalsIgnoreCase("Italy")) {
             city = "Florence, Venice, Rome";
