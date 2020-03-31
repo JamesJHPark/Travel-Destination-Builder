@@ -25,9 +25,9 @@ public class MainFrame extends JFrame {
 
     private TextPanel textPanel;
     private JTextField component;
-    private Toolbar toolbar;
+    private TopPanel topPanel;
     private JFrame frame;
-    private FormPanel formPanel;
+    private InteractivePanel interactivePanel;
     private MenuBuilder menuBuilder;
     private DestinationsManager destinationsManager;
     private String season;
@@ -62,16 +62,16 @@ public class MainFrame extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets up the frame, and initializes the toolbar, textPanel, formPanel and adds these structural
+    // EFFECTS: sets up the frame, and initializes the topPanel, textPanel, interactivePanel and adds these structural
     // features including the JMenuBar to the frame of the program for overall application to run properly
     public void setPanels() {
         frame.add(component);
         frame.setLayout(new BorderLayout());
-        toolbar = new Toolbar();
+        topPanel = new TopPanel();
         textPanel = new TextPanel();
-        formPanel = new FormPanel();
-        frame.add(formPanel, BorderLayout.WEST);
-        frame.add(toolbar, BorderLayout.NORTH);
+        interactivePanel = new InteractivePanel();
+        frame.add(interactivePanel, BorderLayout.WEST);
+        frame.add(topPanel, BorderLayout.NORTH);
         frame.add(textPanel, BorderLayout.CENTER);
         frame.setSize(1300, 1000);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,8 +93,8 @@ public class MainFrame extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: methods that submit user entries to the FormPanel, add, remove Destinations from the DreamVacation and
-    // dreamDestinationList, as well as saving/loading the DreamVacation List for the user to view.
+    // EFFECTS: methods that submit user entries to the InteractivePanel, add, remove Destinations from the
+    // DreamVacation and dreamDestinationList, as well as saving/loading the DreamVacation List for the user to view.
 
     private void buildingDreamVacation() {
         submitMethod();
@@ -111,8 +111,8 @@ public class MainFrame extends JFrame {
     // interactively choose season and the destination for the next vacation in the application
 
     public void submitMethod() {
-        formPanel.setFormListener(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListener(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 String countryName = e.getDestination();
                 season = e.getSeason();
                 chooseSeasonMethod(e.getDestination());
@@ -147,8 +147,8 @@ public class MainFrame extends JFrame {
     // current Dream Vacation List
 
     public void addMethod() {
-        formPanel.setFormListenerAdd(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListenerAdd(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 addMethodToList(dreamDestinationList);
             }
         });
@@ -159,8 +159,8 @@ public class MainFrame extends JFrame {
     // to the user's current Dream Vacation List
 
     public void enterKey() {
-        formPanel.setFormListenerEnter(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListenerEnter(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 addMethodToList(dreamDestinationList);
             }
         });
@@ -173,7 +173,7 @@ public class MainFrame extends JFrame {
 
     public void addMethodToList(ArrayList<Destination> dreamDestinationList) {
         music.playAddSound();
-        Destination destination = new Destination(FormPanel.getDreamVacationField().getText());
+        Destination destination = new Destination(InteractivePanel.getDreamVacationField().getText());
         if (destination.getDestinationCountryName().length() >= 1) {
             thisIsDreamVacation.addDreamDestinations(destination);
         }
@@ -190,10 +190,10 @@ public class MainFrame extends JFrame {
     // according to the program specifications
 
     public void removeKey() {
-        formPanel.setFormListenerRemove(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListenerRemove(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 music.playDeleteSound();
-                Destination destination = new Destination(FormPanel.getDreamVacationField().getText());
+                Destination destination = new Destination(InteractivePanel.getDreamVacationField().getText());
                 if (dreamDestinationList.contains(destination)) {
                     dreamDestinationList.remove(destination);
                     thisIsDreamVacation.removeDreamDestinations(destination);
@@ -210,8 +210,8 @@ public class MainFrame extends JFrame {
     // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
 
     public void saveMethod() {
-        formPanel.setFormListenerSave(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListenerSave(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 saveFunction();
             }
         });
@@ -223,8 +223,8 @@ public class MainFrame extends JFrame {
     // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
     public void loadMethod() {
-        formPanel.setFormListenerLoad(new FormListener() {
-            public void formEventOccurred(FormEvent e) {
+        interactivePanel.setPanelListenerLoad(new PanelListener() {
+            public void createEvent(InteractivePanelEvent e) {
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
@@ -260,11 +260,11 @@ public class MainFrame extends JFrame {
 
 
 
-    //EFFECTS: sets the text on the text panel of the program according to the textEmitted from Toolbar class
+    //EFFECTS: sets the text on the text panel of the program according to the textEmitted from TopPanel class
     // upon pressing the StartButton
 
     public void handleText() {
-        this.toolbar.toolBarOnHello(new StringListener() {
+        this.topPanel.toolBarOnHello(new TextListener() {
             public void stringInText(String text) {
                 textPanel.getterForHandleText(text);
             }
@@ -329,7 +329,7 @@ public class MainFrame extends JFrame {
         this.menuBuilder.forShowItem(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) ev.getSource();
-                formPanel.setVisible(menuItem.isSelected());
+                interactivePanel.setVisible(menuItem.isSelected());
             }
         });
     }

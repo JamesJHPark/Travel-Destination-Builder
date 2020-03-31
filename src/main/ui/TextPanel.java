@@ -87,7 +87,7 @@ public class TextPanel extends JPanel {
     // list of summer Destinations to choose from on textArea.
 
     public void showCountriesWithSummerSeason(DestinationsManager destinationsManager) {
-        if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Summer")) {
+        if (InteractivePanel.getSeasonField().getText().equalsIgnoreCase("Summer")) {
             textArea.append("\nHere is the list of summer travel destinations!");
             textArea.append("\n" + destinationsManager.getSummerDestinations().toString() + "\n");
             textArea.append("\nPlease choose 1 country from this above list only."
@@ -101,7 +101,7 @@ public class TextPanel extends JPanel {
     // list of winter Destinations to choose from on textArea.
 
     public void showCountriesWithWinterSeason(DestinationsManager destinationsManager) {
-        if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Winter")) {
+        if (InteractivePanel.getSeasonField().getText().equalsIgnoreCase("Winter")) {
             textArea.append("\nHere is the list of winter travel destinations!");
             textArea.append("\n" + destinationsManager.getWinterDestinations().toString() + "\n");
             textArea.append("\nPlease choose 1 country from this above list only."
@@ -185,7 +185,7 @@ public class TextPanel extends JPanel {
     // provided is invalid, emits the text and instructs the user to choose a destination from the provided list
     public void textForChoosingRightSummer(DestinationsManager destinationsManager) {
         textArea.setText("");
-        textArea.append(FormPanel.getVacationField().getText()
+        textArea.append(InteractivePanel.getVacationField().getText()
                 + " is an invalid selection! Please select 1 country from the list."
                 + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
         textArea.append(destinationsManager.getSummerDestinations().toString());
@@ -196,7 +196,7 @@ public class TextPanel extends JPanel {
     // provided is invalid, emits the text and instructs the user to choose a destination from the provided list
     public void textForChoosingRightWinter(DestinationsManager destinationsManager) {
         textArea.setText("");
-        textArea.append(FormPanel.getVacationField().getText()
+        textArea.append(InteractivePanel.getVacationField().getText()
                 + " is an invalid selection! Please select 1 country from the list."
                 + "\nThen, enter the country of your choice into Destination panel on the left and click SUBMIT.\n");
         textArea.append(destinationsManager.getWinterDestinations().toString());

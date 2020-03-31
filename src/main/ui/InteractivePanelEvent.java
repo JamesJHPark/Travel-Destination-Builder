@@ -4,14 +4,14 @@ import java.util.EventObject;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-// Represents the FormEvent class
-public class FormEvent extends EventObject {
+// Represents the InteractivePanelEvent class
+public class InteractivePanelEvent extends EventObject {
     private String destination;
     private String dreamVacation;
     private String season;
 
-// EFFECTS: to construct FormEvent with Object source, destination, dreamVacation, and season
-    public FormEvent(Object source, String destination, String dreamVacation, String season) {
+// EFFECTS: to construct InteractivePanelEvent with Object source, destination, dreamVacation, and season
+    public InteractivePanelEvent(Object source, String destination, String dreamVacation, String season) {
         super(source);
         this.destination = destination;
         this.dreamVacation = dreamVacation;

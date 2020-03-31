@@ -46,7 +46,7 @@ This event will allow the user to remove a specific destination country from the
 - You can locate my audio component by clicking on the ADD Button, pressing Alt+N or Alt+R on keyboard. 
 Also, you can locate it by selecting the menu item under Data on top left of the screen: "Add country (typed in Dream Vacation panel) to list."
 All these events will produce the audio sound. 
-- You can also locate my visual component (as an extra) right on the form panel of the GUI. The blue sky with a bird and clouds
+- You can also locate my visual component (as an extra) right on the InteractivePanel of the GUI. The blue sky with a bird and clouds
 fit the theme of travelling nicely. 
 - You can save the state of my application by clicking on the SAVE LIST Button after you have created a Dream Vacation list.
 - You can also save the state of my application by selecting the following menu item under Data on top left of the screen: Save Data.
@@ -75,37 +75,38 @@ will test the above cases with try/catch blocks.
 - I have implemented the try/catch blocks within summerCall and winterCall methods in the TextPanel class of the UI package,
 where the two methods (getCityFromSummerDestinations and getCityFromWinterDestinations) are called from the DestinationManager class.
 
-
 ## Phase 4: Task 3
-- 1) I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
+- Note: As this is the final phase of the project, I re-named a few classes (including interfaces) to better suit the context of my project. 
+- Changes are: FormPanel -> InteractivePanel, FormEvent -> InteractivePanelEvent, FormListener -> PanelListener, StringListener -> TextListener, Toolbar -> TopPanel. Thank you.
+- Problem 1: I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
 responsibility of creating the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes by 
 creating a new class called MenuBuilder for JMenu and JMenuItems. This helped to improve the cohesion issue in the original MainFrame class 
 by extracting out this additional responsibility from the MainFrame class. 
 
 ## Phase 4: Task 3
-- 2) I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), 
+- Problem 2: I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), 
 as these methods can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle) 
 for its own methods of the sound from addSound.wav and javadeletesound.wav files saved in the data folder of the project.
 This will additionally improve the cohesion of the MainFrame class. 
 
 ## Phase 4: Task 3
-- 3) I have identified there were 6 separate associations to the FormListener interfaces (FormListener, FormListenerAdd,
-FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within my FormPanel class. 
+- Problem 3: As per note above, the following names changed from: FormListener -> PanelListener and FormPanel -> InteractivePanel.
+I have identified there were 6 separate associations to the FormListener(now, PanelListener) interfaces (these were previously named: 
+FormListener, FormListenerAdd, FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within the FormPanel(now, InteractivePanel) class 
 I realized all of these 6 interfaces essentially specified the same behavior. Thus, I have removed the extra interfaces 
-to a single FormListener interface. This removal would improve the cohesion and eliminated the need of 
-separate associations to the 6 separate FormListener interfaces within the FormPanel class.
-
+to a single PanelListener interface. This removal would improve the cohesion and eliminated the need of 
+separate associations to the 6 separate FormListener interfaces within the InteractivePanel class.
 
 ## Phase 4: Task 3
-- 4) First, I resolved duplicate codes from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
+- Problem 5: Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
+ of the program into the TextPanel class to improve cohesion in the MainFrame class. For instance, 
+ methods of summerCall, winterCall, and setLoading were entirely moved to the TextPanel class to improve cohesion of the MainFrame class. 
+
+## Phase 4: Task 3
+- Problem 5: First, I resolved duplicate codes from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
 and named this addMethodToList(). Then, I identified parts of the addMethodToList() codes that could be moved to the TextPanel class
 to resolve a cohesion issue within the MainFrame class (the code fits the responsibility of the TextPanel 
 rather than the MainFrame class). This newly created method inside the TextPanel class is called buildingDreamVacation(). 
-
-## Phase 4: Task 3
-- 5) Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
- of the program could be extracted into the TextPanel class to improve cohesion in the MainFrame class. For instance, 
- methods of summerCall, winterCall, and setLoading were entirely moved to the TextPanel class to improve cohesion of the MainFrame class. 
 
 ## Phase 4: UML diagram
 - The UML_Design_Diagram.pdf has been added to the root of my project. Thank you! 

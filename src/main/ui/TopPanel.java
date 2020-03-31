@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-//Represents the Toolbar of the program
-public class Toolbar extends JPanel implements ActionListener {
+//Represents the TopPanel of the program
+public class TopPanel extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton goodbyeButton;
-    private StringListener listenerForString;
+    private TextListener listenerForString;
 
 //EFFECTS: constructs the toolbar of the program
-    public Toolbar() {
+    public TopPanel() {
         setBorder(BorderFactory.createEtchedBorder());
         startButton = new JButton("START");
         goodbyeButton = new JButton("GOODBYE");
@@ -25,9 +25,9 @@ public class Toolbar extends JPanel implements ActionListener {
     }
 
     //MODIFIES: this
-    //EFFECTS: sets the StringListener with input listener
+    //EFFECTS: sets the TextListener with input listener
 
-    public void toolBarOnHello(StringListener listener) {
+    public void toolBarOnHello(TextListener listener) {
         this.listenerForString = listener;
     }
 

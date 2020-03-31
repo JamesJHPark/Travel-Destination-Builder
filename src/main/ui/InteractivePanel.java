@@ -12,9 +12,9 @@ import java.io.File;
 import java.io.IOException;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-//represents the FormPanel of the program
+//represents the InteractivePanel of the program
 
-public class FormPanel extends JPanel {
+public class InteractivePanel extends JPanel {
     private JLabel destinationLabel;
     private JLabel dreamVacationLabel;
     private JLabel seasonLabel;
@@ -22,12 +22,12 @@ public class FormPanel extends JPanel {
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
 
-    private FormListener formListener;
-    private FormListener formListenerAdd;
-    private FormListener formListenerSave;
-    private FormListener formListenerLoad;
-    private FormListener formListenerEnter;
-    private FormListener formListenerRemove;
+    private PanelListener panelListener;
+    private PanelListener panelListenerAdd;
+    private PanelListener panelListenerSave;
+    private PanelListener panelListenerLoad;
+    private PanelListener panelListenerEnter;
+    private PanelListener panelListenerRemove;
 
     private JButton submitBtn;
     private JButton addBtn;
@@ -36,13 +36,14 @@ public class FormPanel extends JPanel {
     private JButton saveBtn;
     private JButton loadBtn;
 
-    private FormEvent ev;
+    private InteractivePanelEvent ev;
     private BufferedImage image;
 
-    //REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-    //EFFECTS: to construct the FormPanel of the program
+    //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-    public FormPanel() {
+    //EFFECTS: to construct the InteractivePanel of the program
+
+    public InteractivePanel() {
         setPanel();
         Border innerBorder = BorderFactory.createTitledBorder("Add Vacation");
         Border outerBorder = BorderFactory.createEmptyBorder(2, 3,  2, 3);
@@ -95,9 +96,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                FormEvent ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListener != null) {
-                    formListener.formEventOccurred(ev);
+                InteractivePanelEvent ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListener != null) {
+                    panelListener.createEvent(ev);
                 }
             }
         });
@@ -115,9 +116,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerLoad != null) {
-                    formListenerLoad.formEventOccurred(ev);
+                ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListenerLoad != null) {
+                    panelListenerLoad.createEvent(ev);
                 }
             }
         });
@@ -134,9 +135,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerSave != null) {
-                    formListenerSave.formEventOccurred(ev);
+                ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListenerSave != null) {
+                    panelListenerSave.createEvent(ev);
                 }
             }
         });
@@ -152,9 +153,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerEnter != null) {
-                    formListenerEnter.formEventOccurred(ev);
+                ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListenerEnter != null) {
+                    panelListenerEnter.createEvent(ev);
 
                 }
             }
@@ -171,9 +172,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerRemove != null) {
-                    formListenerRemove.formEventOccurred(ev);
+                ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListenerRemove != null) {
+                    panelListenerRemove.createEvent(ev);
 
                 }
             }
@@ -192,9 +193,9 @@ public class FormPanel extends JPanel {
                 String destination = destinationField.getText();
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
-                ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListenerAdd != null) {
-                    formListenerAdd.formEventOccurred(ev);
+                ev = new InteractivePanelEvent(this, destination, dreamVacation, season);
+                if (panelListenerAdd != null) {
+                    panelListenerAdd.createEvent(ev);
                 }
             }
         });
@@ -363,45 +364,45 @@ public class FormPanel extends JPanel {
 
 
     //MODIFIES: this
-    //EFFECTS: sets the FormListener for the submit JButton
+    //EFFECTS: sets the PanelListener for the submit JButton
 
-    public void setFormListener(FormListener listener) {
-        this.formListener = listener;
+    public void setPanelListener(PanelListener listener) {
+        this.panelListener = listener;
     }
 
     //MODIFIES: this
-    //EFFECTS: sets the FormListener for the ADD JButton
-    public void setFormListenerAdd(FormListener listener) {
-        this.formListenerAdd = listener;
+    //EFFECTS: sets the PanelListener for the ADD JButton
+    public void setPanelListenerAdd(PanelListener listener) {
+        this.panelListenerAdd = listener;
     }
 
     //EFFECTS: this
-    //EFFECTS: sets the FormListener for the Alt+E key pressed
+    //EFFECTS: sets the PanelListener for the Alt+E key pressed
 
-    public void setFormListenerEnter(FormListener listener) {
-        this.formListenerEnter = listener;
+    public void setPanelListenerEnter(PanelListener listener) {
+        this.panelListenerEnter = listener;
     }
 
 
     //MODIFIES: this
-    //EFFECTS: sets the FormListener for the Alt+R key pressed
+    //EFFECTS: sets the PanelListener for the Alt+R key pressed
 
-    public void setFormListenerRemove(FormListener listener) {
-        this.formListenerRemove = listener;
+    public void setPanelListenerRemove(PanelListener listener) {
+        this.panelListenerRemove = listener;
     }
 
     //MODIFIES: this
-    //EFFECTS: sets the FormListener for the JButton for save
+    //EFFECTS: sets the PanelListener for the JButton for save
 
-    public void setFormListenerSave(FormListener listener) {
-        this.formListenerSave = listener;
+    public void setPanelListenerSave(PanelListener listener) {
+        this.panelListenerSave = listener;
     }
 
     //MODIFIES: this
-    //EFFECTS: sets the FormListener for the JButton for loading
+    //EFFECTS: sets the PanelListener for the JButton for loading
 
-    public void setFormListenerLoad(FormListener listener) {
-        this.formListenerLoad = listener;
+    public void setPanelListenerLoad(PanelListener listener) {
+        this.panelListenerLoad = listener;
     }
 
 
