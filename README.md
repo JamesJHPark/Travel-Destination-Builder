@@ -91,8 +91,8 @@ This will additionally improve the cohesion of the MainFrame class.
 
 ## Phase 4: Task 3
 - Problem 3: As per note above, the following names changed from: FormListener -> PanelListener and FormPanel -> InteractivePanel.
-I have identified there were 6 separate associations to the FormListener(now, PanelListener) interfaces (these were previously named: 
-FormListener, FormListenerAdd, FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within the FormPanel(now, InteractivePanel) class 
+I have identified there were 6 separate associations to the FormListener(PanelListener) interfaces (these were previously named: 
+FormListener, FormListenerAdd, FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within the FormPanel(InteractivePanel) class. 
 I realized all of these 6 interfaces essentially specified the same behavior. Thus, I have removed the extra interfaces 
 to a single PanelListener interface. This removal would improve the cohesion and eliminated the need of 
 separate associations to the 6 separate FormListener interfaces within the InteractivePanel class.
