@@ -62,59 +62,53 @@ your saved customized Dream Vacation list.
 - I have chosen to implement:
 Test and design a class that is robust. You must have at least one method that throws a checked exception.  
 You must have one test for the case where the exception is expected and another where the exception is not expected.
-- I have made designed and tested class DestinationsManager robust (this class previously was named Destinations, now changed the
-class/file name DestinationsManager as this is more appropriate) and I have changed the signature of the following methods in this class,
-getCityFromSummerDestinations and getCityFromWinterDestinations, to throw the checked exception, IllegalDestinationException.
-This checked exception is thrown if the country name of the method input parameter, Destination, does not match any of the specified country names
-within these two methods. If the country name of input Destination matches one of the specified country names, the methods will
-return a string of cities of that particular country. 
-- I have tested these methods inside the DestinationsManagerTest with try/catch blocks for both cases where 
-1) exception is expected 2) exception is not expected, and implemented the try/catch blocks in the TextPanel class of the UI package 
-(specifically, the testSummerCall and testWinterCall methods) that called these two methods (getCityFromSummerDestinations and getCityFromWinterDestinations)
-from the DestinationManager class.
+- The class that is robust is DestinationsManager in the model package (this class was previously named Destinations, now changed the
+class/file name to DestinationsManager as this is more appropriate).
+- In this robust class, the two methods, getCityFromSummerDestinations and getCityFromWinterDestinations, 
+both throw the checked exception, IllegalDestinationException.
+- This checked exception is thrown if the country name of the input parameter, Destination, does not match any of the specified country names.
+ Otherwise, the checked exception is not thrown. 
+- To test this checked exception, the DestinationsManagerTest class contains the tests where:
+1) checked exception is expected 2) checked exception is not expected to be thrown. 
+- For example, testGetCityCatchExceptionSummer(), testGetCityCatchExceptionWinter(), testGetCityFromIceland() and testGetCityFromSpain() 
+will test the above cases with try/catch blocks. 
+- I have implemented the try/catch blocks within summerCall and winterCall methods in the TextPanel class of the UI package,
+where the two methods (getCityFromSummerDestinations and getCityFromWinterDestinations) are called from the DestinationManager class.
 
 
 ## Phase 4: Task 3
-- Within the MainFrame class, I extracted the entire methods of summerCall and winterCall code implementations into the TextPanel
-class (as the implementation of these methods would make it fit to belong in the TextPanel class) and replaced the method names with 
-testSummerCall and testWinterCall inside the TextPanel and passed in the parameters from
-the MainClass as appropriate for code implementation. Therefore, I was able to fix the cohesion issue by removing these methods from the MainFrame
-class entirely. I was able to call the newly created methods (testSummerCall and testWinterCall) inside the MainFrame class with the TextPanel object
-within the chooseSeasonMethod. Also, inside the MainFrame class, the method setLoading() is called in loadMethod() and setLoading() methods of MainFrame Class. 
-This is another cohesion problem as setLoading() implements codes that should entirely be in its own TextPanel class. Therefore,
-I resolved this by creating a method inside the TextPanel class and replaced the setLoading() call in the body of both
-setLoading() and loadMethod() by calling this new method from the TextPanel class.  
+- 1) I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
+responsibility of creating the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes by 
+creating a new class called MenuBuilder for JMenu and JMenuItems. This helped to improve the cohesion issue in the original MainFrame class 
+by extracting out this additional responsibility from the MainFrame class. 
 
 ## Phase 4: Task 3
-- I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
-responsibility of setting the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes by 
-creating a new class called MenuBuilder for JMenu and JMenuItems to improve the cohesion issue in the original MainFrame class 
-by extracting out this part of additional functionality from the MainFrame class. Also, in the MenuBuilder class, I was able to eliminate the need for getter methods 
-when calling the JMenuItem objects from the MainClass by creating methods that take in action listener as an argument inside the MenuBuilder class. 
-In the MainFrame class, I have implemented to reflect this change by setting this.menuBuilder inside the methods of 
-handleExport, handleImport, handleAddCountry, and handleShowItem.
+- 2) I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), 
+as these methods can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle) 
+for its own methods of the sound from addSound.wav and javadeletesound.wav files saved in the data folder of the project.
+This will additionally improve the cohesion of the MainFrame class. 
 
 ## Phase 4: Task 3
-- I have identified an issue with cohesion in the MainFrame class with respect to the Single Responsibility Principle. 
-First, I resolved duplicate codes by extracting a method from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
-and called the newly created method, addMethodToList() inside those methods. Then, I identified 
-the cohesion issue within this method, addMethodToList(), of implementing TextPanel.setText with text description of building DreamVacation list to user. 
-I realized that since I already had the TextPanel class separately in the UI package,
-this particular code of addMethodToList() could be replaced with a call to the newly created method in the TextPanel class, 
-buildingDreamVacation(), to resolve a cohesion issue of the MainFrame class. 
+- 3) I have identified there were 6 separate associations to the FormListener interfaces (FormListener, FormListenerAdd,
+FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within my FormPanel class. 
+I realized all of these 6 interfaces essentially specified the same behavior. Thus, I have removed the extra interfaces 
+to a single FormListener interface. This removal would improve the cohesion and eliminated the need of 
+separate associations to the 6 separate FormListener interfaces within the FormPanel class.
+
 
 ## Phase 4: Task 3
-- I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), as these methods
-can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle) 
-for its own methods/responsibility of the sound methods with respect to addSound.wav and deleteSound.wav files saved in the data folder of the project,
-and this will help improve cohesion of the MainFrame class. 
+- 4) First, I resolved duplicate codes from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
+and named this addMethodToList(). Then, I identified parts of the addMethodToList() codes that could be moved to the TextPanel class
+to resolve a cohesion issue within the MainFrame class (the code fits the responsibility of the TextPanel 
+rather than the MainFrame class). This newly created method inside the TextPanel class is called buildingDreamVacation(). 
 
 ## Phase 4: Task 3
-- I have identified there were multiple associations to the FormListener interfaces (FormListener, FormListenerAdd,
-FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within my FormPanel class. I realized all of these 6 interfaces essentially 
-specified the same behavior. Thus, all of these 6 interfaces could be dealt with by just having a single FormListener interface and set this
-the sole FormListener interface in my FormPanel class to eliminate the need of separate associations with all the 6 FormListener interfaces 
-within FormPanel class. This would help to improve cohesion in my code of FormPanel class as well. 
+- 5) Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
+ of the program could be extracted into the TextPanel class to improve cohesion in the MainFrame class. For instance, 
+ methods of summerCall, winterCall, and setLoading were entirely moved to the TextPanel class to improve cohesion of the MainFrame class. 
+
+## Phase 4: UML diagram
+- The UML_Design_Diagram.pdf has been added to the root of my project. Thank you! 
 
 
 

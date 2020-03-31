@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class TextPanel extends JPanel {
 
     private JTextArea textArea;
+    private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
 
     //REFERENCE: setFont code taken from https://stackoverflow.com/questions/31388790/jframe-text-size
     //EFFECTS: constructs the TextPanel of the program with textArea
@@ -45,8 +46,8 @@ public class TextPanel extends JPanel {
     // list of summer Destinations to choose from and shows the list of the corresponding cities of
     // summer Destination that the user has chosen
 
-    public void testSummerCall(String countryName, Destination destination,
-                                  DestinationsManager destinationsManager) {
+    public void summerCall(String countryName, Destination destination,
+                           DestinationsManager destinationsManager) {
         showCountriesWithSummerSeason(destinationsManager);
         if (countryName.length() > 0) {
             try {
@@ -65,8 +66,8 @@ public class TextPanel extends JPanel {
     // list of winter Destinations to choose from and shows the list of the corresponding cities of
     // winter Destination that the user has chosen on textArea.
 
-    public void testWinterCall(String countryName, Destination destination,
-                               DestinationsManager destinationsManager) {
+    public void winterCall(String countryName, Destination destination,
+                           DestinationsManager destinationsManager) {
         showCountriesWithWinterSeason(destinationsManager);
         if (countryName.length() > 0) {
             try {
@@ -165,7 +166,8 @@ public class TextPanel extends JPanel {
 
 
     //MODIFIES: this
-    //EFFECTS: sets the loading text panel with options for the program to run or exit on textArea
+    //EFFECTS: sets the loading text panel with options for the program to run or exit on textArea, or to
+    // continue adding/removing destinations from the customized Dream Vacation list
     public void setLoading() {
         textArea.append("\n\n 1.To start the App again and create a fresh, new Dream Vacation List,"
                 + " please click START button and go through the program again.");
@@ -205,6 +207,12 @@ public class TextPanel extends JPanel {
     public void getterForHandleText(String text) {
         textArea.setText("");
         textArea.append(text);
+    }
+
+    //EFFECTS: appends the following statement when FileNotFoundException is thrown/caught
+
+    public void unableToSaveFile() {
+        textArea.append("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
     }
 
 

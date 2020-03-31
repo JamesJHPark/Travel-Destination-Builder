@@ -130,11 +130,11 @@ public class MainFrame extends JFrame {
     public void chooseSeasonMethod(String countryName) {
         Destination destination = new Destination(countryName);
         if (season.equalsIgnoreCase("Summer")) {
-            textPanel.testSummerCall(countryName, destination, destinationsManager);
+            textPanel.summerCall(countryName, destination, destinationsManager);
             thisIsDreamVacation = new DreamVacation();
             dreamDestinationList = new ArrayList<>();
         } else if (season.equalsIgnoreCase("Winter")) {
-            textPanel.testWinterCall(countryName, destination, destinationsManager);
+            textPanel.winterCall(countryName, destination, destinationsManager);
             thisIsDreamVacation = new DreamVacation();
             dreamDestinationList = new ArrayList<>();
         }
@@ -252,7 +252,7 @@ public class MainFrame extends JFrame {
             writer.close();
             textPanel.saveToFileText();
         } catch (FileNotFoundException e) {
-            textPanel.appendText("Unable to save Dream Vacation to " + DREAM_VACATION_TXT);
+            textPanel.unableToSaveFile();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
