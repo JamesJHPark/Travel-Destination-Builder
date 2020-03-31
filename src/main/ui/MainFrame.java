@@ -19,6 +19,7 @@ import java.util.List;
 
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+
 //represents the MainFrame of the App allowing interactive user application to build DreamVacation list
 public class MainFrame extends JFrame {
 
@@ -46,6 +47,8 @@ public class MainFrame extends JFrame {
     }
 
 
+    // EFFECTS: initializes and instantiates the new objects for DreamVacation, component of JTextField, frame for
+    // JFrame, menuBuilder, music, and adds the summer and winter pre-specified destinations to the destinationsManager
     public void initializer() {
         thisIsDreamVacation = new DreamVacation();
         dreamDestinationList = thisIsDreamVacation.viewDreamDestinations();
@@ -58,8 +61,9 @@ public class MainFrame extends JFrame {
         music = new Music();
     }
 
-    //MODIFIES: this
-    //EFFECTS: sets up the frame, and initializes the toolbar, textPanel, formPanel of the program
+    // MODIFIES: this
+    // EFFECTS: sets up the frame, and initializes the toolbar, textPanel, formPanel and adds these structural
+    // features including the JMenuBar to the frame of the program for overall application to run properly
     public void setPanels() {
         frame.add(component);
         frame.setLayout(new BorderLayout());
@@ -75,8 +79,8 @@ public class MainFrame extends JFrame {
         frame.setJMenuBar(createMenuBar());
     }
 
-    //MODIFIES: this
-    //EFFECTS: sets up the JMenu bar of the application
+
+    // EFFECTS: returns the JMenu bar of the application
 
     private JMenuBar createMenuBar() {
         menuBuilder.fileMenuMethods();
@@ -88,8 +92,8 @@ public class MainFrame extends JFrame {
         return menuBuilder.getMenuBar();
     }
 
-    //MODIFIES: this
-    //EFFECTS: methods that submit user entries to the FormPanel, add, remove Destinations from the DreamVacation and
+    // MODIFIES: this
+    // EFFECTS: methods that submit user entries to the FormPanel, add, remove Destinations from the DreamVacation and
     // dreamDestinationList, as well as saving/loading the DreamVacation List for the user to view.
 
     private void buildingDreamVacation() {
@@ -102,9 +106,9 @@ public class MainFrame extends JFrame {
         handleText();
     }
 
-    //MODIFIES: this
-    //EFFECTS: submits a typed country into Destination panel, Dream Vacation panel,
-    // or season in the text field panels according to the program specifications
+    // MODIFIES: this
+    // EFFECTS: submits a typed country in the text field of the Season and Destination to allow the user to
+    // interactively choose season and the destination for the next vacation in the application
 
     public void submitMethod() {
         formPanel.setFormListener(new FormListener() {
@@ -117,7 +121,7 @@ public class MainFrame extends JFrame {
     }
 
 
-    //EFFECTS: helper method to create destination object with countryName and passes in the parameters of
+    // EFFECTS: helper method to create destination object with countryName and passes in the parameters of
     // String countryName, Destination destination, and DestinationsManager destinationsManager into the
     // testSummerCall, testWinterCall within TextPanel, and creates a new object of thisIsDreamVacation
     // and dreamDestinationList every time the method is called.
@@ -138,9 +142,9 @@ public class MainFrame extends JFrame {
 
 
 
-    //MODIFIES: this
-    //EFFECTS: adds Destination typed in the text field panel to the Dream Vacation List
-    // according to the program specifications
+    // MODIFIES: this
+    // EFFECTS: adds Destination typed in the text field panel of the Dream Vacation to the user's
+    // current Dream Vacation List
 
     public void addMethod() {
         formPanel.setFormListenerAdd(new FormListener() {
@@ -150,17 +154,22 @@ public class MainFrame extends JFrame {
         });
     }
 
-    //MODIFIES: this
-    //EFFECTS: adds a typed country in the text panel of Dream Vacation with Alt+E or by user clicking on this button
-    // to Dream Vacation List
+    // MODIFIES: this
+    // EFFECTS: adds a typed country in the text panel of Dream Vacation with Alt+E or by user clicking on this button
+    // to the user's current Dream Vacation List
 
     public void enterKey() {
-        formPanel.setFormListenerEnter(new FormListenerEnter() {
-            public void formEventOccurredEnter(FormEvent e) {
+        formPanel.setFormListenerEnter(new FormListener() {
+            public void formEventOccurred(FormEvent e) {
                 addMethodToList(dreamDestinationList);
             }
         });
     }
+
+    // REQUIRES: the destination to be typed has to be of length >=1
+    // MODIFIES: this
+    // EFFECTS: implements the adding of a typed destination to the user's thisIsDreamVacation, DreamVacation,
+    // as well as to the dreamDestinationList.
 
     public void addMethodToList(ArrayList<Destination> dreamDestinationList) {
         music.playAddSound();
@@ -176,13 +185,13 @@ public class MainFrame extends JFrame {
     }
 
 
-    //MODIFIES: this
-    //EFFECTS: removes a typed country with Alt+R in the text field panel from Dream Vacation List
+    // MODIFIES: this
+    // EFFECTS: removes a typed country with Alt+R in the text field panel from Dream Vacation List
     // according to the program specifications
 
     public void removeKey() {
-        formPanel.setFormListenerRemove(new FormListenerRemove() {
-            public void formEventOccurredRemove(FormEvent e) {
+        formPanel.setFormListenerRemove(new FormListener() {
+            public void formEventOccurred(FormEvent e) {
                 music.playDeleteSound();
                 Destination destination = new Destination(FormPanel.getDreamVacationField().getText());
                 if (dreamDestinationList.contains(destination)) {
@@ -201,8 +210,8 @@ public class MainFrame extends JFrame {
     // EFFECTS: to save the customized list of Dream Vacation to DREAM_VACATION_TXT file
 
     public void saveMethod() {
-        formPanel.setFormListenerSave(new FormListenerSave() {
-            public void formEventSave(FormEvent e) {
+        formPanel.setFormListenerSave(new FormListener() {
+            public void formEventOccurred(FormEvent e) {
                 saveFunction();
             }
         });
@@ -214,8 +223,8 @@ public class MainFrame extends JFrame {
     // EFFECTS: loads the Dream Vacation list from DREAM_VACATION_TXT
 
     public void loadMethod() {
-        formPanel.setFormListenerLoad(new FormListenerLoad() {
-            public void formEventLoad(FormEvent e) {
+        formPanel.setFormListenerLoad(new FormListener() {
+            public void formEventOccurred(FormEvent e) {
                 try {
                     textPanel.setText("");
                     List<DreamVacation> dreamVacations = Reader.readDreamVacations(new File(DREAM_VACATION_TXT));
@@ -252,6 +261,7 @@ public class MainFrame extends JFrame {
 
 
     //EFFECTS: sets the text on the text panel of the program according to the textEmitted from Toolbar class
+    // upon pressing the StartButton
 
     public void handleText() {
         this.toolbar.toolBarOnHello(new StringListener() {
@@ -306,13 +316,15 @@ public class MainFrame extends JFrame {
         this.menuBuilder.onExport(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 saveFunction();
             }
         });
     }
 
 
-    //EFFECTS: makes the form panel visible if selected, otherwise the form panel is not visible to the user
+    //EFFECTS: makes the form panel visible if selected on the menuItem of JCheckBoxMenuItem,
+    // otherwise the form panel is not visible to the user
     public void handleShowItem() {
         this.menuBuilder.forShowItem(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
@@ -322,6 +334,7 @@ public class MainFrame extends JFrame {
         });
     }
 
+    //EFFECTS: handles the closing of the application with exit Confirm Dialog to exit the program
 
     public void handleExit() {
         this.menuBuilder.onExit(new ActionListener() {
@@ -338,117 +351,3 @@ public class MainFrame extends JFrame {
     }
 
 }
-/*
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        if (keyCode == KeyEvent.VK_ENTER) {
-            Destination addCountryWithEnter = new Destination(FormPanel.getDreamVacationField().getText());
-            thisIsDreamVacation.addDreamDestinations(addCountryWithEnter);
-            System.out.println(thisIsDreamVacation.getDestinationObject());
-            masterList.add(FormPanel.getDreamVacationField().getText());
-            textPanel.setText(FormPanel.getDreamVacationField().getText());
-            repaint();
-        }
-    }
-    @Override
-    public void keyReleased(KeyEvent e) {
-    }
-    public class AL extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-            if (key == e.VK_ENTER) {
-                Destination addCountryWithEnter = new Destination(FormPanel.getDreamVacationField().getText());
-                thisIsDreamVacation.addDreamDestinations(addCountryWithEnter);
-                System.out.println(thisIsDreamVacation.getDestinationObject());
-                masterList.add(FormPanel.getDreamVacationField().getText());
-                textPanel.setText(FormPanel.getDreamVacationField().getText());
-            }
-        }
-    }*/
-
-
-
-//MODIFIES: this
-//EFFECTS: selects and adds the dream vacation country to be added to the Dream Vacation list
-
-   /* public void selectVacation(String dreamVacation) {
-        if (dreamVacation.length() > 0) {
-            textPanel.setText("");
-            textPanel.appendText("Now, let's create your customized Dream Vacation List for your future travels!\n");
-*//*
-            textPanel.addOnText(dreamVacation);
-*//*
-
-        }
-    }*/
-
-
-/* public void textForChoosingRight() {
-        textPanel.appendText(
-                "\n\n"
-                        + FormPanel.getVacationField().getText()
-                        + " is an invalid selection! Please select 1 country from the above list\n\n.");
-    }*/
-
-
-/*
-        textPanel.setText("Build your Dream Vacation List!"
-                + "\nType country name "
-                + "into Dream Vacation Panel"
-                + "\n" + dreamDestinationList
-                + "\n"
-                + "\nPlease click on SAVE LIST button when you are finished."
-                + "\n"
-                + "\n***Please note: You can only enter a country once***");
-    }*/
-
-//EFFECTS: sets the season with user's response of Summer and provides the user with
-// list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
-// summer Destination that the user has chosen
-/*
-
-    public void summerCall(String countryName, Destination destination) {
-        textPanel.testSummerCall(countryName, destination, destinationsManager);
-*/
-
- /*       textPanel.showCountriesWithSummerSeason(destinationsManager);
-        if (countryName.length() > 0) {
-            try {
-                destinationsManager.getCityFromSummerDestinations(destination);
-                textPanel.popularCitiesRetrieve(countryName);
-                textPanel.appendText(destinationsManager.getCityFromSummerDestinations(destination));
-                textPanel.textForDreamVacation();
-            } catch (IllegalDestinationException e) {
-                textPanel.textForChoosingRightSummer(destinationsManager);
-            }
-        }
-*/
-
-
-//EFFECTS: sets the season with user's response of Summer and provides the user with
-// list of summer DestinationsManager to choose from and shows the list of the corresponding cities of
-// winter Destination that the user has chosen
-/*
-
-
-    public void winterCall(String countryName, Destination destination) {
-        textPanel.testWinterCall(countryName, destination, destinationsManager);
-    }
-
-*/
-
-
-//THESE HAVE BEEN REFACTORED - MOVED TO A NEW CLASS, MenuBuilder **
-      /* menuBar = new JMenuBar();
-        fileMenu = new JMenu("Data");
-        exportDataItem = new JMenuItem("Save Data");
-        importDataItem = new JMenuItem("Load Data");
-        addCountry = new JMenuItem("Add country (typed in Dream Vacation panel) to list");
-        exitItem = new JMenuItem("Exit");
-        secondMenu = new JMenu("Window");
-        showFormItem = new JCheckBoxMenuItem("Vacation Form");
-        showMenu = new JMenu("Launch");*/

@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-// Represents the FormEvent of the program
+// Represents the FormEvent class
 public class FormEvent extends EventObject {
     private String destination;
     private String dreamVacation;

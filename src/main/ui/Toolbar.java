@@ -51,7 +51,6 @@ public class Toolbar extends JPanel implements ActionListener {
     }
 
     //EFFECTS: provides the text of the introduction of the program when START button is clicked
-
     private void intro() {
         listenerForString.stringInText("Hello there! Choose the season for your next vacation: "
                 + "\n"

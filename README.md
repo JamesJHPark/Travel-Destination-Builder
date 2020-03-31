@@ -73,13 +73,6 @@ return a string of cities of that particular country.
 (specifically, the testSummerCall and testWinterCall methods) that called these two methods (getCityFromSummerDestinations and getCityFromWinterDestinations)
 from the DestinationManager class.
 
-## Phase 4: Task 3
-- I have identified that there was poor cohesion in the MainFrame class of the UI package with respect to JMenu and JMenuItem fields/objects
-in this class. Thus, I have refactored the codes by creating a new class called MenuBuilder for JMenu and JMenuItems to improve the 
-cohesion issue in the original MainFrame class by extracting out this part of additional functionality from the MainFrame class. 
-In the MenuBuilder class, I was able to eliminate the need for getter methods in the
-by creating methods that take in action listener as an argument. In the MainFrame class, I have implemented
-to reflect this change by setting this.menuBuilder inside the methods of handleExport, handleImport, handleAddCountry,and handleShowItem.
 
 ## Phase 4: Task 3
 - Within the MainFrame class, I extracted the entire methods of summerCall and winterCall code implementations into the TextPanel
@@ -91,6 +84,15 @@ within the chooseSeasonMethod. Also, inside the MainFrame class, the method setL
 This is another cohesion problem as setLoading() implements codes that should entirely be in its own TextPanel class. Therefore,
 I resolved this by creating a method inside the TextPanel class and replaced the setLoading() call in the body of both
 setLoading() and loadMethod() by calling this new method from the TextPanel class.  
+
+## Phase 4: Task 3
+- I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
+responsibility of setting the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes by 
+creating a new class called MenuBuilder for JMenu and JMenuItems to improve the cohesion issue in the original MainFrame class 
+by extracting out this part of additional functionality from the MainFrame class. Also, in the MenuBuilder class, I was able to eliminate the need for getter methods 
+when calling the JMenuItem objects from the MainClass by creating methods that take in action listener as an argument inside the MenuBuilder class. 
+In the MainFrame class, I have implemented to reflect this change by setting this.menuBuilder inside the methods of 
+handleExport, handleImport, handleAddCountry, and handleShowItem.
 
 ## Phase 4: Task 3
 - I have identified an issue with cohesion in the MainFrame class with respect to the Single Responsibility Principle. 
@@ -108,15 +110,11 @@ for its own methods/responsibility of the sound methods with respect to addSound
 and this will help improve cohesion of the MainFrame class. 
 
 ## Phase 4: Task 3
-- I have identified that there was tight coupling in the FormPanel class of the UI package associated with multiple FormListener interfaces (FormListener, FormListenerAdd,
-FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave). I realized I had 6 interfaces that essentially specified
-the same behavior. Thus, all of these 6 interfaces could be dealt with by just having a single FormListener interface and set this as the sole FormListener in my FormPanel class 
-to eliminate the need of multiple associations of FormListener interfaces within FormPanel class. This would help to resolve cohesion in my code.
+- I have identified there were multiple associations to the FormListener interfaces (FormListener, FormListenerAdd,
+FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within my FormPanel class. I realized all of these 6 interfaces essentially 
+specified the same behavior. Thus, all of these 6 interfaces could be dealt with by just having a single FormListener interface and set this
+the sole FormListener interface in my FormPanel class to eliminate the need of separate associations with all the 6 FormListener interfaces 
+within FormPanel class. This would help to improve cohesion in my code of FormPanel class as well. 
 
-## Phase 4: Task 3
-- I also removed the Singleton class from the project as this was not necessary in the application of my program, and this would
-reduce coupling between my classes (originally, this would have created coupling among the Singleton Class, MainFrame class and TextPanel class as
-I passed the singleton instance of DreamVacation and list of destinations in these classes in prior commits - but I decided
-to implement adding/removing X to/from Y (destination(s) to the DreamVacation list) in the MainFrame class alone).
- 
+
 

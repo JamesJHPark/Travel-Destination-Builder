@@ -26,20 +26,21 @@ public class TextPanel extends JPanel {
         textArea.append("Welcome! To begin, please press the START button on top left of the screen");
     }
 
-
+    //MODIFIES: this
     //EFFECTS: appends text to the textArea
 
     public void appendText(String text) {
         textArea.append(text);
     }
 
-
+    //MODIFIES: this
     //EFFECTS: sets the text according to the string s input
 
     public void setText(String s) {
         textArea.setText(s);
     }
 
+    //MODIFIES: this
     //EFFECTS: sets the season with user's response of Summer and provides the user with
     // list of summer Destinations to choose from and shows the list of the corresponding cities of
     // summer Destination that the user has chosen
@@ -59,10 +60,10 @@ public class TextPanel extends JPanel {
         }
     }
 
-
+    //MODIFIES: this
     //EFFECTS: sets the season with user's response of Winter and provides the user with
     // list of winter Destinations to choose from and shows the list of the corresponding cities of
-    // winter Destination that the user has chosen
+    // winter Destination that the user has chosen on textArea.
 
     public void testWinterCall(String countryName, Destination destination,
                                DestinationsManager destinationsManager) {
@@ -80,6 +81,10 @@ public class TextPanel extends JPanel {
     }
 
 
+    //MODIFIES: this
+    //EFFECTS: based on the user's response of Summer as the season chosen, provides the user with the
+    // list of summer Destinations to choose from on textArea.
+
     public void showCountriesWithSummerSeason(DestinationsManager destinationsManager) {
         if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Summer")) {
             textArea.append("\nHere is the list of summer travel destinations!");
@@ -90,7 +95,9 @@ public class TextPanel extends JPanel {
     }
 
 
-
+    //MODIFIES: this
+    //EFFECTS: based on the user's response of Winter as the season chosen, provides the user with the
+    // list of winter Destinations to choose from on textArea.
 
     public void showCountriesWithWinterSeason(DestinationsManager destinationsManager) {
         if (FormPanel.getSeasonField().getText().equalsIgnoreCase("Winter")) {
@@ -102,12 +109,17 @@ public class TextPanel extends JPanel {
     }
 
 
-
+    //MODIFIES: this
+    //EFFECTS: shows the list of the corresponding cities of summer or winter Destination that the user has chosen
     public void popularCitiesRetrieve(String countryName) {
         textArea.setText("You have chosen " + countryName);
         textArea.append("\nFor your travel to: " + countryName
                 + ", here is the list of popular cities:\n");
     }
+
+    //MODIFIES: this
+    //EFFECTS: emits the text instructing the user to add a destination to the customized user DreamVacation list
+    // with an additional instruction to save the customized list for future viewing
 
     public void buildingDreamVacation(ArrayList<Destination> dreamDestinationList) {
         textArea.setText("Build your Dream Vacation List!"
@@ -122,8 +134,8 @@ public class TextPanel extends JPanel {
 
 
 
-
-
+    //MODIFIES: this
+    //EFFECTS: emits the text instructing the user to add a destination to the customized user DreamVacation list
     public void textForDreamVacation() {
         textArea.append("\nNow, enter any country that you wish to include in your Dream Vacation list!\n"
                 + "\nPlease type the country name into Dream Vacation panel on the left."
@@ -134,13 +146,16 @@ public class TextPanel extends JPanel {
 
 
 
-
-
+    //MODIFIES: this
+    //EFFECTS: notifies the user that the customized dream vacation list has been saved properly with the
+    // instruction to exit out of the program on textArea
     public void saveToFileText() {
         textArea.append("\nYour customized dream vacation list has been saved. "
                 + "\nTo exit the program, please click on data menu and then click exit. Thank you!");
     }
 
+    //MODIFIES: this
+    //EFFECTS: loads the user's dream vacation list that the user has created on textArea
     public void loadedText(ArrayList<Destination> dreamDestinationList) {
         textArea.append("Your customized Dream Vacation List has been loaded:\n"
                 + dreamDestinationList
@@ -149,9 +164,8 @@ public class TextPanel extends JPanel {
 
 
 
-
-    //EFFECTS: sets the loading text panel with options for the program to run or exit
-
+    //MODIFIES: this
+    //EFFECTS: sets the loading text panel with options for the program to run or exit on textArea
     public void setLoading() {
         textArea.append("\n\n 1.To start the App again and create a fresh, new Dream Vacation List,"
                 + " please click START button and go through the program again.");
@@ -164,7 +178,9 @@ public class TextPanel extends JPanel {
 
     }
 
-
+    //MODIFIES: this
+    //EFFECTS: If the entry to the Destination for choosing the destination from the list of summer destinations
+    // provided is invalid, emits the text and instructs the user to choose a destination from the provided list
     public void textForChoosingRightSummer(DestinationsManager destinationsManager) {
         textArea.setText("");
         textArea.append(FormPanel.getVacationField().getText()
@@ -173,6 +189,9 @@ public class TextPanel extends JPanel {
         textArea.append(destinationsManager.getSummerDestinations().toString());
     }
 
+    //MODIFIES: this
+    //EFFECTS: If the entry to the Destination for choosing the destination from the list of winter destinations
+    // provided is invalid, emits the text and instructs the user to choose a destination from the provided list
     public void textForChoosingRightWinter(DestinationsManager destinationsManager) {
         textArea.setText("");
         textArea.append(FormPanel.getVacationField().getText()
@@ -181,6 +200,8 @@ public class TextPanel extends JPanel {
         textArea.append(destinationsManager.getWinterDestinations().toString());
     }
 
+    //MODIFIES: this
+    //EFFECTS: handles the text for the StartButton of the toolbar
     public void getterForHandleText(String text) {
         textArea.setText("");
         textArea.append(text);
@@ -191,87 +212,3 @@ public class TextPanel extends JPanel {
 
 
 
-
-
-/*
-        deleteBySelectMethod();
-*/
-/*
-    public void replaceSelection() {
-        JTextComponent c = textArea;
-        c.replaceSelection("");
-    }*/
-
- /*   //MODIFIES: this
-    //EFFECTS: removes the destination from the masterList and sets the text panel for next step of the application
-
-    public void removeText(String dreamVacation) {
-        Destination dreamDestination = new Destination(dreamVacation);
-        while (masterList.contains(dreamDestination)) {
-            System.out.println(masterList);
-            masterList.remove(dreamDestination);
-            textArea.setText("Build your Dream Vacation List!"
-                    + "\nType country name "
-                    + "into Dream Vacation Panel"
-                    + "\n" + masterList
-                    + "\n"
-                    + "\nPlease click on SAVE LIST button when you are finished."
-                    + "\n"
-                    + "\n***Please note: You can only enter a country once***");
-        }
-    }
-*/
-
-
-//MODIFIES: this
-//EFFECTS: deletes a selected country name from the list with a mouse event
-/*
-    public void deleteBySelectMethod() {
-        JMenuItem removeItem = new JMenuItem("Remove this country from the list");
-        popup = new JPopupMenu();
-        popup.add(removeItem);
-        textArea.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                textArea.getSelectedText();
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    popup.show(textArea, e.getX(), e.getY());
-                }
-            }
-        });
-        removeItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String string = textArea.getSelectedText();
-*//*
-                removeText(string);
-*//*
-                Destination removeThisCountry = new Destination(string);
-                thisIsDreamVacation.removeDreamDestinations(removeThisCountry);
-            }
-        });
-
-    }*/
-
-//EFFECTS: adds the country name in text to the masterList and sets the text for next step of the application
-
-    /*public void addOnText(String text) {
-        Destination addThisCountry = new Destination(text);
-        if (!masterList.contains(addThisCountry)) {
-            masterList.add(addThisCountry);
-        }
-        textArea.setText("Build your Dream Vacation List!"
-                + "\nType country name "
-                + "into Dream Vacation Panel"
-                + "\n" + masterList
-                + "\n"
-                + "\nPlease click on SAVE LIST button when you are finished."
-                + "\n"
-                + "\n***Please note: You can only enter a country once***");
-    }
-*/
-
-    /*
-    private JPopupMenu popup;
-    public JTextArea getTextArea() {
-        return textArea;
-    }
-*/

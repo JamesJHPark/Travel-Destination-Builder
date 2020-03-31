@@ -22,13 +22,12 @@ public class FormPanel extends JPanel {
     public static JTextField dreamVacationField;
     public static JTextField seasonField;
 
-    //Can I resolve a coupling issue by refactoring these codes of FormListeners? prof gave confirmation yes!
     private FormListener formListener;
-  /*  private FormListenerAdd formListenerAdd;*/
-    private FormListenerSave formListenerSave;
-    private FormListenerLoad formListenerLoad;
-    private FormListenerEnter formListenerEnter;
-    private FormListenerRemove formListenerRemove;
+    private FormListener formListenerAdd;
+    private FormListener formListenerSave;
+    private FormListener formListenerLoad;
+    private FormListener formListenerEnter;
+    private FormListener formListenerRemove;
 
     private JButton submitBtn;
     private JButton addBtn;
@@ -38,7 +37,6 @@ public class FormPanel extends JPanel {
     private JButton loadBtn;
 
     private FormEvent ev;
-
     private BufferedImage image;
 
     //REFERENCE: codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
@@ -119,7 +117,7 @@ public class FormPanel extends JPanel {
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerLoad != null) {
-                    formListenerLoad.formEventLoad(ev);
+                    formListenerLoad.formEventOccurred(ev);
                 }
             }
         });
@@ -138,7 +136,7 @@ public class FormPanel extends JPanel {
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerSave != null) {
-                    formListenerSave.formEventSave(ev);
+                    formListenerSave.formEventOccurred(ev);
                 }
             }
         });
@@ -156,7 +154,7 @@ public class FormPanel extends JPanel {
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerEnter != null) {
-                    formListenerEnter.formEventOccurredEnter(ev);
+                    formListenerEnter.formEventOccurred(ev);
 
                 }
             }
@@ -175,7 +173,7 @@ public class FormPanel extends JPanel {
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
                 if (formListenerRemove != null) {
-                    formListenerRemove.formEventOccurredRemove(ev);
+                    formListenerRemove.formEventOccurred(ev);
 
                 }
             }
@@ -195,8 +193,8 @@ public class FormPanel extends JPanel {
                 String dreamVacation = dreamVacationField.getText();
                 String season = seasonField.getText();
                 ev = new FormEvent(this, destination, dreamVacation, season);
-                if (formListener != null) {
-                    formListener.formEventOccurred(ev);
+                if (formListenerAdd != null) {
+                    formListenerAdd.formEventOccurred(ev);
                 }
             }
         });
@@ -365,45 +363,44 @@ public class FormPanel extends JPanel {
 
 
     //MODIFIES: this
-    //EFFECTS: FormListener for the submit JButton
+    //EFFECTS: sets the FormListener for the submit JButton
 
     public void setFormListener(FormListener listener) {
         this.formListener = listener;
     }
 
-    //COMMENTED THESE OUT; IMPROVING COHESION BY USING 1 INTERFACE OF FormListener instead of all 6 interfaces.
     //MODIFIES: this
-    //EFFECTS: FormListener for the ADD JButton
+    //EFFECTS: sets the FormListener for the ADD JButton
     public void setFormListenerAdd(FormListener listener) {
-        this.formListener = listener;
+        this.formListenerAdd = listener;
     }
 
     //EFFECTS: this
-    //EFFECTS: FormListener for the Alt+E key pressed
+    //EFFECTS: sets the FormListener for the Alt+E key pressed
 
-    public void setFormListenerEnter(FormListenerEnter listener) {
+    public void setFormListenerEnter(FormListener listener) {
         this.formListenerEnter = listener;
     }
 
 
     //MODIFIES: this
-    //EFFECTS: FormListener for the Alt+R key pressed
+    //EFFECTS: sets the FormListener for the Alt+R key pressed
 
-    public void setFormListenerRemove(FormListenerRemove listener) {
+    public void setFormListenerRemove(FormListener listener) {
         this.formListenerRemove = listener;
     }
 
     //MODIFIES: this
-    //EFFECTS: FormListener for the JButton for save
+    //EFFECTS: sets the FormListener for the JButton for save
 
-    public void setFormListenerSave(FormListenerSave listener) {
+    public void setFormListenerSave(FormListener listener) {
         this.formListenerSave = listener;
     }
 
     //MODIFIES: this
-    //EFFECTS: FormListener for the JButton for loading
+    //EFFECTS: sets the FormListener for the JButton for loading
 
-    public void setFormListenerLoad(FormListenerLoad listener) {
+    public void setFormListenerLoad(FormListener listener) {
         this.formListenerLoad = listener;
     }
 

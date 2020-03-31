@@ -43,32 +43,6 @@ class DestinationsManagerTest {
         assertEquals(5, testDestination.getWinterDestinations().size());
     }
 
-   /* @Test
-    void testWinterOrSummer() {
-        ArrayList<Destination> summerList = testDestination.chooseWinterOrSummer("summer");
-        String summerList1 = summerList.toString()
-                //REFERENCES: code taken from URL:
-                //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
-                .replace("[", "")
-                .replace("]", "")
-                .replace(",", ",");
-
-        assertEquals("Italy, Spain, Croatia, Vietnam, Japan", summerList1);
-
-        ArrayList<Destination> winterList = testDestination.chooseWinterOrSummer("winter");
-        String winterList1 = winterList.toString()
-                //REFERENCES: code taken from URL:
-                //           https://stackoverflw.com/questions/4389480/print-array-without-brackets-and-commas
-                //           https://javaconceptoftheday.com/remove-white-spaces-from-string-in-java/
-                .replace("[", "")
-                .replace("]", "");
-
-
-        assertEquals("Mexico, Iceland, USA, France, Switzerland", winterList1);
-
-    }
-*/
 
     @Test
     void testGetCityFromItaly() {
@@ -76,7 +50,7 @@ class DestinationsManagerTest {
             testDestination.getCityFromSummerDestinations(italy);
             assertEquals("Florence, Venice, Rome", testDestination.getCityFromSummerDestinations(italy));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -86,7 +60,7 @@ class DestinationsManagerTest {
             testDestination.getCityFromSummerDestinations(croatia);
             assertEquals("Dubrovnik, Zagreb, Split", testDestination.getCityFromSummerDestinations(croatia));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -96,7 +70,7 @@ class DestinationsManagerTest {
             testDestination.getCityFromSummerDestinations(spain);
             assertEquals("Barcelona, Madrid, Seville", testDestination.getCityFromSummerDestinations(spain));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -106,7 +80,7 @@ class DestinationsManagerTest {
             testDestination.getCityFromSummerDestinations(japan);
             assertEquals("Kyoto, Tokyo, Osaka", testDestination.getCityFromSummerDestinations(japan));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -117,7 +91,7 @@ class DestinationsManagerTest {
             assertEquals("Ho Chih Minh, Da Nang, Hanoi",
                     testDestination.getCityFromSummerDestinations(vietnam));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -128,7 +102,7 @@ class DestinationsManagerTest {
             assertEquals("Cozumel, Tulum, Cancun, Mexico City",
                     testDestination.getCityFromWinterDestinations(mexico));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -139,7 +113,7 @@ class DestinationsManagerTest {
             assertEquals("Paris, Strasbourg",
                     testDestination.getCityFromWinterDestinations(france));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -150,7 +124,7 @@ class DestinationsManagerTest {
             assertEquals("Zurich, Lucerne, Geneva, Bern",
                     testDestination.getCityFromWinterDestinations(switzerland));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -162,7 +136,7 @@ class DestinationsManagerTest {
             assertEquals("Reykjavik, Selfoss",
                     testDestination.getCityFromWinterDestinations(iceland));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have been thrown!");
+            fail("IllegalDestinationException shouldn't have been thrown in this case!");
         }
     }
 
@@ -173,7 +147,7 @@ class DestinationsManagerTest {
             assertEquals("Miami, Los Angeles, New York",
                     testDestination.getCityFromWinterDestinations(usa));
         } catch (IllegalDestinationException e) {
-            fail("IllegalDestinationException shouldn't have thrown!");
+            fail("IllegalDestinationException shouldn't have thrown in this case!");
         }
     }
 
