@@ -20,7 +20,7 @@ import java.util.List;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-//represents the MainFrame of the App allowing interactive user application to build DreamVacation list
+// Represents the MainFrame of the App allowing interactive user application to build DreamVacation list
 public class MainFrame extends JFrame {
 
     private TextPanel textPanel;

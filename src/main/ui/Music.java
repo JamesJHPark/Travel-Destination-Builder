@@ -4,8 +4,8 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-    // represents the Music class that contains methods to play sounds from wav. files stored in data folder of the
-    // project and this is the refactored class/codes from the MainFrame Class
+// Represents the Music class that contains methods to play sounds from wav. files stored in data folder of the
+// project and this is the refactored class/codes from the MainFrame Class
 
 public class Music {
 

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-//represents the InteractivePanel of the program with JLabels, JTextFields, and JButtons
+// Represents the InteractivePanel of the program with JLabels, JTextFields, and JButtons
 
 public class InteractivePanel extends JPanel {
     private JLabel destinationLabel;
