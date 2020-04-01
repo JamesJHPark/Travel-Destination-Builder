@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 // This is the refactored class/codes from the MainFrame Class
 
-// Represents the class of MenuBuilder that create JMenu, JMenuBar, JCheckBoxMenuItem, and JMenuItems
+//Represents the class of MenuBuilder that create JMenu, JMenuBar, JCheckBoxMenuItem, and JMenuItems
 public class MenuBuilder {
     private JMenu fileMenu;
     private JMenuBar menuBar;

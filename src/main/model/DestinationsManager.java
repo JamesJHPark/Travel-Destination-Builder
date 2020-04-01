@@ -4,8 +4,8 @@ import exceptions.IllegalDestinationException;
 
 import java.util.ArrayList;
 
-// Represents DestinationManager class that manages the specified summer and winter destinations for upcoming vacation
-// for the user
+//Represents DestinationManager class that manages the specified summer and winter destinations for upcoming vacation
+//for the user
 
 public class DestinationsManager {
     private ArrayList<Destination> summerDestinations;

@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
-// Represents the customized list of dream destinations that user has selected from the list of destinations
+//Represents the customized list of dream destinations that user has selected from the list of destinations
 
 public class DreamVacation implements Saveable {
     private ArrayList<Destination> dreamDestinations;
