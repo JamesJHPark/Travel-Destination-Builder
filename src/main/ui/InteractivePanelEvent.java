@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
-// Represents the InteractivePanelEvent class
+// Represents the InteractivePanelEvent class with constructor to create an InteractivePanelEvent
 public class InteractivePanelEvent extends EventObject {
     private String destination;
     private String dreamVacation;

@@ -76,7 +76,7 @@ will test the above cases with try/catch blocks.
 where the two methods (getCityFromSummerDestinations and getCityFromWinterDestinations) are called from the DestinationManager class.
 
 ## Phase 4: Task 3
-- Note: As this is the final phase of the project, I re-named a few classes (including interfaces) to better suit the context of my project. 
+- Note: As this is the final phase of the project, I re-named a few classes (including interfaces) to better suit the context of my project.
 - Changes are: FormPanel -> InteractivePanel, FormEvent -> InteractivePanelEvent, FormListener -> PanelListener, StringListener -> TextListener, Toolbar -> TopPanel. Thank you.
 - Problem 1: I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
 responsibility of creating the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes by 
@@ -98,7 +98,7 @@ to a single PanelListener interface. This removal would improve the cohesion and
 separate associations to the 6 separate FormListener interfaces within the InteractivePanel class.
 
 ## Phase 4: Task 3
-- Problem 5: Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
+- Problem 4: Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
  of the program into the TextPanel class to improve cohesion in the MainFrame class. For instance, 
  methods of summerCall, winterCall, and setLoading were entirely moved to the TextPanel class to improve cohesion of the MainFrame class. 
 
@@ -107,7 +107,7 @@ separate associations to the 6 separate FormListener interfaces within the Inter
 and named this addMethodToList(). Then, I identified parts of the addMethodToList() codes that could be moved to the TextPanel class
 to resolve a cohesion issue within the MainFrame class (the code fits the responsibility of the TextPanel 
 rather than the MainFrame class). This newly created method inside the TextPanel class is called buildingDreamVacation(). 
-
+    
 ## Phase 4: UML diagram
 - The UML_Design_Diagram.pdf has been added to the root of my project. Thank you! 
 

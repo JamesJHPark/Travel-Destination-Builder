@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
-//Represents the TopPanel of the program
+//Represents the TopPanel of the program with JButtons
 public class TopPanel extends JPanel implements ActionListener {
     private JButton startButton;
     private JButton goodbyeButton;

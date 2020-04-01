@@ -209,6 +209,7 @@ public class TextPanel extends JPanel {
         textArea.append(text);
     }
 
+    //MODIFIES: this
     //EFFECTS: appends the following statement when FileNotFoundException is thrown/caught
 
     public void unableToSaveFile() {

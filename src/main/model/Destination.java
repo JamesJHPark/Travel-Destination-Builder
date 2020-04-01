@@ -1,12 +1,10 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
+//Represents the Destination class with a constructor to create a destination object with the name of a country
 public class Destination {
     private String countryName;
-    private ArrayList<Destination> summerDestinationList;
-    private ArrayList<Destination> winterDestinationList;
 
     //EFFECTS: constructs the Destination object with a string parameter of the country name
     public Destination(String countryName) {
