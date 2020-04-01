@@ -75,9 +75,11 @@ will test the above cases with try/catch blocks.
 where the two methods (getCityFromSummerDestinations and getCityFromWinterDestinations) are called from the DestinationManager class.
 
 ## Phase 4: Task 3
-- Note: As this is the final phase of the project, I re-named a few classes (including interfaces) to better suit the context of my project.
-- Changes include:  FormPanel -> InteractivePanel,  FormEvent -> InteractivePanelEvent,  FormListener -> PanelListener,  
-  StringListener -> TextListener,  Toolbar -> TopPanel.
+- Note: As this is the final phase of my project, I re-named a few classes (including interfaces), and removed the Singleton class
+because I realized passing in Singleton instance for DreamVacation into my MainFrame/TextPanel classes was not absolutely 
+necessary in the application of my program after refactoring my codes (as listed below), and these changes better suit the context of my project. 
+- Class Name changes include:  FormPanel -> InteractivePanel,  FormEvent -> InteractivePanelEvent,  FormListener -> PanelListener,  
+  StringListener -> TextListener,  Toolbar -> TopPanel. 
   
 - Problem 1: I have identified there were 6 separate associations to the FormListener(PanelListener) interfaces (these were previously named: 
 FormListener, FormListenerAdd, FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within the FormPanel(InteractivePanel) class. 

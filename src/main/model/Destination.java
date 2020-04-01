@@ -3,6 +3,7 @@ package model;
 import java.util.Objects;
 
 //Represents the Destination class with a constructor to create a destination object with the name of a country
+
 public class Destination {
     private String countryName;
 

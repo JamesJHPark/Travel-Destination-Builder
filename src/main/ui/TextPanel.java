@@ -9,7 +9,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-//REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+//REFERENCE: the class name (TextPanel), codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 //Represents TextPanel of the program
 public class TextPanel extends JPanel {
 

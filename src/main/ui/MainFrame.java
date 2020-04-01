@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-//REFERENCE: the class codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
+//REFERENCE: the class name (MainFrame), codes referenced/taken from https://www.youtube.com/watch?v=WRwPVZ4jmNY&t=1211s
 
 // Represents the MainFrame of the App allowing interactive user application to build DreamVacation list
 public class MainFrame extends JFrame {

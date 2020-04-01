@@ -12,14 +12,13 @@ import persistence.Writer;
 import java.io.*;
 import java.util.*;
 
-// Vacation resolver application
+// Vacation resolver application for the console interaction with user
 public class VacationResolver {
     private static final String DREAM_VACATION_TXT = "./data/DreamVacation.txt";
     private DestinationsManager chooseDestination;
     private DreamVacation createDreamDestinations;
     private Scanner input;
     private Destination nextDestination;
-
     ArrayList<String> fixedList = new ArrayList<>();
 
 
