@@ -76,13 +76,14 @@ where the two methods (getCityFromSummerDestinations and getCityFromWinterDestin
 
 ## Phase 4: Task 3
 - Note: As this is the final phase of the project, I re-named a few classes (including interfaces) to better suit the context of my project.
-- Changes are: FormPanel -> InteractivePanel, FormEvent -> InteractivePanelEvent, FormListener -> PanelListener, StringListener -> TextListener, Toolbar -> TopPanel. T
-
+- Changes include:  FormPanel -> InteractivePanel,  FormEvent -> InteractivePanelEvent,  FormListener -> PanelListener,  
+  StringListener -> TextListener,  Toolbar -> TopPanel.
+  
 - Problem 1: I have identified there were 6 separate associations to the FormListener(PanelListener) interfaces (these were previously named: 
 FormListener, FormListenerAdd, FormListenerEnter, FormListenerLoad, FormListenerRemove, FormListenerSave) within the FormPanel(InteractivePanel) class. 
 I realized all of these 6 interfaces essentially specified the same behavior. Thus, I have removed the extra interfaces 
-to a single PanelListener interface. This removal would improve the cohesion of the InteractivePanel class and eliminated the need of 
-separate associations to the 6 different FormListener interfaces.
+to a single PanelListener interface. This removal would improve the cohesion and eliminated the need of 
+separate associations to the 6 different FormListener interfaces in the InteractivePanel class. 
 
 ## Phase 4: Task 3
 - Problem 2: I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), 
