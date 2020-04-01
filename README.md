@@ -77,7 +77,7 @@ where the two methods (getCityFromSummerDestinations and getCityFromWinterDestin
 ## Phase 4: Task 3
 - Note: As this is the final phase of my project, I re-named a few classes (including interfaces), and removed the Singleton class
 because I realized passing in Singleton instance for DreamVacation into my MainFrame/TextPanel classes was not absolutely 
-necessary in the application of my program after refactoring my codes (as listed below), and these changes better suit the context of my project. 
+necessary in the application of my program after refactoring the codes, and these changes better suit the context of my project. 
 - Class Name changes include:  FormPanel -> InteractivePanel,  FormEvent -> InteractivePanelEvent,  FormListener -> PanelListener,  
   StringListener -> TextListener,  Toolbar -> TopPanel. 
   
