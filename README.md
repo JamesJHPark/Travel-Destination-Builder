@@ -28,7 +28,7 @@ in the future and add these places to a personalized **"dream vacation"** list.
 - As a user, I want to be able to continuously add more countries to the customized dream vacation list
 - As a user, I want to be able to start over and create a new dream vacation list if I wish to do so
 
-## Instructions for Grader
+## Instruction 
 - First, when beginning the application, you can press the START Button on top left of the screen.
 - Then, you can choose the season either Summer or Winter and type this into Season text field panel and click SUBMIT Button.
 - Next, you can choose one of the countries from the provided travel destinations and type the country 
