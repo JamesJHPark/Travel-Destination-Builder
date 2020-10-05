@@ -58,7 +58,7 @@ your saved customized Dream Vacation list.
 - This concludes my phase 3 and have fulfilled all the requirements of the project so far. Thank you! 
 
 
-## Phase 4: Task 2
+## Phase 4: 
 - I have chosen to implement:
 Test and design a class that is robust. You must have at least one method that throws a checked exception.  
 You must have one test for the case where the exception is expected and another where the exception is not expected.
@@ -74,7 +74,7 @@ will test the above cases with try/catch blocks.
 - I have implemented the try/catch blocks within summerCall and winterCall methods in the TextPanel class of the UI package,
 where the two methods (getCityFromSummerDestinations and getCityFromWinterDestinations) are called from the DestinationManager class.
 
-## Phase 4: Task 3
+
 - Note: As this is the final phase of my project, I re-named a few classes (including interfaces), and removed the Singleton class
 because I realized passing in Singleton instance for DreamVacation into my MainFrame/TextPanel classes was not absolutely 
 necessary in the application of my program after refactoring the codes, and these changes better suit the context of my project. 
@@ -87,25 +87,25 @@ I realized all of these 6 interfaces essentially specified the same behavior. Th
 to a single PanelListener interface. This removal would improve the cohesion and eliminated the need of 
 separate associations to the 6 different FormListener interfaces in the InteractivePanel class. 
 
-## Phase 4: Task 3
+
 - Problem 2: I have identified a cohesion problem within the MainFrame class with respect to the methods of playAddSound() and playDeleteSound(), 
 as these methods can be extracted into a separate class, named Music. This way, the Music class will be responsible (1 class, single responsibility principle) 
 for its own methods of the sound from addSound.wav and javadeletesound.wav files saved in the data folder of the project.
 These music methods are used for the program's ADD button, Alt+R/Alt+N keys/buttons, and the drop-down menu item (Add country) in the program. 
 Therefore, this fix will additionally improve the cohesion of the MainFrame class.
 
-## Phase 4: Task 3
+
 - Problem 3: Within the MainFrame class, I realized that I could move the methods related to appending and outputting strings to the text panel
 of the program into the TextPanel class to improve cohesion in the MainFrame class. For instance, some of the fixes that I have implemented
 include moving the methods of summerCall, winterCall, and setLoading to the TextPanel class to improve cohesion of the MainFrame and the TextPanel classes. 
 
-## Phase 4: Task 3
+
 - Problem 4: I have identified that there was poor cohesion in the MainFrame class of the UI package with the additional 
 responsibility of creating the JMenu and JMenuItem objects within this class. Thus, I have refactored these codes and
 created a new class called MenuBuilder for JMenu and JMenuItems. This helped to improve the cohesion issue in the MainFrame class 
 by extracting out the additional responsibility. 
 
-## Phase 4: Task 3
+
 - Problem 5: First, I resolved duplicate codes from enterKey(), addMethod(), and addCountryWithMenu() inside the MainFrame class, 
 and named this addMethodToList(). Then, I identified parts of the addMethodToList() codes that could be moved to the TextPanel class
 to resolve a cohesion issue within the MainFrame class (the code fits the responsibility of the TextPanel 
